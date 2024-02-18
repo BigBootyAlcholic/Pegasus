@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{c177b3a7-7b50-4a8a-abdc-7c8da05c4c81}</ProjectGuid>
+    <RootNamespace>infamous</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;INFAMOUS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;INFAMOUS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;INFAMOUS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalIncludeDirectories>src</AdditionalIncludeDirectories>
+      <Optimization>MaxSpeed</Optimization>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>../includes/libMinHook.x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;INFAMOUS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalIncludeDirectories>src</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>../includes/libMinHook.x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\cheat\menu\main.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\network.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\network\network_players.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\network\network_spoofing.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\network\network_tunables.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\network\players\network_players_selected.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\player.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\protection.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\spawner.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\vehicle.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\weapon.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\world.hpp" />
+    <ClInclude Include="src\cheat\util\control_manager.hpp" />
+    <ClInclude Include="src\cheat\util\event.hpp" />
+    <ClInclude Include="src\cheat\util\global.hpp" />
+    <ClInclude Include="src\cheat\util\input.hpp" />
+    <ClInclude Include="src\cheat\util\network_manager.hpp" />
+    <ClInclude Include="src\cheat\util\notify.hpp" />
+    <ClInclude Include="src\cheat\util\packet.hpp" />
+    <ClInclude Include="src\cheat\util\panels.hpp" />
+    <ClInclude Include="src\cheat\util\player_manager.hpp" />
+    <ClInclude Include="src\cheat\util\script\script_data.hpp" />
+    <ClInclude Include="src\cheat\util\script\script_patch.hpp" />
+    <ClInclude Include="src\cheat\util\script\script_patcher_service.hpp" />
+    <ClInclude Include="src\cheat\util\scr_globals.hpp" />
+    <ClInclude Include="src\cheat\util\shop_manager.hpp" />
+    <ClInclude Include="src\cheat\util\texture.hpp" />
+    <ClInclude Include="src\cheat\util\timer.hpp" />
+    <ClInclude Include="src\core\core.hpp" />
+    <ClInclude Include="src\core\exceptions\Disassembler.hpp" />
+    <ClInclude Include="src\core\exceptions\exception.hpp" />
+    <ClInclude Include="src\core\exceptions\stackWalker.hpp" />
+    <ClInclude Include="src\core\hooks.hpp" />
+    <ClInclude Include="src\core\hooks\SyncData.hpp" />
+    <ClInclude Include="src\core\init.hpp" />
+    <ClInclude Include="src\core\log\log.hpp" />
+    <ClInclude Include="src\core\patterns.hpp" />
+    <ClInclude Include="src\framework\d3d.hpp" />
+    <ClInclude Include="src\framework\framework.hpp" />
+    <ClInclude Include="src\framework\options\abstract_option.hpp" />
+    <ClInclude Include="src\framework\options\abstract_submenu.hpp" />
+    <ClInclude Include="src\framework\options\break.hpp" />
+    <ClInclude Include="src\framework\options\button.hpp" />
+    <ClInclude Include="src\framework\options\core.hpp" />
+    <ClInclude Include="src\framework\options\number.hpp" />
+    <ClInclude Include="src\framework\options\option.hpp" />
+    <ClInclude Include="src\framework\options\scroll.hpp" />
+    <ClInclude Include="src\framework\options\submenu.hpp" />
+    <ClInclude Include="src\framework\options\submenu_option.hpp" />
+    <ClInclude Include="src\framework\options\toggle.hpp" />
+    <ClInclude Include="src\framework\render.hpp" />
+    <ClInclude Include="src\framework\types.hpp" />
+    <ClInclude Include="src\rage\classes\base\atRTTI.hpp" />
+    <ClInclude Include="src\rage\classes\base\CBaseModelInfo.hpp" />
+    <ClInclude Include="src\rage\classes\base\CNavigation.hpp" />
+    <ClInclude Include="src\rage\classes\base\CObject.hpp" />
+    <ClInclude Include="src\rage\classes\base\datBase.hpp" />
+    <ClInclude Include="src\rage\classes\base\fwArchetype.hpp" />
+    <ClInclude Include="src\rage\classes\base\fwArchetypeDef.hpp" />
+    <ClInclude Include="src\rage\classes\base\fwExtensibleBase.hpp" />
+    <ClInclude Include="src\rage\classes\base\fwExtension.hpp" />
+    <ClInclude Include="src\rage\classes\base\fwExtensionContainer.hpp" />
+    <ClInclude Include="src\rage\classes\base\fwRefAwareBase.hpp" />
+    <ClInclude Include="src\rage\classes\base\fwRefAwareBaseImpl.hpp" />
+    <ClInclude Include="src\rage\classes\base\HashTable.hpp" />
+    <ClInclude Include="src\rage\classes\base\pgBase.hpp" />
+    <ClInclude Include="src\rage\classes\base\phArchetype.hpp" />
+    <ClInclude Include="src\rage\classes\base\phBound.hpp" />
+    <ClInclude Include="src\rage\classes\draw_handlers\fwDrawData.hpp" />
+    <ClInclude Include="src\rage\classes\entities\CAttackers.hpp" />
+    <ClInclude Include="src\rage\classes\entities\CDynamicEntity.hpp" />
+    <ClInclude Include="src\rage\classes\entities\CEntity.hpp" />
+    <ClInclude Include="src\rage\classes\entities\CPhysical.hpp" />
+    <ClInclude Include="src\rage\classes\entities\fwEntity.hpp" />
+    <ClInclude Include="src\rage\classes\enums\eExplosionTag.hpp" />
+    <ClInclude Include="src\rage\classes\enums\eHandlingType.hpp" />
+    <ClInclude Include="src\rage\classes\enums\enums.hpp" />
+    <ClInclude Include="src\rage\classes\netsync\CProjectBaseSyncDataNode.hpp" />
+    <ClInclude Include="src\rage\classes\netsync\data_nodes.hpp" />
+    <ClInclude Include="src\rage\classes\netsync\netSyncDataNode.hpp" />
+    <ClInclude Include="src\rage\classes\netsync\netSyncNodeBase.hpp" />
+    <ClInclude Include="src\rage\classes\netsync\netSyncTree.hpp" />
+    <ClInclude Include="src\rage\classes\netsync\net_object_mgr.hpp" />
+    <ClInclude Include="src\rage\classes\netsync\NodeCommonDataOperations.hpp" />
+    <ClInclude Include="src\rage\classes\network\CJoinRequestContext.hpp" />
+    <ClInclude Include="src\rage\classes\network\CMsgJoinResponse.hpp" />
+    <ClInclude Include="src\rage\classes\network\CNetComplaintMgr.hpp" />
+    <ClInclude Include="src\rage\classes\network\CNetGamePlayer.hpp" />
+    <ClInclude Include="src\rage\classes\network\CNetGamePlayerDataMsg.hpp" />
+    <ClInclude Include="src\rage\classes\network\CNetworkPlayerMgr.hpp" />
+    <ClInclude Include="src\rage\classes\network\netConnection.hpp" />
+    <ClInclude Include="src\rage\classes\network\netEvent.hpp" />
+    <ClInclude Include="src\rage\classes\network\netObject.hpp" />
+    <ClInclude Include="src\rage\classes\network\netPeerAddress.hpp" />
+    <ClInclude Include="src\rage\classes\network\netPlayerMgrBase.hpp" />
+    <ClInclude Include="src\rage\classes\network\netShopping.hpp" />
+    <ClInclude Include="src\rage\classes\network\RemoteGamerInfoMsg.hpp" />
+    <ClInclude Include="src\rage\classes\network\snSession.hpp" />
+    <ClInclude Include="src\rage\classes\ped\CPed.hpp" />
+    <ClInclude Include="src\rage\classes\ped\CPedBoneInfo.hpp" />
+    <ClInclude Include="src\rage\classes\ped\CPedFactory.hpp" />
+    <ClInclude Include="src\rage\classes\ped\CPedIntelligence.hpp" />
+    <ClInclude Include="src\rage\classes\ped\CPedInventory.hpp" />
+    <ClInclude Include="src\rage\classes\ped\CPedModelInfo.hpp" />
+    <ClInclude Include="src\rage\classes\ped\CPedWeaponManager.hpp" />
+    <ClInclude Include="src\rage\classes\network\ClanData.hpp" />
+    <ClInclude Include="src\rage\classes\player\CNonPhysicalPlayerData.hpp" />
+    <ClInclude Include="src\rage\classes\player\CPlayerInfo.hpp" />
+    <ClInclude Include="src\rage\classes\network\netPlayer.hpp" />
+    <ClInclude Include="src\rage\classes\rage\atArray.hpp" />
+    <ClInclude Include="src\rage\classes\rage\joaat.hpp" />
+    <ClInclude Include="src\rage\classes\rage\rlGamerHandle.hpp" />
+    <ClInclude Include="src\rage\classes\rage\rlGamerInfo.hpp" />
+    <ClInclude Include="src\rage\classes\rage\rlGamerInfoBase.hpp" />
+    <ClInclude Include="src\rage\classes\rage\rlMetric.hpp" />
+    <ClInclude Include="src\rage\classes\rage\rlSessionInfo.hpp" />
+    <ClInclude Include="src\rage\classes\rage\scrValue.hpp" />
+    <ClInclude Include="src\rage\classes\rage\vector.hpp" />
+    <ClInclude Include="src\rage\classes\script\CGameScriptObjInfo.hpp" />
+    <ClInclude Include="src\rage\classes\script\dataList.hpp" />
+    <ClInclude Include="src\rage\classes\script\GtaThread.hpp" />
+    <ClInclude Include="src\rage\classes\script\scriptHandler.hpp" />
+    <ClInclude Include="src\rage\classes\script\scriptHandlerNetComponent.hpp" />
+    <ClInclude Include="src\rage\classes\script\scriptId.hpp" />
+    <ClInclude Include="src\rage\classes\script\scriptIdBase.hpp" />
+    <ClInclude Include="src\rage\classes\script\scriptResource.hpp" />
+    <ClInclude Include="src\rage\classes\script\scriptManager.hpp" />
+    <ClInclude Include="src\rage\classes\script\scrNativeHandler.hpp" />
+    <ClInclude Include="src\rage\classes\script\scrNativeRegistration.hpp" />
+    <ClInclude Include="src\rage\classes\script\scrNativeRegistrationTable.hpp" />
+    <ClInclude Include="src\rage\classes\script\scrProgram.hpp" />
+    <ClInclude Include="src\rage\classes\script\scrProgramTable.hpp" />
+    <ClInclude Include="src\rage\classes\script\scrProgramTableEntry.hpp" />
+    <ClInclude Include="src\rage\classes\script\scrThread.hpp" />
+    <ClInclude Include="src\rage\classes\script\scrThreadContext.hpp" />
+    <ClInclude Include="src\rage\classes\script\sysMemAllocator.hpp" />
+    <ClInclude Include="src\rage\classes\script\TlsContext.hpp" />
+    <ClInclude Include="src\rage\classes\script\types.hpp" />
+    <ClInclude Include="src\rage\classes\texture\grcLockedTexture.hpp" />
+    <ClInclude Include="src\rage\classes\texture\grcRenderTarget.hpp" />
+    <ClInclude Include="src\rage\classes\texture\grcTexture.hpp" />
+    <ClInclude Include="src\rage\classes\texture\grcTextureFactory.hpp" />
+    <ClInclude Include="src\rage\classes\texture\grcTextureStore.hpp" />
+    <ClInclude Include="src\rage\classes\texture\pgDictionary.hpp" />
+    <ClInclude Include="src\rage\classes\texture\pgDictionaryPool.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CBaseSubHandlingData.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CDriveByAnimInfo.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CHandlingData.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CHandlingObject.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CTrainConfig.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CVehicle.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CVehicleDriveByAnimInfo.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CVehicleLayoutMetaData.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CVehicleModelInfo.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CVehicleModelInfoLayout.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CVehicleSeatAnimInfo.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CVehicleSeatAnimInfos.hpp" />
+    <ClInclude Include="src\rage\classes\vehicle\CWeaponGroupNames.hpp" />
+    <ClInclude Include="src\rage\classes\weapon\CAmmoInfo.hpp" />
+    <ClInclude Include="src\rage\classes\weapon\CItemInfo.hpp" />
+    <ClInclude Include="src\rage\classes\weapon\CWeaponBoneId.hpp" />
+    <ClInclude Include="src\rage\classes\weapon\CWeaponInfo.hpp" />
+    <ClInclude Include="src\rage\engine.hpp" />
+    <ClInclude Include="src\rage\invoker\natives.hpp" />
+    <ClInclude Include="src\rage\invoker\native_invoker.hpp" />
+    <ClInclude Include="src\rage\types\base_types.hpp" />
+    <ClInclude Include="src\rage\types\network_types.hpp" />
+    <ClInclude Include="src\rage\types\pool_types.hpp" />
+    <ClInclude Include="src\security\checks\debuggercheck.hpp" />
+    <ClInclude Include="src\security\papi\types.hpp" />
+    <ClInclude Include="src\security\security.hpp" />
+    <ClInclude Include="src\security\util\winapi.hpp" />
+    <ClInclude Include="src\stdafx.hpp" />
+    <ClInclude Include="src\util\caller.hpp" />
+    <ClInclude Include="src\util\fiber.hpp" />
+    <ClInclude Include="src\util\fiber_pool.hpp" />
+    <ClInclude Include="src\util\hooking\hooking.hpp" />
+    <ClInclude Include="src\util\hooking\minhook.h" />
+    <ClInclude Include="src\util\math.hpp" />
+    <ClInclude Include="src\util\memory\memory.hpp" />
+    <ClInclude Include="src\util\memory\pattern.hpp" />
+    <ClInclude Include="src\util\util.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\cheat\menu\main.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\network.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\network\network_players.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\network\network_spoofing.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\network\network_tunables.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\network\players\network_players_selected.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\player.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\protection.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\spawner.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\vehicle.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\weapon.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\world.cpp" />
+    <ClCompile Include="src\cheat\util\control_manager.cpp" />
+    <ClCompile Include="src\cheat\util\input.cpp" />
+    <ClCompile Include="src\cheat\util\network_manager.cpp" />
+    <ClCompile Include="src\cheat\util\notify.cpp" />
+    <ClCompile Include="src\cheat\util\packet.cpp" />
+    <ClCompile Include="src\cheat\util\panels.cpp" />
+    <ClCompile Include="src\cheat\util\player_manager.cpp" />
+    <ClCompile Include="src\cheat\util\script\script_patch.cpp" />
+    <ClCompile Include="src\cheat\util\script\script_patcher_service.cpp" />
+    <ClCompile Include="src\cheat\util\texture.cpp" />
+    <ClCompile Include="src\cheat\util\timer.cpp" />
+    <ClCompile Include="src\core\core.cpp" />
+    <ClCompile Include="src\core\exceptions\stackWalker.cpp" />
+    <ClCompile Include="src\core\hooks.cpp" />
+    <ClCompile Include="src\core\hooks\ApplyPlayerPhysicalIndex.cpp" />
+    <ClCompile Include="src\core\hooks\Bypass.cpp" />
+    <ClCompile Include="src\core\hooks\CanApplyData.cpp" />
+    <ClCompile Include="src\core\hooks\CompressDataNode.cpp" />
+    <ClCompile Include="src\core\hooks\ConstructJoinMessage.cpp" />
+    <ClCompile Include="src\core\hooks\Crash.cpp" />
+    <ClCompile Include="src\core\hooks\GameEngine.cpp" />
+    <ClCompile Include="src\core\hooks\HandleNetMessage.cpp" />
+    <ClCompile Include="src\core\hooks\HandleNetworkEvent.cpp" />
+    <ClCompile Include="src\core\hooks\InitNativeTables.cpp" />
+    <ClCompile Include="src\core\hooks\PedMovementDataNode.cpp" />
+    <ClCompile Include="src\core\hooks\ProcessCloneCreate.cpp" />
+    <ClCompile Include="src\core\hooks\ProcessCloneSync.cpp" />
+    <ClCompile Include="src\core\hooks\Script.cpp" />
+    <ClCompile Include="src\core\hooks\ScriptVM.cpp" />
+    <ClCompile Include="src\core\hooks\SyncEntityMatrix.cpp" />
+    <ClCompile Include="src\core\hooks\SyncPedOrientation.cpp" />
+    <ClCompile Include="src\core\hooks\Task.cpp" />
+    <ClCompile Include="src\core\init.cpp" />
+    <ClCompile Include="src\core\log\log.cpp" />
+    <ClCompile Include="src\core\patterns.cpp" />
+    <ClCompile Include="src\dllmain.cpp" />
+    <ClCompile Include="src\framework\d3d.cpp" />
+    <ClCompile Include="src\framework\framework.cpp" />
+    <ClCompile Include="src\rage\classes\network\Network.hpp" />
+    <ClCompile Include="src\rage\classes\script\scriptManager.cpp" />
+    <ClCompile Include="src\rage\engine.cpp" />
+    <ClCompile Include="src\rage\invoker\native_invoker.cpp" />
+    <ClCompile Include="src\security\checks\debuggercheck.cpp" />
+    <ClCompile Include="src\security\security.cpp" />
+    <ClCompile Include="src\security\util\winapi.cpp" />
+    <ClCompile Include="src\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\util\fiber.cpp" />
+    <ClCompile Include="src\util\fiber_pool.cpp" />
+    <ClCompile Include="src\util\hooking\hooking.cpp" />
+    <ClCompile Include="src\util\memory\memory.cpp" />
+    <ClCompile Include="src\util\memory\pattern.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
