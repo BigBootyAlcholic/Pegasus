@@ -18,14 +18,14 @@ namespace Hooks {
 	}
 
 	void NetworkSessionHost(Rage::Invoker::NativeContext* Context) {
-		if (NetworkMenuVars::m_Vars.m_JoinQueue) {
+		/*if (NetworkMenuVars::m_Vars.m_JoinQueue) {
 			Engine::JoinSessionByInfo(*Patterns::Vars::g_Network, &NetworkMenuVars::m_Vars.m_SessionInfo, 1, 1 | 2 | 4, nullptr, 0);
 			NetworkMenuVars::m_Vars.m_JoinQueue = false;
 			Context->SetReturn(0, TRUE);
 		}
-		else {
+		else {*/
 			Context->SetReturn(0, Native::NetworkSessionHost(Context->GetArgument<int>(0), Context->GetArgument<int>(1), Context->GetArgument<bool>(2)));
-		}
+		//}
 	}
 
 	void _0x6BFB12CE158E3DD4(Rage::Invoker::NativeContext* Context) {

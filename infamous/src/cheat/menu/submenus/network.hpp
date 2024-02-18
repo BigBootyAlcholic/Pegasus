@@ -7,6 +7,7 @@
 #include "core/core.hpp"
 #include "rage/types/network_types.hpp"
 #include "rage/classes/rage/rlSessionInfo.hpp"
+
 class NetworkMenu {
 public:
 	void Run();
@@ -16,20 +17,4 @@ public:
 static NetworkMenu* GetNetworkMenu() {
 	static NetworkMenu instance;
 	return &instance;
-}
-
-namespace NetworkMenuVars {
-	struct Blacklist {
-		Rage::Network::BlacklistedPlayer m_Player;
-		bool m_API;
-		std::string m_ResolvedName;
-	};
-
-	struct Vars_ {
-		std::vector<Blacklist> m_Players;
-		bool m_JoinQueue;
-		Rage::rlSessionInfo m_SessionInfo;
-	};
-
-	extern Vars_ m_Vars;
 }
