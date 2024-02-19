@@ -100,9 +100,16 @@ namespace Patterns {
 		inline u64 g_ParseNodes;
 		inline u64 g_ReceiveCloneCreate;
 		inline u64 g_ReceiveCloneSync;
+		inline u64 g_ReceiveCloneRemove;
 		inline u64 g_GetSyncTree;
 		inline u64 g_GetNetObject;
 		inline CNetworkObjectMgr** g_NetworkObjectMgr;
+
+		inline u64 g_PackCloneSync;
+		inline u64 g_PackCloneCreate;
+		inline u64 g_PackCloneRemove;
+
+		inline u64 g_SendCloneSync;
 
 		inline u64 g_GetNetworkObjectFromNetworkID;
 
@@ -182,5 +189,23 @@ namespace Patterns {
 		inline u64 g_SyncEntityMatrix;
 		inline u64 g_PedMovement;
 		inline u64 g_HandleRotationValuesFromOrder;
+
+		inline u64 g_SendChatMessage;
+		inline int64_t** g_SendChatMessagePtr;
+		inline ChatData** g_ChatData;
+
+		inline u64 g_HandlePickupProcessing;
+
+		inline u64 g_UiDrawManager;
+		inline u64 g_GetScenePreset;
+		inline u64 g_PushScenePresetManager;
+		inline u64 g_AddElementToScene;
+		inline u64 g_SetSceneElementLighting;
+
+		inline u64 g_WritePlayerGameStateDataNode;
+		inline u64 g_ReadNewScriptHostMessage;
+
+		inline u64 g_GetHostArrayHandler;
+		inline WaterQuads g_WaterQuads;
 	}
 }

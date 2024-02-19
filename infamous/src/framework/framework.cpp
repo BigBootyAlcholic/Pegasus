@@ -5,6 +5,9 @@
 #include "types.hpp"
 #include "core/core.hpp"
 #include "cheat/util/panels.hpp"
+#include "core/patterns.hpp"
+#include "rage/engine.hpp"
+#include "cheat/util/global.hpp"
 namespace Framework {
 
 	bool IsKeyPressed(std::uint16_t key) {
@@ -204,6 +207,14 @@ namespace Framework {
 		Render::DrawRect({ m_Position.m_X, m_DrawBaseY + (m_bg_current / 2.f) }, { m_Width, m_bg_current }, m_Option.m_color);
 	}
 
+	int GetIdFromName(const char* name) {
+		for (std::uint32_t i = 0; i < 32; ++i) {
+			if (!strcmp(Native::GetPlayerName(i), name))
+				return i;
+		}
+		return 0;
+	}
+
 	void FrameWork::DrawOption(Framework::Options::AbstractOption* option, bool selected) {
 		if (selected)
 			DrawScroller();
@@ -213,6 +224,13 @@ namespace Framework {
 		Native::_Set2DLayer(4);
 
 		auto y_pos = selected ? m_Current : Render::GetRectBase(m_Option.m_height);
+
+		if (selected) {
+			if (!strcmp(sub->GetName(), "Players")) {
+			//	DrawPlayerInfo(GetIdFromName(option->GetLeftText()));
+			}
+		}
+
 
 		if (option->GetFlag(eOptionFlag::SimpleOption)) {
 			Render::DrawText(option->GetLeftText(), JUSTIFY_LEFT, { m_Position.m_X, y_pos }, m_Option.m_font_scale, m_Option.m_font, m_Option.m_padding, selected ? m_Option.m_selected_text_color : m_Option.m_text_color);
@@ -270,6 +288,18 @@ namespace Framework {
 			}
 
 			Render::DrawText(option->GetRightText(), JUSTIFY_RIGHT, { m_Position.m_X + test, y_pos }, m_Option.m_font_scale, m_Option.m_font, { m_Option.m_padding.m_X - test, m_Option.m_padding.m_Y }, selected ? m_Option.m_selected_text_color : m_Option.m_text_color);
+		}
+
+		if (option->GetFlag(eOptionFlag::KeyboardOption)) {
+			auto size = Render::GetSpriteScale(0.028);
+			Render::DrawText(option->GetLeftText(), JUSTIFY_LEFT, { m_Position.m_X, y_pos }, m_Option.m_font_scale, m_Option.m_font, m_Option.m_padding, selected ? m_Option.m_selected_text_color : m_Option.m_text_color);
+
+			Render::DrawSprite({ "textures", "Edit" }, { m_Position.m_X + (m_Width / m_Option.m_padding.m_X - 0.004f),
+				m_DrawBaseY + (m_Option.m_height / 2.f), }, size, selected ? m_Option.m_selected_text_color : m_Option.m_text_color, 0.f);
+
+			Render::DrawRightText(option->GetRightText(), m_Position.m_X + (m_Width / m_Option.m_padding.m_X) - 0.012f,
+				m_DrawBaseY + (m_Option.m_height / 2.f) - (Render::GetTextHeight(m_Option.m_font, m_Option.m_font_scale) / 1.5f) - 0.00007,
+				m_Option.m_font_scale, m_Option.m_font, selected ? m_Option.m_selected_text_color : m_Option.m_text_color, false, false);
 		}
 
 		if (option->GetFlag(eOptionFlag::BreakOption)) {
@@ -360,5 +390,421 @@ namespace Framework {
 		Render::DrawText2(tooltip.c_str(), { m_Position.m_X - (m_Width / 2.f) + 0.004f, y + 0.005f }, scaled_body_height, m_Option.m_font, { 255, 255, 255, 255 }, JUSTIFY_LEFT, { m_Position.m_X - (m_Width / 2.f) + 0.004f, (1.0f - (1.0f - (m_Position.m_X + 0.1575f - (0.23f - m_Option.m_font_scale)) - m_Wrap)) });
 
 		m_DrawBaseY += m_Option.m_height;
+	}
+
+	void Text(const char* text, Color color, Math::Vector2<float> position, Math::Vector2<float> size, bool center)
+	{
+		Native::SetTextCentre(center);
+		Native::SetTextColour(color.r, color.g, color.b, color.a);
+		Native::SetTextFont(0);
+		Native::SetTextScale(size.m_X, size.m_Y);
+		Native::BeginTextCommandDisplayText("STRING");
+		Native::AddTextComponentSubstringPlayerName((char*)text);
+		Native::EndTextCommandDisplayText(position.m_X, position.m_Y, 0);
+
+
+	}
+	int GetHealth(Ped ped) {
+
+		int health = (int)Native::GetEntityHealth(ped);
+		int maxHealth = (int)Native::GetEntityMaxHealth(ped);
+
+		//dont divide by 0
+		if (health != 0) {
+			int percentage = health * 100 / maxHealth;
+			return percentage;
+		}
+
+		return 0;
+	}
+	int GetArmor(Ped ped, Player player) {
+		int armor = (int)Native::GetPedArmour(ped);
+		int maxArmor = (int)Native::GetPlayerMaxArmour(player);
+		
+
+		if (armor != 0) {
+			int percentage = armor * 100 / maxArmor;
+			return percentage;
+		}
+
+		return 0;
+	}
+	char* GetWanted(Player p)
+	{
+		char buffer[20];
+		int Stars = (int)Native::GetPlayerWantedLevel(p);
+
+		sprintf_s(buffer, "%i/5", Stars);
+
+
+		return buffer;
+	}
+
+		//case 1:
+			//Global_1845263[iVar0 /*877*/].f_205.f_26 = func_13934(joaat("MPPLY_KILL_DEATH_RATIO"));
+			//Global_1845263[iVar0 /*877*/].f_205.f_24 = func_23535(170, -1);
+			//Global_1845263[iVar0 /*877*/].f_205.f_25 = func_23535(172, -1);
+			//Global_1845263[iVar0 /*877*/].f_205.f_28 = func_1951(joaat("MPPLY_KILLS_PLAYERS"));
+			//Global_1845263[iVar0 /*877*/].f_205.f_29 = (func_1951(joaat("MPPLY_DEATHS_PLAYER")) + func_1951(joaat("MPPLY_DEATHS_PLAYER_SUICIDE")));
+		//	*uParam0++;
+		//	break;
+
+		//case 2:
+		//	Global_1845263[iVar0 /*877*/].f_205.f_15 = func_1951(joaat("MPPLY_TOTAL_RACES_WON"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_16 = func_1951(joaat("MPPLY_TOTAL_RACES_LOST"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_17 = func_1951(joaat("MPPLY_TIMES_FINISH_RACE_TOP_3"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_18 = func_1951(joaat("MPPLY_TIMES_FINISH_RACE_LAST"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_19 = func_1951(joaat("MPPLY_TIMES_RACE_BEST_LAP"));
+		//	*uParam0++;
+		//	break;
+
+		//case 3:
+		//	Global_1845263[iVar0 /*877*/].f_205.f_20 = func_1951(joaat("MPPLY_TOTAL_DEATHMATCH_WON"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_21 = func_1951(joaat("MPPLY_TOTAL_DEATHMATCH_LOST"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_22 = func_1951(joaat("MPPLY_TOTAL_TDEATHMATCH_WON"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_23 = func_1951(joaat("MPPLY_TOTAL_TDEATHMATCH_LOST"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_30 = func_1951(joaat("MPPLY_TIMES_FINISH_DM_TOP_3"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_31 = func_1951(joaat("MPPLY_TIMES_FINISH_DM_LAST"));
+		//	*uParam0++;
+		//	break;
+
+		//case 4:
+		//	Global_1845263[iVar0 /*877*/].f_205.f_32 = func_1951(joaat("MPPLY_DARTS_TOTAL_WINS"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_33 = func_1951(joaat("MPPLY_DARTS_TOTAL_MATCHES"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_34 = func_1951(joaat("MPPLY_ARMWRESTLING_TOTAL_WINS"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_35 = func_1951(joaat("MPPLY_ARMWRESTLING_TOTAL_MATCH"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_36 = func_1951(joaat("MPPLY_TENNIS_MATCHES_WON"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_37 = func_1951(joaat("MPPLY_TENNIS_MATCHES_LOST"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_38 = func_1951(joaat("MPPLY_BJ_WINS"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_39 = func_1951(joaat("MPPLY_BJ_LOST"));
+		//	*uParam0++;
+		//	break;
+
+		//case 5:
+		//	Global_1845263[iVar0 /*877*/].f_205.f_40 = func_1951(joaat("MPPLY_GOLF_WINS"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_41 = func_1951(joaat("MPPLY_GOLF_LOSSES"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_42 = func_1951(joaat("MPPLY_SHOOTINGRANGE_WINS"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_43 = func_1951(joaat("MPPLY_SHOOTINGRANGE_LOSSES"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_44 = func_23535(70, -1);
+		//	Global_1845263[iVar0 /*877*/].f_205.f_47 = func_1951(joaat("MPPLY_HORDEWINS"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_48 = func_1951(joaat("MPPLY_CRHORDE"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_45 = func_1951(joaat("MPPLY_MCMWIN"));
+		//	Global_1845263[iVar0 /*877*/].f_205.f_46 = func_1951(joaat("MPPLY_CRMISSION"));
+		//	*uParam0++;
+		//	break;
+
+	int getPlayerRank(int player)
+	{
+
+		return *Menu::Global(1845263).At(player, 877).At(205).At(6).As<int*>();
+	}
+	int getPlayerCash(int player)
+	{
+
+		return *Menu::Global(1845263).At(player, 877).At(205).At(3).As<int*>();
+	}
+	int getPlayerWallet(int player)
+	{
+
+		return *Menu::Global(1845263).At(player, 877).At(205).At(56).As<int*>();
+	}
+	int getPlayerKD(int player)
+	{
+
+		return *Menu::Global(1845263).At(player, 877).At(205).At(26).As<int*>();
+	}
+	int kills(int player)
+	{
+		return *Menu::Global(1845263).At(player, 877).At(205).At(28).As<int*>();
+	}
+
+	int getPlayerAmmo(Ped ped, Hash WeaponHash)
+	{
+		int Ammo = (int)Native::GetAmmoInPedWeapon(ped, WeaponHash);
+		if (Ammo == -1) {
+			return (int)("Infinite");
+		}
+		else {
+			return Ammo;
+		}
+
+	}
+	float ItoF(int input)
+	{
+		float Output = *(float*)&input;
+		return Output;
+	}
+	bool isNumericChar(char x)
+	{
+		return (x >= '0' && x <= '9') ? true : false;
+	}
+	int StoI(char* str)
+	{
+		if (*str == NULL)
+			return 0;
+
+		int res = 0,
+			sign = 1,
+			i = 0;
+
+		if (str[0] == '-')
+		{
+			sign = -1;
+			i++;
+		}
+		for (; str[i] != '\0'; ++i)
+		{
+			if (isNumericChar(str[i]) == false)
+				return 0;
+			res = res * 10 + str[i] - '0';
+		}
+		return sign * res;
+	}
+	char* ItoS(int num)
+	{
+		char buf[30];
+		snprintf(buf, sizeof(buf), "%i", num);
+		return buf;
+	}
+	char* FtoS(float input)
+	{
+		char returnvalue[64];
+		int wholenumber = (int)input;
+		input -= wholenumber;
+		input *= 100;
+		sprintf(returnvalue, "%d.%d", wholenumber, (int)input);
+		return returnvalue;
+	}
+	const char* getPlayerVehicle(Ped ped)
+	{
+		bool inVehicle = Native::IsPedInAnyVehicle(ped, 0);
+
+		if (inVehicle)
+		{
+			Hash vehicleHash = Native::GetEntityModel(Native::GetVehiclePedIsIn(ped, 0));
+			const char* vehicleModel = Native::_GetLabelText(Native::GetDisplayNameFromVehicleModel(vehicleHash));
+
+			return vehicleModel;
+		}
+		else {
+			char result[16];
+			sprintf_s(result, "%s", "None");
+			return result;
+		}
+
+	}
+
+
+	const char* InCutscene(int player)
+	{
+		if (Native::NetworkIsPlayerInMpCutscene(player))
+		{
+			return "Yes";
+		}
+		else {
+			return "No";
+		}
+	}
+	int GetSpeed(Ped ped) {
+
+		int speed = (int)round(Native::GetEntitySpeed(ped) * 2.24);
+		return speed;
+	}
+	bool is_player_freemode_host(std::int32_t player) {
+		return (Native::NetworkGetHostOfScript("freemode", -1, 0) == player);
+	}
+	bool is_player_in_interior(Player player)
+	{
+		/*Ped ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player);
+		int currentInterior = INTERIOR::GET_INTERIOR_FROM_ENTITY(ped);
+		return INTERIOR::IS_VALID_INTERIOR(currentInterior);*/
+		int interior = Native::GetInteriorFromEntity(Native::GetPlayerPedScriptIndex(player));
+		if (!interior) {
+			interior = *Menu::Global(2689235).At(player, 453).At(248).As<int*>();
+		}
+		return interior;
+	}
+
+	void FrameWork::DrawPlayerInfo(Player _Player) {
+		if (m_Opened) {
+			Color m_white{ 255, 255, 255, 255 };
+			float PosX = m_Position.m_X + 0.25f;
+
+			float PosY = m_Position.m_Y + 0.168f;
+			float LTextX = PosX - 0.1225;
+			float RTextX = PosX + 0.009f;
+			float TextY = m_Position.m_Y - 0.055;
+			float SeperatorX = PosX + 0.05;
+
+			float RTextX2 = PosX + 0.1215f;
+
+			float rightresult = 0.49f;
+			float righttext = SeperatorX - 0.048f;
+
+			Ped ped = Native::GetPlayerPedScriptIndex(_Player);
+
+			Render::DrawRect({ PosX, PosY + 0.0202f }, { 0.25f, 0.375f }, m_Option.m_color);//draw main info rect
+			Render::DrawRect({ PosX, PosY - 0.0220f * 7.652f }, { 0.25f, 0.002f }, m_Header.m_color);//draw main info top bar 
+
+
+			Render::DrawRect({ PosX + 0.195f, PosY + 0.0202f }, { 0.135f, 0.375f }, m_Option.m_color);//draw ped preview rect
+			Render::DrawRect({ PosX + 0.195f, PosY - 0.0220f * 7.652f }, { 0.135f, 0.002f }, m_Header.m_color);//draw ped preview top bar 
+
+			CNetGamePlayer* NetGamePlayer = Engine::GetNetworkGamePlayer(_Player);
+
+			//std::string rank = std::to_string(getPlayerRank(_Player));
+			//std::string cash = std::to_string(getPlayerCash(_Player));
+			//std::string bank = std::to_string(getPlayerWallet(_Player));
+
+			//float KD_Float = ItoF(getPlayerKD(_Player));
+			//float kill_Float = ItoF(kills(_Player));
+			//std::string kd = FtoS(KD_Float);
+			//std::string kills = FtoS(kill_Float);
+
+			Math::Vector3<float> get_coords = Native::GetEntityCoords(ped, 0);
+			std::string wantedlvl = GetWanted(_Player);
+			std::string ammo = std::format("{}", Native::GetAmmoInPedWeapon(ped, Native::GetSelectedPedWeapon(ped)));
+			std::string coords = std::format("[{0},{1},{2}]", std::roundl(get_coords.m_X), std::roundl(get_coords.m_Y), std::roundl(get_coords.m_Z));
+
+
+
+			Hash street[2]{};
+			Native::GetStreetNameAtCoord(get_coords.m_X, get_coords.m_Y, get_coords.m_Z, &street[0], &street[1]);
+			std::string Street = Native::GetStreetNameFromHashKey(street[0]);
+			std::string Zone = Native::_GetLabelText(Native::GetNameOfZone(get_coords.m_X, get_coords.m_Y, get_coords.m_Z));
+			std::string heading = std::format("{}", roundf(Native::GetEntityHeading(ped)));
+
+			Math::Vector3<float> playerCoords = Native::GetEntityCoords(ped, false);
+			Math::Vector3<float> selfCoords = Native::GetEntityCoords(Native::PlayerPedId(), false);
+			float distance = Native::GetDistanceBetweenCoords(selfCoords.m_X, selfCoords.m_Y, selfCoords.m_Z, playerCoords.m_X, playerCoords.m_Y, playerCoords.m_Z, true);
+			std::string Distance = std::format("{}m", roundf(distance));
+			std::string Speed = std::to_string(GetSpeed(ped));
+			std::string scid = std::to_string(NetGamePlayer->GetGamerInfo()->m_gamer_handle_2.m_rockstar_id);
+			std::string slot = std::format("{}", NetGamePlayer->m_player_id);
+			std::string public_ip = std::format("{0}.{1}.{2}.{3}", NetGamePlayer->GetGamerInfo()->m_internal_ip.m_field1, NetGamePlayer->GetGamerInfo()->m_internal_ip.m_field2, NetGamePlayer->GetGamerInfo()->m_internal_ip.m_field3, NetGamePlayer->GetGamerInfo()->m_internal_ip.m_field4);
+			std::string local_ip = std::format("{0}.{1}.{2}.{3}", NetGamePlayer->GetGamerInfo()->m_external_ip.m_field1, NetGamePlayer->GetGamerInfo()->m_external_ip.m_field2, NetGamePlayer->GetGamerInfo()->m_external_ip.m_field3, NetGamePlayer->GetGamerInfo()->m_external_ip.m_field4);
+			std::string token = std::to_string(NetGamePlayer->GetGamerInfo()->m_host_token);
+			std::string public_port = std::to_string((uint16_t)NetGamePlayer->GetGamerInfo()->m_external_port);
+			std::string local_port = std::to_string((uint16_t)NetGamePlayer->GetGamerInfo()->m_internal_port);
+			std::string peer_id = std::to_string((uint64_t)NetGamePlayer->GetGamerInfo()->m_peer_id);
+			std::string host = NetGamePlayer->is_host() ? std::format("Yes") : std::format("No");
+			std::string scripthost = is_player_freemode_host(ped) ? "Yes" : "No";
+
+
+
+
+			std::string passive = Native::_0x38D28DA81E4E9BF9(ped) ? "Yes" : "No";
+			std::string rockstar = Native::NetworkPlayerIsRockstarDev(ped) ? "Yes" : "No";
+
+			Text("Rank", { m_white }, { LTextX, TextY + 0.06f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText("100", SeperatorX - 0.0523f, TextY + 0.06f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.07f }, { 0.001f, 0.015f }, m_white);
+			Text("Health", { m_white }, { SeperatorX - 0.048f, TextY + 0.06f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText("100", RTextX2, TextY + 0.06f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("Cash", { m_white }, { LTextX, TextY + 0.085f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText("2147483647", SeperatorX - 0.0523f, TextY + 0.085f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.095f }, { 0.001f, 0.015f }, m_white);
+			Text("Armor", { m_white }, { SeperatorX - 0.048f, TextY + 0.085f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText("100", RTextX2, TextY + 0.085f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("Bank", { m_white }, { LTextX, TextY + 0.11f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText("2147483647", SeperatorX - 0.0523f, TextY + 0.11f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.12f }, { 0.001f, 0.015f }, m_white);
+			Text("Wanted Level", { m_white }, { SeperatorX - 0.048f, TextY + 0.11f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(wantedlvl.c_str(), RTextX2, TextY + 0.11f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("K/D Ratio", { m_white }, { LTextX, TextY + 0.135f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText("1.50", SeperatorX - 0.0523f, TextY + 0.135f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.145f }, { 0.001f, 0.015f }, m_white);
+			Text("Ammo", { m_white }, { SeperatorX - 0.048f, TextY + 0.135f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(ammo.c_str(), RTextX2, TextY + 0.135f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("Weapon", { m_white }, { LTextX, TextY + 0.16f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText("~c~None", RTextX2, TextY + 0.16f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("Zone", { m_white }, { LTextX, TextY + 0.185f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(Zone.c_str(), RTextX2, TextY + 0.185, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("Street", { m_white }, { LTextX, TextY + 0.21f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(Street.c_str(), RTextX2, TextY + 0.21, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+
+			Text("Coords", { m_white }, { LTextX, TextY + 0.235f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(coords.c_str(), SeperatorX - 0.0523f, TextY + 0.235f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.245f }, { 0.001f, 0.015f }, m_white);
+			Text("Heading", { m_white }, { SeperatorX - 0.048f, TextY + 0.235f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(heading.c_str(), RTextX2, TextY + 0.235f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("Distance", { m_white }, { LTextX, TextY + 0.26f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(Distance.c_str(), SeperatorX - 0.0523f, TextY + 0.26f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.27f }, { 0.001f, 0.015f }, m_white);
+			Text("Speed", { m_white }, { SeperatorX - 0.048f, TextY + 0.26f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(Speed.c_str(), RTextX2, TextY + 0.26f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("Public Ip", { m_white }, { LTextX, TextY + 0.285f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(public_ip.c_str(), SeperatorX - 0.0523f, TextY + 0.285f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.295f }, { 0.001f, 0.015f }, m_white);
+			Text("Local Ip", { m_white }, { SeperatorX - 0.048f, TextY + 0.285f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(local_ip.c_str(), RTextX2, TextY + 0.285f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("Public Port", { m_white }, { LTextX, TextY + 0.31f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(public_port.c_str(), SeperatorX - 0.0523f, TextY + 0.31f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.32f }, { 0.001f, 0.015f }, m_white);
+			Text("Local Port", { m_white }, { SeperatorX - 0.048f, TextY + 0.31f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(local_port.c_str(), RTextX2, TextY + 0.31f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("Host", { m_white }, { LTextX, TextY + 0.335f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(host.c_str(), SeperatorX - 0.0523f, TextY + 0.335f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.345f }, { 0.001f, 0.015f }, m_white);
+			Text("Script Host", { m_white }, { SeperatorX - 0.048f, TextY + 0.335f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(scripthost.c_str(), RTextX2, TextY + 0.335f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("Peer", { m_white }, { LTextX, TextY + 0.36f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(peer_id.c_str(), SeperatorX - 0.0523f, TextY + 0.36f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.37f }, { 0.001f, 0.015f }, m_white);
+			Text("Token", { m_white }, { SeperatorX - 0.048f, TextY + 0.36f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(token.c_str(), RTextX2, TextY + 0.36f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			if (IsValidPtr(NetGamePlayer->GetGamerInfo()->m_gamer_handle_2.m_rockstar_id))
+			{
+				Text("Scid", { m_white }, { LTextX, TextY + 0.385f }, { 0.23f, 0.23f }, false);
+				Render::DrawRightText(scid.c_str(), SeperatorX - 0.0523f, TextY + 0.385f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			}
+
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.395f }, { 0.001f, 0.015f }, m_white);
+			Text("Slot", { m_white }, { SeperatorX - 0.048f, TextY + 0.385f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(slot.c_str(), RTextX2, TextY + 0.385f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Text("Passive", { m_white }, { LTextX, TextY + 0.41f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(passive.c_str(), SeperatorX - 0.0523f, TextY + 0.41f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+			Render::DrawRect({ SeperatorX - 0.05f, TextY + 0.42f }, { 0.001f, 0.015f }, m_white);
+			Text("Rockstar", { m_white }, { SeperatorX - 0.048f, TextY + 0.41f }, { 0.23f, 0.23f }, false);
+			Render::DrawRightText(rockstar.c_str(), RTextX2, TextY + 0.41f, 0.23f, (int)eFont::ChaletLondon, m_white, 0, 0);
+
+			Rage::joaat_t SceneHash = 0x390DCCF5;//0xAD197067, 0x390DCCF5, 0x3D8F5C29, 0x5ADFAFD0
+			Rage::joaat_t Element = 0;
+			CPed* LocalPed = NetGamePlayer->m_player_info->m_ped;
+			uintptr_t DrawManager = *(uint64_t*)(Patterns::Vars::g_UiDrawManager);
+
+			Math::Vector3<float> pos = { PosX - 0.56f, PosY * 7.5f, 0.0f };
+
+			if (DrawManager) {
+
+				DWORD* preset2 = Caller::Call<DWORD*>(Patterns::Vars::g_GetScenePreset, DrawManager, &SceneHash);
+				DWORD* preset = preset2 + (0x2A0 * Element);
+
+				if (preset) {
+
+					*(float*)(preset + 0x12) = 0;
+					*(float*)(preset + 0x9) = -3.8f;//size
+				}
+				if (Caller::Call<bool>(Patterns::Vars::g_PushScenePresetManager, DrawManager, &SceneHash)) {
+					if (Caller::Call<bool>(Patterns::Vars::g_AddElementToScene, DrawManager, &SceneHash, Element, LocalPed, pos, 1.0f)) {
+						Caller::Call<bool>(Patterns::Vars::g_SetSceneElementLighting, DrawManager, &SceneHash, Element, 1.6f);
+					}
+				}
+			}
+
+		}
 	}
 }

@@ -31,7 +31,30 @@ namespace ProtectionMenuVars {
 		bool m_Enabled = true;
 		uint32_t m_LastSpawned = 0;
 	};
+	struct Ghost {
+		bool m_Enabled = false;
+		bool m_DisableForSession = false;
+		eNetObjectTypes m_Type;
+		std::string m_Name;
+	};
 	struct Vars_ {
+
+		bool m_Godmode = true;
+		bool m_SuperJump = true;
+		bool m_Health = true;
+		bool m_Armor = true;
+		bool m_Spectate = true;
+
+		bool m_BlockAllScriptEvents = false;
+
+		Ghost m_Ghosts[14];
+		bool m_BlockIncomingSyncs;
+		bool m_BlockOutGoingSyncs;
+
+		bool m_EntityLimits[14];
+
+		bool m_BlockModderSync;
+		bool m_BlockModderCreate;
 
 		bool m_MetricLog = true;
 		bool m_MetricNotify = true;

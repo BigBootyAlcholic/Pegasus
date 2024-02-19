@@ -88,5 +88,34 @@ namespace Framework::Options {
 		}
 	};
 
-	
+	class KeyboardOption : public BaseOption<KeyboardOption> {
+	private:
+		std::function<void()> m_function;
+	public:
+		explicit KeyboardOption(const char* text) {
+			SetLeftText(text);
+		}
+
+		KeyboardOption& addToolTip(const char* description) {
+			BaseOption::SetToolTip(description);
+			return *this;
+		}
+
+		KeyboardOption& addRightText(const char* text) {
+			BaseOption::SetRightText(text);
+			return *this;
+		}
+
+		KeyboardOption& addClick(std::function<void()>&& function) {
+			SetAction(std::move(function));
+			return *this;
+		}
+
+		bool GetFlag(eOptionFlag flag) override {
+			if (flag == eOptionFlag::KeyboardOption) {
+				return true;
+			}
+			return BaseOption::GetFlag(flag);
+		}
+	};
 }

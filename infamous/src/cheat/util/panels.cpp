@@ -12,7 +12,7 @@ namespace Menu {
             g_panel_pos.m_X = menu->m_Position.m_X + (menu->m_Width / 2.f) + (m_Width + g_panel_spacing);
         }
         else {
-            g_panel_pos.m_X = menu->m_Position.m_X + (menu->m_Width / 2.f) + (m_Width + g_panel_spacing);
+            g_panel_pos.m_X = menu->m_Position.m_X + (menu->m_Width / 2.f) + (m_Width + g_panel_spacing) + m_Width;
             //g_panel_base = g_panel_base_2;
         }
 

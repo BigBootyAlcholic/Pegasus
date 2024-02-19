@@ -7,6 +7,7 @@
 #include "rage/classes/network/netEvent.hpp"
 #include "rage/classes/network/RemoteGamerInfoMsg.hpp"
 #include "rage/classes/netsync/netSyncDataNode.hpp"
+#include "rage/classes/netsync/data_nodes.hpp"
 //:DDD
 
 class CHttpRequest;
@@ -165,6 +166,30 @@ namespace Hooks {
 
 	inline void(*OgPedMovementDataNode)(uint64_t, uint64_t);
 	void PedMovementDataNodeHook(uint64_t Rcx, uint64_t Rdx);
+
+	inline bool(*OgSendChatMessage)(void* _This, Rage::rlGamerInfo* GamerInfo, char* Message, bool isTeam);
+	bool SendChatMessageHook(void* _This, Rage::rlGamerInfo* GamerInfo, char* Message, bool isTeam);
+
+	inline bool(*OgHandlePickupProcessingHook)(Rage::netObject* object, void* unk, CPed* ped);
+	bool HandlePickupProcessingHook(Rage::netObject* object, void* unk, CPed* ped);
+
+	inline bool(*OgProcessCloneRemove)(uint64_t, CNetGamePlayer*, uint64_t, uint16_t, uint64_t);
+	bool ProcessCloneRemoveHook(uint64_t This, CNetGamePlayer* NetGamePlayer, uint64_t R8, uint16_t NetworkID, uint64_t Stack);
+
+	inline void(*OgPackCloneCreate)(uint64_t, Rage::netObject*, CNetGamePlayer*, uint64_t);
+	void PackCloneCreateHook(uint64_t This, Rage::netObject* Object, CNetGamePlayer* Player, uint64_t SyncData);
+
+	inline bool(*OgPackCloneSync)(uint64_t, Rage::netObject*, CNetGamePlayer*);
+	bool PackCloneSyncHook(uint64_t This, Rage::netObject* NetObj, CNetGamePlayer* NetGamePlayer);
+
+	inline bool(*OgSendCloneSync)(uint64_t, Rage::netObject*, CNetGamePlayer*);
+	bool SendCloneSyncHook(uint64_t This, Rage::netObject* NetObj, CNetGamePlayer* NetGamePlayer);
+
+	inline void(*OgWritePlayerGameStateDataNode)(Rage::netObject*, CPlayerGameStateDataNode*);
+	void WritePlayerGameStateDataNodeHook(Rage::netObject* Player, CPlayerGameStateDataNode* Node);
+
+	inline bool(*OgHandleMsgNewScriptHost)(uint64_t Rcx, uint64_t Rdx);
+	bool HandleMsgNewScriptHostHook(uint64_t Rcx, uint64_t Rdx);
 
 	//hooks variables
 	namespace Vars {

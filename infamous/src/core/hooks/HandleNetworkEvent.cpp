@@ -645,6 +645,10 @@ namespace Hooks {
 
 		//LOG(std::format("SE | Player: {} Args{}", fromPlayer->get_name(), script_args).c_str());
 
+		if (ProtectionMenuVars::m_Vars.m_BlockAllScriptEvents) {
+			return true;
+		}
+
 		return false;
 	}
 

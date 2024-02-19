@@ -2,6 +2,7 @@
 #include "engine.hpp"
 #include "cheat/menu/submenus/network.hpp"
 #include "util/fiber.hpp"
+#include "core/hooks.hpp"
 namespace Engine {
 	CNetGamePlayer*	GetNetworkGamePlayer(u32 Player) {
 		return Caller::Call<CNetGamePlayer*>(Patterns::Vars::g_GetNetworkGamePlayer, Player);
@@ -39,5 +40,41 @@ namespace Engine {
 
 	void HandleRotationValuesFromOrder(Math::Matrix* Matrix, Math::Vector3_<float>* Rotation, int Order) {
 		Caller::Call<int>(Patterns::Vars::g_HandleRotationValuesFromOrder, Matrix, Rotation, Order);
+	}
+
+	void DrawChat(const char* msg, const char* player_name, bool is_team)
+	{
+		int scaleform = Native::RequestScaleformMovie("MULTIPLAYER_CHAT");
+
+		while (!Native::HasScaleformMovieLoaded(scaleform))
+			Utils::GetFiberManager()->GoToMainFiber();
+
+		Native::_PushScaleformMovieFunction(scaleform, "ADD_MESSAGE");
+		Native::_0xE83A3E3557A56640(player_name); // player name
+		Native::_0x77FE3402004CD1B0((Any)msg);             // content
+		Native::_PushScaleformMovieFunctionParameterString(Native::_GetLabelText(is_team ? "MP_CHAT_TEAM" : "MP_CHAT_ALL")); // scope
+		Native::_PushScaleformMovieFunctionParameterBool(false);                               // teamOnly
+		Native::_PushScaleformMovieFunctionParameterInt((int)eHudColors::HUD_COLOUR_PURE_WHITE); // eHudColour
+		Native::_PopScaleformMovieFunctionVoid();
+
+		Native::_PushScaleformMovieFunction(scaleform, "SET_FOCUS");
+		Native::_PushScaleformMovieFunctionParameterInt(1);                                    // VISIBLE_STATE_DEFAULT
+		Native::_PushScaleformMovieFunctionParameterInt(0);                                    // scopeType (unused)
+		Native::_PushScaleformMovieFunctionParameterInt(0);                                    // scope (unused)
+		Native::_0xE83A3E3557A56640(player_name);           // player
+		Native::_PushScaleformMovieFunctionParameterInt((int)eHudColors::HUD_COLOUR_PURE_WHITE); // eHudColour
+		Native::_PopScaleformMovieFunctionVoid();
+
+		Native::DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255, 0);
+
+		// fix broken scaleforms, when chat alrdy opened
+		if (const auto chat_data = *Patterns::Vars::g_ChatData; chat_data && (chat_data->m_chat_open || chat_data->m_timer_two))
+			Native::_AbortTextChat();
+	}
+
+	void SendChatMessage(const char* Message) {
+		if (Hooks::OgSendChatMessage(*Patterns::Vars::g_SendChatMessagePtr, Menu::GetLocalPlayer().m_NetGamePlayer->GetGamerInfo(), (char*)Message, false)) {
+			DrawChat(Message, Menu::GetLocalPlayer().m_Name, false);
+		}
 	}
 }

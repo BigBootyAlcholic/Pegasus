@@ -20,6 +20,22 @@ namespace NetworkPlayersSelectedMenuVars {
 		Caller::Call<void>(Patterns::Vars::g_TriggerScriptEvent, event_group, args, arg_count, player_bits, event_id);
 	}
 
+	void TeleportToPlayer() {
+		Entity handle;
+		Math::Vector3<float> coords = Native::GetEntityCoords(Menu::GetSelectedPlayer().m_Ped, false);
+		Native::IsPedInAnyVehicle(Menu::GetLocalPlayer().m_Ped, false) ? handle = Native::GetVehiclePedIsUsing(Menu::GetLocalPlayer().m_Ped) : handle = Menu::GetLocalPlayer().m_Ped;
+		Native::SetEntityCoords(handle, coords.m_X, coords.m_Y, coords.m_Z, false, false, false, false);
+		if (Native::IsPedInAnyVehicle(Menu::GetSelectedPlayer().m_Ped, FALSE)) {
+			Vehicle veh = Native::GetVehiclePedIsIn(Menu::GetSelectedPlayer().m_Ped, false);
+			for (int i = -1; i < 16; i++) {
+				if (Native::IsVehicleSeatFree(veh, i, 0)) {
+					Native::SetPedIntoVehicle(Menu::GetLocalPlayer().m_Ped, veh, i);
+					return;
+				}
+			}
+		}
+	}
+
 	void Crash() {
 		int64_t args1[] = { (int64_t)eRemoteEvent::Crash, (int64_t)Menu::GetLocalPlayer().m_ID };
 		TriggerScriptEvent(1, args1, sizeof(args1) / sizeof(args1[0]), 1 << Menu::GetSelectedPlayer().m_ID, (int)eRemoteEvent::Crash);
@@ -49,8 +65,13 @@ void NetworkPlayersSelectedMenu::Run() {
 	if (Menu::GetSelectedPlayer().IsValidName()) {
 		Framework::addPlayerSubmenu(&NetworkPlayersMenuVars::m_Vars.m_SelectedPlayer, "network_selected_player", [=](Framework::Options::PCore* core) {
 			
+			g_EnablePlayerInfo = true;
+
 			core->addOption(Framework::Options::SubmenuOption("Removals")
 				.setTarget("network_selected_player_removals"));
+
+			core->addOption(Framework::Options::ButtonOption("Teleport To Player")
+				.addClick([] { TeleportToPlayer(); }));
 
 			core->addOption(Framework::Options::ButtonOption("View Profile")
 				.addClick([] {

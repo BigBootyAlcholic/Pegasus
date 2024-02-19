@@ -25,12 +25,12 @@ namespace Framework::Options {
 
 		NumberOption& addTooltip(const char* const text)
 		{
-			base::set_tooltip(text);
+			base::SetToolTip(text);
 			return *this;
 		}
 
 		NumberOption& addClick(std::function<void()> action = [] {}) {
-			base::set_action(std::move(action));
+			base::SetAction(std::move(action));
 			return *this;
 		}
 

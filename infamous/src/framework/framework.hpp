@@ -85,7 +85,7 @@ namespace Framework {
 		title m_Title;
 		option m_Option;
 		footer m_Footer;
-		float m_Wrap = -0.1f;
+		float m_Wrap = -0.12f;
 
 		bool m_color_opt = false;
 
@@ -138,6 +138,8 @@ namespace Framework {
 		void load_theme(const char* name);
 		void reset_theme();
 		std::vector<std::string> m_cached_themes;
+
+		void DrawPlayerInfo(Player _Player);
 
 	public:
 		std::vector<std::unique_ptr<Framework::Options::AbstractSubmenu>> m_AllSubmenus;

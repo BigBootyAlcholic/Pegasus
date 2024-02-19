@@ -180,6 +180,10 @@ namespace Patterns {
 			Vars::g_ReceiveCloneCreate = ptr.As<u64>();
 		}, out);
 
+		Batch.Add({ ("RCR"), ("48 8B C4 48 89 58 08 48 89 68 10 48 89 70 18 48 89 78 20 41 54 41 56 41 57 48 83 EC 50 4C 8B F2 4D 8B E0 48") }, [](Memory::Ptr ptr) {
+			Vars::g_ReceiveCloneRemove = ptr.As<u64>();
+		}, out);
+
 		Batch.Add({ ("RCS"), ("48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 41 54 41 55 41 56 41 57 48 83 EC 40 4C 8B EA") }, [](Memory::Ptr ptr) {
 			Vars::g_ReceiveCloneSync = ptr.As<decltype(Vars::g_ReceiveCloneSync)>();
 			Vars::g_GetSyncTree = ptr.Add(0x2F).Call().As<decltype(Vars::g_GetSyncTree)>();
@@ -190,6 +194,17 @@ namespace Patterns {
 			Vars::g_CanApplyData = ptr.Call().As<u64>();
 		}, out);
 
+		Batch.Add({ ("PCC"), ("48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC 20 48 8B F9 48 8B CA 49 8B E9") }, [](Memory::Ptr ptr) {
+			Vars::g_PackCloneCreate = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("PCS"), ("48 89 5C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8B 02") }, [](Memory::Ptr ptr) {
+			Vars::g_PackCloneSync = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("SCS"), ("48 89 5C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 0F B7 42") }, [](Memory::Ptr ptr) {
+			Vars::g_SendCloneSync = ptr.As<u64>();
+		}, out);
 
 		Batch.Add({ ("NS_NSM"), ("48 8B 0D ? ? ? ? 41 8A D9") }, [](Memory::Ptr ptr) {
 			Vars::g_NetShopMgr = *ptr.Add(3).Rip().As<Rage::netShopping::CNetworkShoppingMgr**>();		
@@ -332,6 +347,58 @@ namespace Patterns {
 
 		Batch.Add({ ("PMDN"), ("40 53 48 83 EC 20 48 8B 02 4C 8B C2 48 8B D9 48 8B D1 49 8B C8 FF 90 88 00 00 00 B8") }, [](Memory::Ptr ptr) {
 			Vars::g_PedMovement = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("SCMP"), ("83 7E 1C 01 48 8B 3D") }, [](Memory::Ptr ptr) {
+			Vars::g_SendChatMessagePtr = ptr.Add(7).Rip().As<int64_t**>();
+		}, out);
+
+		Batch.Add({ ("SCM"), ("48 83 EC 20 48 8B F1 48 8B CA 41 8A E9") }, [](Memory::Ptr ptr) {
+			Vars::g_SendChatMessage = ptr.Sub(21).As<u64>();
+		}, out);
+
+		Batch.Add({ ("CD"), ("48 8B 05 ? ? ? ? 0F 45 DF") }, [](Memory::Ptr ptr) {
+			Vars::g_ChatData = ptr.FromInstruction().As<ChatData**>();
+		}, out);
+
+		Batch.Add({ ("HPUP"), ("49 8B 80 ? ? ? ? 48 85 C0 74 0C F6 80 ? ? ? ? ? 75 03 32 C0 C3") }, [](Memory::Ptr ptr) {
+			Vars::g_HandlePickupProcessing = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("3DPED"), ("4C 8B 15 ? ? ? ? F3 0F 11 45 ? F3 0F 10 05 ? ? ? ? BF ? ? ? ? BB ? ? ? ? 41 BE ? ? ? ? F3 0F 11") }, [](Memory::Ptr ptr) {
+			Vars::g_UiDrawManager = ptr.FromInstruction().As<u64>();
+		}, out);
+
+		Batch.Add({ ("PSPTM"), ("40 53 48 83 EC 20 8B 02 48 8D 54 24 38 48 8B D9 89 44 24 38 E8 ? ? ? ? 48 8B C8") }, [](Memory::Ptr ptr) {
+			Vars::g_PushScenePresetManager = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("AETS"), ("4C 8B DC 48 83 EC 58 8B") }, [](Memory::Ptr ptr) {
+			Vars::g_AddElementToScene = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("SCEL"), ("48 8B C4 48 89 58 10 48 89 70 18 57 48 83 EC 30 48 83 B9") }, [](Memory::Ptr ptr) {
+			Vars::g_SetSceneElementLighting = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("GCP"), ("0F B7 81 10 08 00 00") }, [](Memory::Ptr ptr) {
+			Vars::g_GetScenePreset = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("WPGSN"), ("48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 54 41 55 41 56 41 57 48 83 EC 30 0F B7 81") }, [](Memory::Ptr ptr) {
+			Vars::g_WritePlayerGameStateDataNode = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("HMNSH"), ("E8 ? ? ? ? 84 C0 74 60 4C 39 77 40 74 29 48 8B 4C 24 ? 48 8B 01 FF 50 28 48 8B 4F 40 44 0F B7") }, [](Memory::Ptr ptr) {
+			Vars::g_ReadNewScriptHostMessage = ptr.Call().As<u64>();
+		}, out);
+
+		Batch.Add({ ("GHAH"), ("48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 48 83 EC 20 8A 81 8F") }, [](Memory::Ptr ptr) {
+			Vars::g_GetHostArrayHandler = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("WQ"), ("74 41 4C 8B 05 ? ? ?") }, [](Memory::Ptr ptr) {
+			Vars::g_WaterQuads.m_oceanQuads = (QuadInfo*)Memory::GetAddressFromInstruction(ptr.As<uint64_t>(), 2);
 		}, out);
 
 		//annoyingggggggggggggggggggggggggggggggggggggg

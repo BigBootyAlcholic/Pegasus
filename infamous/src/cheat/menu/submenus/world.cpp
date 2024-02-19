@@ -49,6 +49,44 @@ namespace WorldMenuVars {
 			m_Vars.m_PedB--;
 		}
 	}
+
+	void NoOcean(bool enable)
+	{
+		for (int Iterator = 0; Iterator < Patterns::Vars::g_WaterQuads.m_oceanQuads->m_quadCount; Iterator++)
+		{
+			const std::uint64_t QuadStruct = Patterns::Vars::g_WaterQuads.m_oceanQuads->m_quadPool + (Iterator * 0x1C);
+			const auto Height = *(float*)(QuadStruct + 0x14);
+			if (enable && Height == 0.f)
+				*(float*)(QuadStruct + 0x14) = -1000.f;
+			else if (!enable && Height == -1000.f)
+				*(float*)(QuadStruct + 0x14) = 0.f;
+		}
+	}
+
+	void RaiseOcean(bool enable)
+	{
+		for (int Iterator = 0; Iterator < Patterns::Vars::g_WaterQuads.m_oceanQuads->m_quadCount; Iterator++)
+		{
+			const std::uint64_t QuadStruct = Patterns::Vars::g_WaterQuads.m_oceanQuads->m_quadPool + (Iterator * 0x1C);
+			const auto Height = *(float*)(QuadStruct + 0x14);
+			if (enable && Height == 0.f)
+				*(float*)(QuadStruct + 0x14) = 10.f;
+			else if (!enable && Height == 10.f)
+				*(float*)(QuadStruct + 0x14) = 0.f;
+		}
+	}
+
+	void TransparentOcean(bool enable)
+	{
+		for (int Iterator = 0; Iterator < Patterns::Vars::g_WaterQuads.m_oceanQuads->m_quadCount; Iterator++)
+		{
+			const std::uint64_t QuadStruct = Patterns::Vars::g_WaterQuads.m_oceanQuads->m_quadPool + (Iterator * 0x1C);
+			if (enable)
+				*(int*)(QuadStruct + 0x8) = 0;
+			else
+				*(int*)(QuadStruct + 0x8) = 0x1A1A1A1A;
+		}
+	}
 }
 
 bool Test = false;
@@ -60,7 +98,25 @@ void WorldMenu::Run() {
 
 		core->addOption(Framework::Options::SubmenuOption("Ped Color")
 			.setTarget("ped_color"));
-		});
+
+		core->addOption(Framework::Options::SubmenuOption("Ocean")
+			.setTarget("world-ocean"));
+	});
+
+	Framework::addSubmenu("Ocean", "world-ocean", [](Framework::Options::Core* core) {
+		//no worky, either bad offsets or sig
+		core->addOption(Framework::Options::ButtonOption("No Ocean")
+			.addClick([] { NoOcean(true); }));
+
+		core->addOption(Framework::Options::ButtonOption("Raise Ocean")
+			.addClick([] { RaiseOcean(true); }));
+
+		core->addOption(Framework::Options::ButtonOption("Transparent Ocean")
+			.addClick([] { TransparentOcean(true); }));
+
+		core->addOption(Framework::Options::ButtonOption("Restore")
+			.addClick([] { TransparentOcean(false); RaiseOcean(false); NoOcean(false); }));
+	});
 
 	Framework::addSubmenu("Timecycle Modifiers", "tc_modifiers", [](Framework::Options::Core* core) {
 		core->addOption(Framework::Options::ToggleNumberOption<float>("Width")
@@ -138,25 +194,25 @@ void WorldMenu::Update() {
 
 	RGBFade();
 
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_WEST_COL_R, (r / 255.f) * 1.5f);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_WEST_COL_G, (g / 255.f) * 1.5f);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_WEST_COL_B, (b / 255.f) * 1.5f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_WEST_COL_R, (r / 255.f) * 1.f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_WEST_COL_G, (g / 255.f) * 1.f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_WEST_COL_B, (b / 255.f) * 1.f);
 
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_EAST_COL_R, (r / 255.f) * 1.5f);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_EAST_COL_G, (g / 255.f) * 1.5f);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_EAST_COL_B, (b / 255.f) * 1.5f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_EAST_COL_R, (r / 255.f) * 1.f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_EAST_COL_G, (g / 255.f) * 1.f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_EAST_COL_B, (b / 255.f) * 1.f);
 
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_TRANSITION_COL_R, (r / 255.f) * 1.5f);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_TRANSITION_COL_G, (g / 255.f) * 1.5f);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_TRANSITION_COL_B, (b / 255.f) * 1.5f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_TRANSITION_COL_R, (r / 255.f) * 1.f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_TRANSITION_COL_G, (g / 255.f) * 1.f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_AZIMUTH_TRANSITION_COL_B, (b / 255.f) * 1.f);
 
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_COL_R, (r / 255.f) * 1.5f);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_COL_G, (g / 255.f) * 1.5f);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_COL_B, (b / 255.f) * 1.5f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_COL_R, (r / 255.f) * 1.f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_COL_G, (g / 255.f) * 1.f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_COL_B, (b / 255.f) * 1.f);
 
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_TRANSITION_COL_R, (r / 255.f) * 1.5f);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_TRANSITION_COL_G, (g / 255.f) * 1.5f);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_TRANSITION_COL_B, (b / 255.f) * 1.5f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_TRANSITION_COL_R, (r / 255.f) * 1.f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_TRANSITION_COL_G, (g / 255.f) * 1.f);
+	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_ZENITH_TRANSITION_COL_B, (b / 255.f) * 1.f);
 
 	SetTimeCycleVar(eTimeCycleVar::TCVAR_SKY_STARS_ITEN, 1000.f);
 

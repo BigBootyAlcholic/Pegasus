@@ -13,6 +13,7 @@ class VehicleMenu {
 public:
 	void Run();
 	void Update();
+	Math::Vector3<float> GetCameraDirection(Math::Vector3<float> Rotation = Native::GetGameplayCamRot(0));
 };
 
 static VehicleMenu* GetVehicleMenu() {
@@ -23,37 +24,26 @@ static VehicleMenu* GetVehicleMenu() {
 namespace VehicleMenuVars {
 	struct Vars_ {
 		bool m_GodMode = false;
-		bool m_RenderBurnt = false;
-		bool m_AutoRepair = false;
-		bool m_AutoWash = false;
-		bool m_AutoFlip = false;
-		bool m_AntiLockon = false;
-		bool m_AntiStickyBomb = false;
-		bool m_EngineAlwaysOn = false;
-		bool m_DisableFullCollision = false;
-		bool m_DisableCollisionWithVehicles = false;
-		bool m_DisableCollisionWithPeds = false;
-		bool m_DisableCollisionWithObjects = false;
-		bool m_NoClip = false;
-		float m_NoClipSpeed = 1.f;
-		bool m_VehicleFly = false;
-		bool m_Hydraulics = false;
-		bool m_DriftMode = false;
-		bool m_TumbleDryer = false;
-		bool m_StickyTires = false;
-		bool m_SlippyWheels = false;
-		bool m_NoGravity = false;
-		bool m_SuperGrip = false;
-		bool m_DriveOnWater = false;
-		bool m_DriveThroughWalls = false;
-		bool m_DriveOnAir = false;
-		bool m_BypassMaxSpeed = false;
+		bool m_Invisibility = false;
+		bool m_Seatbelt = false;
+
+		bool m_FlyingVehicle;
+		bool m_DisableMaxSpeed;
+		bool m_LimitMaxSpeed;
+
+		float m_FlyingVehicleSpeed = 1.f;
+		float m_LimitMaxSpeedVal;
+
+		Vehicle m_Container;
+
+		bool m_AutoDeploy;
+		int m_BoostSpeed = 40;
+		bool m_HornBoost;
+
 		bool m_NoTurbulence = false;
 		bool m_HandBrake = false;
 		bool m_InstantlyEnter = false;
 		bool m_InstantlyExit = false;
-		bool m_Invisibility = false;
-		bool m_Seatbelt = false;
 	};
 
 	extern Vars_ m_Vars;

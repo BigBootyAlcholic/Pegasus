@@ -670,6 +670,39 @@ namespace Menu {
         panel.EndPanel();
     }
 
+
+    inline void PlayerInfoPanel(u32 Player) {
+        PanelManager Main(0.14f, 0.3f, 0.03f);
+        Main.StartPanel("");
+
+        int health = (int)Native::GetEntityHealth(Menu::GetPlayer((int)Player).m_Ped);
+        int armor = (int)Native::GetPedArmour(Menu::GetPlayer((int)Player).m_Ped);
+
+        Main.Push("Rank", "1337");
+        Main.Push("Health", std::to_string(health));
+        Main.Push("Cash", "383434");
+        Main.Push("Armor", std::to_string(armor));
+        Main.Push("Bank", "53640946");
+        Main.Push("Wanted Level", "0/5");
+        Main.Push("K/D Ratio", "0.5");
+        Main.Push("Rockstar ID", std::to_string(Menu::GetPlayer((int)Player).m_NetGamePlayer->GetGamerInfo()->m_gamer_handle.m_rockstar_id));
+        Main.Push("IP", "123.123.123.123");
+        Main.Push("Host Token", "123");
+        Main.Push("Device", "Keyboard");
+        Main.Push("Ping", "0");
+
+        PanelManager Preview(0.14f, 0.3f, 0.03f);
+        Preview.StartPanel("");
+
+        Preview.SetNext();
+        Preview.Push("Monkey Balls", "Fax");
+
+        Preview.EndPanel();
+    }
+
+
+
+
   /*  inline void recent_info_panel(Player player) {
         panel panel(0.14f, 0.03f, 0.03f);
         panel.start_panel(PLAYER::GET_PLAYER_NAME(player));

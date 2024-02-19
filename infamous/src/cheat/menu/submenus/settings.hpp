@@ -4,26 +4,16 @@
 #include "framework/options/button.hpp"
 #include "framework/options/toggle.hpp"
 #include "framework/options/submenu_option.hpp"
+#include "framework/options/number.hpp"
 #include "core/core.hpp"
-#include "rage/types/network_types.hpp"
-#include "rage/classes/rage/rlSessionInfo.hpp"
 
-class NetworkMenu {
+class SettingsMenu {
 public:
 	void Run();
 	void Update();
 };
 
-static NetworkMenu* GetNetworkMenu() {
-	static NetworkMenu instance;
+static SettingsMenu* GetSettingsMenu() {
+	static SettingsMenu instance;
 	return &instance;
-}
-
-namespace NetworkMenuVars {
-	struct Vars_ {
-		bool m_SpeedUp;
-		bool m_LogState;
-	};
-
-	extern Vars_ m_Vars;
 }

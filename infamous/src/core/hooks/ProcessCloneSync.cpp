@@ -8,6 +8,7 @@
 #include "rage/classes/netsync/data_nodes.hpp"
 #include "rage/classes/base/CObject.hpp"
 #include "cheat/util/notify.hpp"
+#include "cheat/menu/submenus/protection.hpp"
 namespace Hooks {
 
 	eAckCode ProcessCloneSyncHook(CNetworkObjectMgr* _this,
@@ -37,6 +38,18 @@ namespace Hooks {
 		if (objectType < eNetObjType::NET_OBJ_TYPE_AUTOMOBILE || objectType > eNetObjType::NET_OBJ_TYPE_TRAIN) {
 			LOG_ERROR("Out of Bounds Crash");
 			Menu::Notify::stacked(std::format("Blocked Invalid Object Type From {}", fromPlayer->get_name()).c_str());
+			return eAckCode::ACKCODE_FAIL;
+		}
+
+		if (ProtectionMenuVars::m_Vars.m_BlockModderSync) {
+			if (Menu::GetPlayer(fromPlayer->m_player_id).m_IsModder) {
+				LOG_WARN(std::format("SYNC PROCESS {}", fromPlayer->get_name()).c_str());
+				return eAckCode::ACKCODE_FAIL;
+			}
+		}
+
+		if (ProtectionMenuVars::m_Vars.m_BlockIncomingSyncs) {
+			LOG_WARN("BLOCKING PROCESS SYNC");
 			return eAckCode::ACKCODE_FAIL;
 		}
 

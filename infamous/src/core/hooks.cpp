@@ -24,8 +24,6 @@ namespace Hooks {
 		if (IsValidPtr(Patterns::Vars::g_SendHttpRequest))
 			Hooking::GetHooking()->Create("HSR", Patterns::Vars::g_SendHttpRequest, SendHTTPRequestHook, &OgSendHTTPRequestHook);
 
-		LOG_CUSTOM_WARN("Bypass", "Created Bypass Hooks");
-
 		if (IsValidPtr(Patterns::Vars::g_FallTaskCreate))
 			Hooking::GetHooking()->Create("FTC", Patterns::Vars::g_FallTaskCreate, FallTaskCreateHook, &OgFallTaskCreateHook);
 
@@ -37,6 +35,9 @@ namespace Hooks {
 
 		if (IsValidPtr(Patterns::Vars::g_InitNativeTables))
 			Hooking::GetHooking()->Create("INT", Patterns::Vars::g_InitNativeTables, InitNativeTablesHook, &OgInitNativeTablesHook);
+
+		if (IsValidPtr(Patterns::Vars::g_ReceiveCloneRemove))
+			Hooking::GetHooking()->Create("PCR", Patterns::Vars::g_ReceiveCloneRemove, ProcessCloneRemoveHook, &OgProcessCloneRemove);
 
 		if (IsValidPtr(Patterns::Vars::g_ReceiveCloneSync))
 			Hooking::GetHooking()->Create("PCS", Patterns::Vars::g_ReceiveCloneSync, ProcessCloneSyncHook, &OgProcessCloneSyncHook);
@@ -110,15 +111,28 @@ namespace Hooks {
 		if (IsValidPtr(Patterns::Vars::g_PedMovement))
 			Hooking::GetHooking()->Create("PMDN", Patterns::Vars::g_PedMovement, PedMovementDataNodeHook, &OgPedMovementDataNode);
 
+		if (IsValidPtr(Patterns::Vars::g_SendChatMessage))
+			Hooking::GetHooking()->Create("SCM", Patterns::Vars::g_SendChatMessage, SendChatMessageHook, &OgSendChatMessage);
+
+		if (IsValidPtr(Patterns::Vars::g_HandlePickupProcessing))
+			Hooking::GetHooking()->Create("HPUP", Patterns::Vars::g_HandlePickupProcessing, HandlePickupProcessingHook, &OgHandlePickupProcessingHook);
+
+		//if (IsValidPtr(Patterns::Vars::g_PackCloneCreate))
+			//Hooking::GetHooking()->Create("PCC", Patterns::Vars::g_PackCloneCreate, PackCloneCreateHook, &OgPackCloneCreate);
+
+		//if (IsValidPtr(Patterns::Vars::g_PackCloneSync))
+				//	Hooking::GetHooking()->Create("PCS", Patterns::Vars::g_PackCloneSync, PackCloneSyncHook, &OgPackCloneSync);
+
+		//if (IsValidPtr(Patterns::Vars::g_SendCloneSync))
+			//Hooking::GetHooking()->Create("SCS", Patterns::Vars::g_SendCloneSync, SendCloneSyncHook, &OgSendCloneSync);
+
+		if (IsValidPtr(Patterns::Vars::g_WritePlayerGameStateDataNode))
+			Hooking::GetHooking()->Create("WPGSDN", Patterns::Vars::g_WritePlayerGameStateDataNode, WritePlayerGameStateDataNodeHook, &OgWritePlayerGameStateDataNode);
+
+		if (IsValidPtr(Patterns::Vars::g_ReadNewScriptHostMessage))
+			Hooking::GetHooking()->Create("HMNSH", Patterns::Vars::g_ReadNewScriptHostMessage - 0x6D, HandleMsgNewScriptHostHook, &OgHandleMsgNewScriptHost);
+
 		/*
-		if (IsValidPtr(Patterns::Vars::g_SyncPedOrientation))
-			Hooking::GetHooking()->Create("SPO", Patterns::Vars::g_SyncPedOrientation, SyncPedOrientationHook, &OgSyncPedOrientation);
-
-		if (IsValidPtr(Patterns::Vars::g_SyncEntityMatrix))
-			Hooking::GetHooking()->Create("SEM", Patterns::Vars::g_SyncEntityMatrix, SyncEntityMatrixHook, &OgSyncEntityMatrix);
-
-		if (IsValidPtr(Patterns::Vars::g_PedMovement))
-			Hooking::GetHooking()->Create("PMDN", Patterns::Vars::g_PedMovement, PedMovementDataNodeHook, &OgPedMovementDataNode);*/
 
 /*		if (IsValidPtr(Patterns::Vars::g_CompressDataNode))
 			Hooking::GetHooking()->Create("PDN1", Patterns::Vars::g_CompressDataNode, CompressDataNodeHook, &OgCompressDataNodeHook);

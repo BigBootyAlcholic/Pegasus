@@ -5,6 +5,21 @@ using namespace ProtectionMenuVars;
 
 namespace ProtectionMenuVars {
 	Vars_ m_Vars;
+
+	std::pair<std::string, eNetObjectTypes> Types[] = {
+		{ "Automobile", NetObjectAutomobile },
+		{ "Bike", NetObjectBike },
+		{ "Boat", NetObjectBoat },
+		{ "Helicopter", NetObjectHeli },
+		{ "Object", NetObjectObject },
+		{ "Ped", NetObjectPed },
+		{ "Pickup", NetObjectPickup },
+		{ "Plane", NetObjectPlane },
+		{ "Submarine", NetObjectSubmarine },
+		{ "Player", NetObjectPlayer },
+		{ "Trailer", NetObjectTrailer },
+		{ "Train", NetObjectTrain }
+	};
 }
 
 void ProtectionMenu::Run() {
@@ -49,12 +64,109 @@ void ProtectionMenu::Run() {
 	{ "Bounty", &m_Vars.m_Bounty },
 	};
 
+
+
 	Framework::addSubmenu("Protections", "protections", [=](Framework::Options::Core* core) {		
 		core->addOption(Framework::Options::SubmenuOption("Events")
 			.setTarget("protection_events"));
 
 		core->addOption(Framework::Options::SubmenuOption("Reports")
 			.setTarget("protection_reports"));
+
+		core->addOption(Framework::Options::SubmenuOption("Syncs")
+			.setTarget("entity-events"));
+
+		core->addOption(Framework::Options::SubmenuOption("Flags")
+			.setTarget("protection-flags"));
+
+		core->addOption(Framework::Options::ToggleOption("Block All Script Events")
+			.addToggle(&m_Vars.m_BlockAllScriptEvents));
+
+	});
+
+
+	Framework::addSubmenu("Flags", "protection-flags", [=](Framework::Options::Core* core) {
+		core->addOption(Framework::Options::ToggleOption("Godmode")
+			.addToggle(&m_Vars.m_Godmode)
+			.addTooltip("Disables modders seeing you're in godmode"));
+
+		core->addOption(Framework::Options::ToggleOption("Super Jump")
+			.addToggle(&m_Vars.m_SuperJump)
+			.addTooltip("Disables modders seeing you're using super jump"));
+
+		core->addOption(Framework::Options::ToggleOption("Health")
+			.addToggle(&m_Vars.m_Health)
+			.addTooltip("Disables modders seeing you have abnormal health"));
+
+		core->addOption(Framework::Options::ToggleOption("Armor")
+			.addToggle(&m_Vars.m_Armor)
+			.addTooltip("Disables modders seeing you have abnormal armor"));
+
+		core->addOption(Framework::Options::ToggleOption("Spectate")
+			.addToggle(&m_Vars.m_Spectate)
+			.addTooltip("Disables modders seeing you're spectating someone"));
+	});
+
+
+	Framework::addSubmenu("Syncs", "entity-events", [=](Framework::Options::Core* core) {
+		core->addOption(Framework::Options::SubmenuOption("Entity Blocking")
+			.setTarget("entity-blocking"));
+		
+		core->addOption(Framework::Options::ToggleOption("Block Incoming Syncs")
+			.addToggle(&m_Vars.m_BlockIncomingSyncs));
+
+		core->addOption(Framework::Options::ToggleOption("Block Outgoing Syncs")
+			.addToggle(&m_Vars.m_BlockOutGoingSyncs));
+
+		core->addOption(Framework::Options::ToggleOption("Block Modder Sync")
+			.addToggle(&m_Vars.m_BlockModderSync));
+
+		core->addOption(Framework::Options::ToggleOption("Block Modder Create")
+			.addToggle(&m_Vars.m_BlockModderCreate));
+	});
+
+	Framework::addSubmenu("Entity Blocking", "entity-blocking", [=](Framework::Options::Core* core) {
+		core->addOption(Framework::Options::ToggleOption("Automobile")
+			.addToggle(&m_Vars.m_EntityLimits[0]));
+
+		core->addOption(Framework::Options::ToggleOption("Bike")
+			.addToggle(&m_Vars.m_EntityLimits[1]));
+
+		core->addOption(Framework::Options::ToggleOption("Boat")
+			.addToggle(&m_Vars.m_EntityLimits[2]));
+
+		core->addOption(Framework::Options::ToggleOption("Door")
+			.addToggle(&m_Vars.m_EntityLimits[3]));
+
+		core->addOption(Framework::Options::ToggleOption("Heli")
+			.addToggle(&m_Vars.m_EntityLimits[4]));
+
+		core->addOption(Framework::Options::ToggleOption("Object")
+			.addToggle(&m_Vars.m_EntityLimits[5]));
+
+		core->addOption(Framework::Options::ToggleOption("Ped")
+			.addToggle(&m_Vars.m_EntityLimits[6]));
+
+		core->addOption(Framework::Options::ToggleOption("Pickup")
+			.addToggle(&m_Vars.m_EntityLimits[7]));
+
+		core->addOption(Framework::Options::ToggleOption("Pickup Placement")
+			.addToggle(&m_Vars.m_EntityLimits[8]));
+
+		core->addOption(Framework::Options::ToggleOption("Plane")
+			.addToggle(&m_Vars.m_EntityLimits[9]));
+
+		core->addOption(Framework::Options::ToggleOption("Submarine")
+			.addToggle(&m_Vars.m_EntityLimits[10]));
+
+		core->addOption(Framework::Options::ToggleOption("Player")
+			.addToggle(&m_Vars.m_EntityLimits[11]));
+
+		core->addOption(Framework::Options::ToggleOption("Trailer")
+			.addToggle(&m_Vars.m_EntityLimits[12]));
+
+		core->addOption(Framework::Options::ToggleOption("Train")
+			.addToggle(&m_Vars.m_EntityLimits[13]));
 	});
 
 

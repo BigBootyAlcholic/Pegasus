@@ -14,6 +14,8 @@
 #include "cheat/util/global.hpp"
 #include "submenus/world.hpp"
 #include "submenus/vehicle.hpp"
+#include "submenus/settings.hpp"
+#include "submenus/teleport.hpp"
 using namespace MainMenuVars;
 using namespace Patterns::Vars;
 namespace MainMenuVars {
@@ -41,15 +43,17 @@ void MainMenu::Run() {
 		core->addOption(Framework::Options::SubmenuOption("Spawner")
 			.setTarget("spawner-menu"));
 
+		core->addOption(Framework::Options::SubmenuOption("Teleport")
+			.setTarget("teleport-menu"));
+
 		core->addOption(Framework::Options::SubmenuOption("World")
 			.setTarget("world-menu"));
 
+		core->addOption(Framework::Options::SubmenuOption("Settings")
+			.setTarget("settings-menu"));
+
 		core->addOption(Framework::Options::ToggleOption("$1m Loop")
 			.addToggle(&m_TestLoop));
-
-
-		core->addOption(Framework::Options::ButtonOption("Unload")
-			.addClick([] { Core::g_Running = false; }));
 	});
 }
 
@@ -132,6 +136,10 @@ void MainMenu::Update() {
 	SetTimeCycleVar(eTimeCycleVar::TCVAR_FOG_VOLUME_INTENSITY_SCALE, 0);*/
 
 
+	if (g_EnablePlayerInfo && Native::DoesEntityExist(Menu::GetSelectedPlayer().m_Ped) && Menu::GetSelectedPlayer().m_NetGamePlayer->is_valid()) {
+		Framework::GetFrameWork()->DrawPlayerInfo(Menu::GetSelectedPlayer().m_ID);
+	}
+
 	if (m_Vars.m_SeamlessJoin) {
 		const auto TransitionState = *Menu::Global(1575008).As<eTransitionState*>();
 
@@ -168,4 +176,6 @@ void MainMenu::Update() {
 	GetWeaponMenu()->Update();
 	GetWorldMenu()->Update();
 	GetVehicleMenu()->Update();
+	GetSettingsMenu()->Update();
+	GetTeleportMenu()->Update();
 }

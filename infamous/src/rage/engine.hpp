@@ -10,4 +10,5 @@ namespace Engine {
 	void JoinSessionByInfo(Network* _Network, Rage::rlSessionInfo* SessionInfo, int Unk, int Flags, Rage::rlGamerHandle* Handle, int HandleCount);
 	void JoinSession(const Rage::rlSessionInfo& Info);
 	void HandleRotationValuesFromOrder(Math::Matrix* Matrix, Math::Vector3_<float>* Rotation, int Order);
+	void SendChatMessage(const char* Message);
 }

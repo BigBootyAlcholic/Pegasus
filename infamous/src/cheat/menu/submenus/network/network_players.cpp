@@ -71,6 +71,8 @@ namespace NetworkPlayersMenuVars {
 void NetworkPlayersMenu::Run() {
 
 	Framework::addSubmenu("Players", "network_players", [=](Framework::Options::Core* core) {
+		g_EnablePlayerInfo = false;
+
 		static int Timer = 0;
 		Menu::GetPlayerManager()->Foreach([&](Menu::PlayerVars& Player) {
 			if (!Player.IsValidName()) return;

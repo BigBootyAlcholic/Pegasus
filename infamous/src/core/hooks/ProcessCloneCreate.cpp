@@ -42,6 +42,11 @@ namespace Hooks {
 								int32_t timeStamp)
 	{
 
+
+		if (objectType == eNetObjType::NET_OBJ_TYPE_PICKUP_PLACEMENT) {
+			LOG_ERROR("CREATE PLACEMENT");
+			return;
+		}
 		
 		Rage::netSyncTree* tree = Caller::Call<Rage::netSyncTree*>(Patterns::Vars::g_GetSyncTree, _this, objectType);
 		if (!tree) {
@@ -135,6 +140,17 @@ namespace Hooks {
 					}
 				}
 			}
+		}
+
+		if (ProtectionMenuVars::m_Vars.m_BlockModderCreate) {
+			if (Menu::GetPlayer(fromPlayer->m_player_id).m_IsModder) {
+				LOG_WARN(std::format("SYNC CREATE {}", fromPlayer->get_name()).c_str());
+				return;
+			}
+		}
+
+		if (ProtectionMenuVars::m_Vars.m_EntityLimits[(int)objectType]) {
+			return;
 		}
 
 		//for can apply data
