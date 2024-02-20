@@ -127,6 +127,8 @@ void MainMenu::Update() {
 	Framework::GetFrameWork()->Run();
 	Run();
 
+//	Menu::Global(4541412).As<int>() = 1;
+
 	//RegisterScriptPatches();
 
 	/*SetTimeCycleVar(eTimeCycleVar::TCVAR_FOG_FOGRAY_INTENSITY, 0);
@@ -141,7 +143,7 @@ void MainMenu::Update() {
 	}
 
 	if (m_Vars.m_SeamlessJoin) {
-		const auto TransitionState = *Menu::Global(1575008).As<eTransitionState*>();
+		const auto TransitionState = Menu::Global(1575008).As<eTransitionState>();
 
 		if (TransitionState <= eTransitionState::TRANSITION_STATE_FM_FINAL_SETUP_PLAYER) {
 			Native::SetPlayerControl(Native::PlayerId(), true, 0);

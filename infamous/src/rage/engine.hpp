@@ -11,4 +11,6 @@ namespace Engine {
 	void JoinSession(const Rage::rlSessionInfo& Info);
 	void HandleRotationValuesFromOrder(Math::Matrix* Matrix, Math::Vector3_<float>* Rotation, int Order);
 	void SendChatMessage(const char* Message);
+	void TriggerScriptEvent(int event_group, int64_t* args, int arg_count, int player_bits);
+	void SendRagdollEvent(int Player);
 }

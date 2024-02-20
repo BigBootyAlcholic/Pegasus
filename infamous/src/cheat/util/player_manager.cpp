@@ -58,6 +58,7 @@ namespace Menu {
 			}
 
 			Player.m_NetGamePlayer = Engine::GetNetworkGamePlayer(Player.m_ID);
+			Player.m_PedPointer = (CPed*)Engine::GetEntityAddress(Player.m_Ped);
 
 			Player.m_Health = Native::GetEntityHealth(Player.m_Ped);
 			Player.m_Alive = !Native::IsPedDeadOrDying(Player.m_Ped, true);

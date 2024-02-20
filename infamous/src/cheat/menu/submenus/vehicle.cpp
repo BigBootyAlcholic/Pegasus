@@ -419,9 +419,6 @@ void VehicleMenu::Update() {
 	}
 	else {
 		Native::SetEntityInvincible(Menu::GetLocalPlayer().m_Vehicle, false);
-		Native::SetEntityProofs(Menu::GetLocalPlayer().m_Vehicle, false, false, false, false, false, false, false, false);
-		Native::SetVehicleCanBeVisiblyDamaged(Menu::GetLocalPlayer().m_Vehicle, true);
-		Native::SetVehicleEngineOn(Menu::GetLocalPlayer().m_Vehicle, false, false, false);
 	}
 
 	if (m_Vars.m_Invisibility) {

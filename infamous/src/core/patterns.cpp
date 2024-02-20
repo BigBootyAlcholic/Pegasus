@@ -194,11 +194,11 @@ namespace Patterns {
 			Vars::g_CanApplyData = ptr.Call().As<u64>();
 		}, out);
 
-		Batch.Add({ ("PCC"), ("48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC 20 48 8B F9 48 8B CA 49 8B E9") }, [](Memory::Ptr ptr) {
+		Batch.Add({ ("PCC2"), ("48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC 20 48 8B F9 48 8B CA 49 8B E9") }, [](Memory::Ptr ptr) {
 			Vars::g_PackCloneCreate = ptr.As<u64>();
 		}, out);
 
-		Batch.Add({ ("PCS"), ("48 89 5C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8B 02") }, [](Memory::Ptr ptr) {
+		Batch.Add({ ("PCS2"), ("48 89 5C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8B 02") }, [](Memory::Ptr ptr) {
 			Vars::g_PackCloneSync = ptr.As<u64>();
 		}, out);
 
@@ -401,7 +401,17 @@ namespace Patterns {
 			Vars::g_WaterQuads.m_oceanQuads = (QuadInfo*)Memory::GetAddressFromInstruction(ptr.As<uint64_t>(), 2);
 		}, out);
 
-		//annoyingggggggggggggggggggggggggggggggggggggg
+		Batch.Add({ ("NRQ"), ("E8 ? ? ? ? EB 3E 48 8B D3") }, [](Memory::Ptr ptr) {
+			Vars::g_RequestControl = ptr.Call().As<u64>();
+		}, out);
+
+		Batch.Add({ ("HTPR"), ("83 F9 FF 74 31 4C 8B 0D") }, [](Memory::Ptr ptr) {
+			Vars::g_HandleToPtr = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("SRE"), ("40 53 48 83 EC 20 0F B7 D9 48 8B 0D ? ? ? ? B2 01 E8 ? ? ? ? 48 8B 0D ? ? ? ? E8 ? ? ? ? 48 8B C8 33 C0 48 85 C9 74 08 0F B7 D3 E8 ? ? ? ? 48 8B 0D") }, [](Memory::Ptr ptr) {
+			Vars::g_SendRagdollEvent = ptr.As<u64>();
+		}, out);
 
 		Batch.Add({ ("FCP"), ("E8 ? ? ? ? 84 C0 75 0B 41 FF CF") }, [](Memory::Ptr ptr) {
 			Vars::g_FragmentPatch = ptr.Call().As<decltype(Vars::g_FragmentPatch)>();

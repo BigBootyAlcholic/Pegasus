@@ -117,8 +117,8 @@ namespace Hooks {
 		if (IsValidPtr(Patterns::Vars::g_HandlePickupProcessing))
 			Hooking::GetHooking()->Create("HPUP", Patterns::Vars::g_HandlePickupProcessing, HandlePickupProcessingHook, &OgHandlePickupProcessingHook);
 
-		//if (IsValidPtr(Patterns::Vars::g_PackCloneCreate))
-			//Hooking::GetHooking()->Create("PCC", Patterns::Vars::g_PackCloneCreate, PackCloneCreateHook, &OgPackCloneCreate);
+	//	if (IsValidPtr(Patterns::Vars::g_PackCloneCreate))
+		//	Hooking::GetHooking()->Create("PCC2", Patterns::Vars::g_PackCloneCreate, PackCloneCreateHook, &OgPackCloneCreate);
 
 		//if (IsValidPtr(Patterns::Vars::g_PackCloneSync))
 				//	Hooking::GetHooking()->Create("PCS", Patterns::Vars::g_PackCloneSync, PackCloneSyncHook, &OgPackCloneSync);

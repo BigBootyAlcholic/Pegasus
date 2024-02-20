@@ -77,4 +77,16 @@ namespace Engine {
 			DrawChat(Message, Menu::GetLocalPlayer().m_Name, false);
 		}
 	}
+
+	void TriggerScriptEvent(int event_group, int64_t* args, int arg_count, int player_bits) {
+		Caller::Call<void>(Patterns::Vars::g_TriggerScriptEvent, event_group, args, arg_count, player_bits);
+	}
+
+	void SendRagdollEvent(int Player) {
+		if (Menu::GetPlayer(Player).m_PedPointer) {
+			if (Menu::GetPlayer(Player).m_PedPointer->m_net_object) {
+				Caller::Call<int>(Patterns::Vars::g_SendRagdollEvent, Menu::GetPlayer(Player).m_PedPointer->m_net_object->m_object_id);
+			}
+		}
+	}
 }

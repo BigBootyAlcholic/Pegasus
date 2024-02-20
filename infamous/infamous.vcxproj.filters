@@ -570,6 +570,9 @@
     <ClInclude Include="src\cheat\menu\submenus\teleport.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\cheat\menu\submenus\network\players\network_players_selected_griefing.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">
@@ -789,6 +792,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\cheat\menu\submenus\teleport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cheat\menu\submenus\network\players\network_players_selected_griefing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

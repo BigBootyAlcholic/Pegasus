@@ -3,15 +3,88 @@
 #include "cheat/util/player_manager.hpp"
 #include "cheat/util/timer.hpp"
 #include "cheat/util/global.hpp"
+#include "util/fiber.hpp"
+#include "util/fiber_pool.hpp"
 using namespace NetworkSpoofingMenuVars;
 using namespace Framework::Options;
 namespace NetworkSpoofingMenuVars {
 	Vars_ m_Vars;
 
+	const char* textSettingsLabels[] = {
+	"Normal",
+	"Bold",
+	"Italic"
+	};
+
+	const char* textSettingsValues[] = {
+		"",
+		"~h~",
+		"~italic~"
+	}; int textSettingsId = 0;
+
+	const char* textColorsLabels[] = {
+		"Default",
+		"Black",
+		"Blue",
+		"Gold",
+		"Green",
+		"Grey",
+		"Light Blue",
+		"Orange",
+		"Purple",
+		"Red"
+	};
+
+	const char* textColorsValues[] = {
+		"",
+		"~v~",
+		"~b~",
+		"~y~",
+		"~g~",
+		"~c~",
+		"~f~",
+		"~o~",
+		"~p~",
+		"~r~"
+	}; int textColorsId = 0;
+
+	const char* textIconsLabels[] = {
+		"None",
+		"Wanted Star",
+		"Rockstar Verified",
+		"Rockstar"
+	};
+
+	const char* textIconsValues[] = {
+		"",
+		"~ws~",
+		"~¦~",
+		"~÷~"
+	}; int textIconsId = 0;
+
+	static bool active = false;
+	inline static void SpoofName() {
+		Utils::GetFiberPool()->Push([] {
+			Native::DisplayOnscreenKeyboard(0, "Input", "", "", "", "", "", 100);
+			while (Native::UpdateOnscreenKeyboard() == 0) {
+				active = true;
+				Framework::GetFrameWork()->ResetKeys();
+				Utils::GetFiberManager()->GoToMainFiber();
+			}
+			active = false;
+			if (!Native::GetOnscreenKeyboardResult())
+				return;
+			m_Vars.m_Name = Native::GetOnscreenKeyboardResult();
+			});
+	}
+
 }
 
 void NetworkSpoofingMenu::Run() {
 	Framework::addSubmenu("Spoofing", "network-spoofing", [](Framework::Options::Core* core) {
+		core->addOption(SubmenuOption("Name")
+			.setTarget("spoofing-name"));
+
 		core->addOption(SubmenuOption("Rotation")
 			.setTarget("player-rotation"));
 
@@ -20,6 +93,37 @@ void NetworkSpoofingMenu::Run() {
 
 		core->addOption(ToggleOption("Movement Animation")
 			.addToggle(&m_Vars.m_MoveAnimation));
+
+		core->addOption(ToggleOption("Hide From Playerlist")
+			.addToggle(&m_Vars.m_HideFromPlayerlist));
+	});
+
+	Framework::addSubmenu("Name", "spoofing-name", [](Framework::Options::Core* core) {
+		const char* og_name = Native::GetPlayerName(Native::PlayerId());
+
+		core->addOption(KeyboardOption("Input Name")
+			.addClick([=] { SpoofName(); }));
+
+		core->addOption(ButtonOption("Reset to Default")
+			.addClick([=] { m_Vars.m_SpoofName = false; m_Vars.m_Name = og_name; }));
+
+		std::string preview = std::format("Apply: {}{}{}{}", textSettingsValues[textSettingsId], textColorsValues[textColorsId], textIconsValues[textIconsId], m_Vars.m_Name.c_str());
+		std::string name_to_apply = std::format("{}{}{}{}", textSettingsValues[textSettingsId], textColorsValues[textColorsId], textIconsValues[textIconsId], m_Vars.m_Name.c_str());
+
+		core->addOption(ButtonOption(preview.c_str())
+			.addClick([=] { m_Vars.m_SpoofName = true; m_Vars.m_Name = name_to_apply; }));
+
+		core->addOption(BreakOption("Settings"));
+
+		core->addOption(scrollOption<const char*, int>("Color")
+			.addScroll(&textColorsLabels).setPosition(&textColorsId));
+
+		core->addOption(scrollOption<const char*, int>("Style")
+			.addScroll(&textSettingsLabels).setPosition(&textSettingsId));
+
+		core->addOption(scrollOption<const char*, int>("Icon")
+			.addScroll(&textIconsLabels).setPosition(&textIconsId));
+
 	});
 
 	Framework::addSubmenu("Vehicle Rotation", "vehicle-Rotation", [](Framework::Options::Core* core) {

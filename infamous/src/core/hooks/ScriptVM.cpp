@@ -155,6 +155,8 @@ namespace Hooks {
 	//	if (auto ByteCode = Menu::g_ScriptPatcher->GetScriptBytecode(Program->m_name_hash))
 		//	Program->m_code_blocks = ByteCode;
 
+
+
 		const auto _Return = OgScriptVmHook(Stack, Globals, Program, Context);
 
 

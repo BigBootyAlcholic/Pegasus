@@ -22,6 +22,14 @@ static NetworkSpoofingMenu* GetNetworkSpoofingMenu() {
 
 namespace NetworkSpoofingMenuVars {
 	struct Vars_ {
+
+		bool m_HideFromPlayerlist;
+		bool m_SpoofName;
+		std::string m_Name = "Pegasus";
+		int m_Color;
+		int m_Style;
+		int m_Icon;
+
 		bool m_PedSpinbot;
 		bool m_PedJitter;
 		bool m_PedFaceDirection;

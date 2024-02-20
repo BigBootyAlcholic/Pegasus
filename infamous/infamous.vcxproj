@@ -154,6 +154,7 @@
     <ClInclude Include="src\cheat\menu\submenus\network\network_spoofing.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\network\network_tunables.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\network\players\network_players_selected.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\network\players\network_players_selected_griefing.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\player.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\protection.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\settings.hpp" />
@@ -341,6 +342,7 @@
     <ClCompile Include="src\cheat\menu\submenus\network\network_spoofing.cpp" />
     <ClCompile Include="src\cheat\menu\submenus\network\network_tunables.cpp" />
     <ClCompile Include="src\cheat\menu\submenus\network\players\network_players_selected.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\network\players\network_players_selected_griefing.cpp" />
     <ClCompile Include="src\cheat\menu\submenus\player.cpp" />
     <ClCompile Include="src\cheat\menu\submenus\protection.cpp" />
     <ClCompile Include="src\cheat\menu\submenus\settings.cpp" />

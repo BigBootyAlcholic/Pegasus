@@ -207,5 +207,10 @@ namespace Patterns {
 
 		inline u64 g_GetHostArrayHandler;
 		inline WaterQuads g_WaterQuads;
+
+		inline u64 g_RequestControl;
+		inline u64 g_HandleToPtr;
+
+		inline u64 g_SendRagdollEvent;
 	}
 }
