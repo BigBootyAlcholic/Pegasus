@@ -24,6 +24,7 @@ inline void Run() {
 namespace MainMenuVars {
 	struct Vars_ {
 		bool m_Crash = false;
+		bool m_TestLoopV2;
 		bool m_SeamlessJoin = false;
 	};
 

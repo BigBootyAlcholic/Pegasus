@@ -146,6 +146,9 @@ void NetworkMenu::Run() {
 
 		core->addOption(Framework::Options::ToggleOption("Mocking")
 			.addToggle(&m_mocking).addTooltip("Mock what everyone says in chat.\nExample: \"hey everyone\" becomes \"hEy EvERyOnE\""));
+
+		core->addOption(Framework::Options::ToggleOption("Disable Profanity Filter")
+			.addToggle(&m_Vars.m_DisableProfanityFilter));
 	});
 
 	Framework::addSubmenu("Send Message", "chat-send", [](Framework::Options::Core* core) {
@@ -188,6 +191,9 @@ void NetworkMenu::Run() {
 	});
 
 	Framework::addSubmenu("Session", "network-session", [](Framework::Options::Core* core) {
+		core->addOption(Framework::Options::SubmenuOption("Session Scripts")
+			.setTarget("toolkit-script-migration"));
+
 		core->addOption(Framework::Options::SubmenuOption("Script Migration")
 			.setTarget("toolkit-script-migration"));
 
@@ -196,6 +202,17 @@ void NetworkMenu::Run() {
 
 		core->addOption(Framework::Options::SubmenuOption("Speed Up Transition")
 			.setTarget("toolkit-transition"));
+
+		static bool magnet;
+		static bool disable;
+
+		core->addOption(Framework::Options::ToggleOption("Show Killfeed")
+			.addToggle(&magnet));
+
+		core->addOption(Framework::Options::ButtonOption("Rejoin Session")
+			.addClick([] { Engine::JoinSession((*Patterns::Vars::g_Network)->m_last_joined_session.m_session_info); }));
+
+		
 	});
 
 	

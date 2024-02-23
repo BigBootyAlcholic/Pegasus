@@ -16,6 +16,28 @@ namespace Rage
         virtual void kill() = 0;
 
     public:
+        class Info {
+        public:
+            Info(scrValue* resultPtr, int parameterCount, scrValue* params) :
+                ResultPtr(resultPtr), ParamCount(parameterCount), Params(params), BufferCount(0) { }
+            //Return result, if applicable
+            scrValue* ResultPtr;
+            //Parameter count
+            int ParamCount;
+            //Pointer to parameter values
+            scrValue* Params;
+            int BufferCount;
+            scrValue* Orig[4];
+            Math::Vector3<float> Buffer[4];
+            void CopyReferencedParametersOut() {
+                int bc = BufferCount;
+                while (bc--) {
+                    Orig[bc][0].Float = Buffer[bc].m_X;
+                    Orig[bc][1].Float = Buffer[bc].m_Y;
+                    Orig[bc][2].Float = Buffer[bc].m_Z;
+                }
+            }
+        };
         scrThreadContext m_context;                 // 0x08
         scrValue* m_stack;                          // 0xB0
         char m_padding[0x4];                        // 0xB8

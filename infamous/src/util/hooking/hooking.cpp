@@ -301,7 +301,7 @@ namespace Hooking {
 
 		AddNativeDetour("SGI", Joaat("main_persistent"), 0x767FBC2AC802EF3D, Hooks::StatGetIntHook);
 		AddNativeDetour("SWMWH", Joaat("shop_controller"), 0xDC38CC1E35B6A5D7, Hooks::SetWarningMessageWithHeader);
-		AddNativeDetour("NSH", Joaat("maintransition"), 0x6F3D4ED9BEE4E61D, Hooks::SetWarningMessageWithHeader);
+		AddNativeDetour("NSH", Joaat("maintransition"), 0x6F3D4ED9BEE4E61D, Hooks::NetworkSessionHost);
 		/*
 		AddNativeDetour("SCTNS", 0x6BFB12CE158E3DD4, Hooks::_0x6BFB12CE158E3DD4);       // Stops news.
 		AddNativeDetour("SCTNSS", 0xFE4C1D0D3B9CC17E, Hooks::_0xFE4C1D0D3B9CC17E); // Stops news.

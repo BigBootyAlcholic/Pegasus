@@ -104,6 +104,24 @@ namespace NetworkPlayersSelectedGriefingMenuVars {
 		Engine::TriggerScriptEvent(1, ceokick, 4, 1 << Player.m_ID);
 	}
 
+	void Quit(Menu::PlayerVars Player) {
+		//Menu::Helpers::TriggerScriptEvent({ Rage::Global::ApartmentTeleport, Player.m_ID, 0, 0 }, 4, Player.m_ID);
+		int64_t ceokick[4] = { (int64_t)eScriptEvents::ScriptEventFmmcInteriorDestruction, Native::PlayerId(), 0, 0 };
+		Engine::TriggerScriptEvent(1, ceokick, 4, 1 << Player.m_ID);
+
+		int64_t ceokick1[4] = { (int64_t)eScriptEvents::ScriptEventLaunchFreemodeEvent, Native::PlayerId(), 0, 0 };
+		Engine::TriggerScriptEvent(1, ceokick1, 4, 1 << Player.m_ID);
+
+		int64_t ceokick2[4] = { (int64_t)eScriptEvents::ScriptEventLaunchFmTriggerTut, Native::PlayerId(), 0, 0 };
+		Engine::TriggerScriptEvent(1, ceokick2, 4, 1 << Player.m_ID);
+
+		int64_t ceokick3[4] = { (int64_t)eScriptEvents::ScriptEventLaunchCustomPedUpdateAction, Native::PlayerId(), 0, 0 };
+		Engine::TriggerScriptEvent(1, ceokick3, 4, 1 << Player.m_ID);
+
+		int64_t ceokick4[4] = { (int64_t)eScriptEvents::ScriptEventFmmcPedRetaskHandshake, Native::PlayerId(), 0, 0 };
+		Engine::TriggerScriptEvent(1, ceokick4, 4, 1 << Player.m_ID);
+	}
+
 	void GlitchPhysics(Menu::PlayerVars Player) {
 		if (Player.m_Ped != Menu::GetLocalPlayer().m_Ped && Player.m_ID != Menu::GetLocalPlayer().m_ID) {
 			Menu::GetControlManager()->RequestModel(0xd5c0bc07, [=](uint32_t Model) { // prop_acc_guitar_01:0xd5c0bc07

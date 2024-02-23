@@ -132,6 +132,39 @@ namespace Hooks {
 		if (IsValidPtr(Patterns::Vars::g_ReadNewScriptHostMessage))
 			Hooking::GetHooking()->Create("HMNSH", Patterns::Vars::g_ReadNewScriptHostMessage - 0x6D, HandleMsgNewScriptHostHook, &OgHandleMsgNewScriptHost);
 
+		if (IsValidPtr(Patterns::Vars::g_HasRosPrivilege))
+			Hooking::GetHooking()->Create("HRP", Patterns::Vars::g_HasRosPrivilege, HasRosPrivilegeHook, &OgHasRosPrivilege);
+
+		if (IsValidPtr(Patterns::Vars::g_HasGameBeenAltered))
+			Hooking::GetHooking()->Create("HGBA", Patterns::Vars::g_HasGameBeenAltered, HasGameBeenAlteredHook, &OgHasGameBeenAltered);
+
+		if (IsValidPtr(Patterns::Vars::g_PostRawMessage))
+			Hooking::GetHooking()->Create("PRM", Patterns::Vars::g_PostRawMessage, PostRawMessageHook, &OgPostRawMessage);
+
+		if (IsValidPtr(Patterns::Vars::g_CheckStringStatus))
+			Hooking::GetHooking()->Create("SCPCSC", Patterns::Vars::g_CheckStringStatus, GetChatProfanityStatusHook, &OgGetChatProfanityStatus);
+
+		if (IsValidPtr(Patterns::Vars::g_ApplyWeatherMeta))
+			Hooking::GetHooking()->Create("APM", Patterns::Vars::g_ApplyWeatherMeta, ApplyWeatherMetaHook, &OgApplyWeatherMeta);
+
+		if (IsValidPtr(Patterns::Vars::g_AllocateMemoryMessage))
+			Hooking::GetHooking()->Create("AMM", Patterns::Vars::g_AllocateMemoryMessage, AllocateMemoryMessageHook, &OgAllocateMemoryMessage);
+
+		if (IsValidPtr(Patterns::Vars::g_MessageBoxTermination))
+			Hooking::GetHooking()->Create("MBT", Patterns::Vars::g_MessageBoxTermination, MessageBoxTerminationHook, &OgMessageBoxTermination);
+
+		if (IsValidPtr(Patterns::Vars::g_ReceiveBroadcastArray))
+			Hooking::GetHooking()->Create("RBA", Patterns::Vars::g_ReceiveBroadcastArray, ReceiveBroadcastArrayHook, &OgReceiveBroadcastArray);
+
+		if (IsValidPtr(Patterns::Vars::g_UpdatePresenceAttributeInt))
+			Hooking::GetHooking()->Create("UPAI", Patterns::Vars::g_UpdatePresenceAttributeInt, UpdatePresenceAttributeIntHook, &OgUpdatePresenceAttributeInt);
+
+		if (IsValidPtr(Patterns::Vars::g_UpdatePresenceAttributeString))
+			Hooking::GetHooking()->Create("UPAS", Patterns::Vars::g_UpdatePresenceAttributeString, UpdatePresenceAttributeStringHook, &OgUpdatePresenceAttributeString);
+
+		//if (IsValidPtr(Patterns::Vars::g_MeltdownPatch))
+		//	Hooking::GetHooking()->Create("MDP", Patterns::Vars::g_MeltdownPatch, MeltdownPatchHook, &OgMeltdownPatch);
+
 		/*
 
 /*		if (IsValidPtr(Patterns::Vars::g_CompressDataNode))

@@ -118,20 +118,20 @@ using namespace std::chrono;
 using namespace std::chrono_literals;
 
 //rust defines
-using st = size_t;
 using u64 = uint64_t;
-using s64 = int64_t;
+using i64 = int64_t;
 using u32 = uint32_t;
-using s32 = int32_t;
+using i32 = int32_t;
 using u16 = uint16_t;
-using s16 = int16_t;
+using i16 = int16_t;
 using u8 = uint8_t;
-using s8 = int8_t;
+using i8 = int8_t;
 using cc = const char;
-using ccp = cc*;
-using buf_t = char*;
-using fp = float;
 using db = double;
+using s64 = i64;
+using s32 = i32;
+using s16 = i16;
+using s8 = i8;
 #include "rage/classes/network/CNetGamePlayer.hpp"
 #include "rage/classes/enums/enums.hpp"
 #include "rage/invoker/natives.hpp"
@@ -817,3 +817,8 @@ struct WaterQuads
 {
 	QuadInfo* m_oceanQuads;
 };
+
+
+
+
+inline bool g_ScriptVmRe = false;

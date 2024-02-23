@@ -60,6 +60,19 @@ static void GetScriptID(CGameScriptId& id, Rage::datBitBuffer& buffer)
 		id.m_instance_id = buffer.Read<int32_t>(8);
 }
 
+static bool IsValidWeapon(Rage::joaat_t hash)
+{
+	for (const auto& info : Patterns::Vars::g_WeaponInfoManager->m_item_infos)
+	{
+		if (info && info->m_name == hash && info->GetClassId() == RAGE_JOAAT("cweaponinfo"))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void CheckWeaponDamageEvent(CNetGamePlayer* player, Rage::datBitBuffer* buffer)
 {
 	uint8_t damageType;
@@ -1076,6 +1089,17 @@ namespace Hooks {
 				g_SyncingPlayer = fromPlayer;
 				g_SyncingObjectType = sync_type;
 			}
+			break;
+		}
+		case eNetworkEvents::WEAPON_DAMAGE_EVENT: {
+			u32 weaponType = buffer->Read<uint32_t>(32);
+			if (!IsValidWeapon(weaponType)) {
+				Menu::Notify::stacked(std::format("Blocked Crash S7 From {}", fromPlayer->get_name()).c_str());
+				SendEventAck(_this, fromPlayer, toPlayer, eventIndex, eventBitset);
+				return;
+			}
+
+			buffer->Seek(0);
 			break;
 		}
 		case eNetworkEvents::RESPAWN_PLAYER_PED_EVENT: {

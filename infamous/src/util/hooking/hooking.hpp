@@ -154,6 +154,7 @@ namespace Hooking {
 
 	class NativeHooks final
 	{
+	public:
 		using NativeDetour = std::pair<Rage::scrNativeHash, Rage::Invoker::NativeHandler>;
 
 		std::unordered_map<Rage::joaat_t, std::vector<NativeDetour>> m_NativeRegistrations;

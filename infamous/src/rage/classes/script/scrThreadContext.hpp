@@ -4,13 +4,13 @@
 #include "rage/classes/rage/joaat.hpp"
 namespace Rage
 {
-    enum class eThreadState : std::uint32_t
-    {
-        idle,
-        running,
-        killed,
-        unk_3,
-        unk_4,
+
+    enum class eThreadState : uint32_t {
+        Running,
+        Blocked,
+        Aborted,
+        Halted,
+        ResetInstructionCount
     };
 
     class scrThreadContext
@@ -27,7 +27,14 @@ namespace Rage
         float m_wait_timer;                  // 0x20
         char m_padding1[0x2C];               // 0x24
         std::uint32_t m_stack_size;          // 0x50
-        char m_padding2[0x54];               // 0x54
+        uint32_t m_catch_pointer_count; //0x0054
+        uint32_t m_catch_frame_pointer; //0x0058
+        uint32_t m_catch_stack_pointer; //0x005C
+        uint32_t m_priority; //0x0060
+        uint8_t m_call_depth; //0x0060
+        uint8_t unk_0061; //0x0061
+        uint16_t unk_0062; //0x0062
+        char m_callstack[16]; //0x0068
     };
-    static_assert(sizeof(scrThreadContext) == 0xA8);
+    static_assert(sizeof(scrThreadContext) == 0x78);
 }

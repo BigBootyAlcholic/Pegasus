@@ -512,3 +512,10 @@ public:
     CWeaponBoneId m_rotate_barrel_bone2;//0x98A
 };
 static_assert(sizeof(CWeaponInfo) == 0x0990);
+
+class CWeaponInfoManager
+{
+public:
+    char field_0x0[16][4];
+    Rage::atArray<CWeaponInfo*> m_item_infos;
+};

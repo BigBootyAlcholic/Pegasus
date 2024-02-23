@@ -13,4 +13,7 @@ namespace Engine {
 	void SendChatMessage(const char* Message);
 	void TriggerScriptEvent(int event_group, int64_t* args, int arg_count, int player_bits);
 	void SendRagdollEvent(int Player);
+
+
+	void JoinSessionByRid(u64 rid);
 }

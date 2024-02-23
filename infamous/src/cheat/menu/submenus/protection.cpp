@@ -79,6 +79,9 @@ void ProtectionMenu::Run() {
 		core->addOption(Framework::Options::SubmenuOption("Flags")
 			.setTarget("protection-flags"));
 
+		core->addOption(Framework::Options::ToggleOption("Block Join")
+			.addToggle(&m_Vars.m_BlockJoin));
+
 		core->addOption(Framework::Options::ToggleOption("Block All Script Events")
 			.addToggle(&m_Vars.m_BlockAllScriptEvents));
 

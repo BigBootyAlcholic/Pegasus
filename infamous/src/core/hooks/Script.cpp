@@ -18,14 +18,14 @@ namespace Hooks {
 	}
 
 	void NetworkSessionHost(Rage::Invoker::NativeContext* Context) {
-		/*if (NetworkMenuVars::m_Vars.m_JoinQueue) {
+		if (NetworkMenuVars::m_Vars.m_JoinQueue) {
 			Engine::JoinSessionByInfo(*Patterns::Vars::g_Network, &NetworkMenuVars::m_Vars.m_SessionInfo, 1, 1 | 2 | 4, nullptr, 0);
 			NetworkMenuVars::m_Vars.m_JoinQueue = false;
 			Context->SetReturn(0, TRUE);
 		}
-		else {*/
+		else {
 			Context->SetReturn(0, Native::NetworkSessionHost(Context->GetArgument<int>(0), Context->GetArgument<int>(1), Context->GetArgument<bool>(2)));
-		//}
+		}
 	}
 
 	void _0x6BFB12CE158E3DD4(Rage::Invoker::NativeContext* Context) {
@@ -117,7 +117,7 @@ namespace Hooks {
 
 	void SetEntityCoords(Rage::Invoker::NativeContext* Context) {
 		if (!MainMenuVars::m_Vars.m_SeamlessJoin
-			|| *Menu::Global(1575008).As<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING // This check is for character selection if i remember correctly.
+			|| Menu::Global(1575008).As<eTransitionState>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING // This check is for character selection if i remember correctly.
 			|| Context->GetArgument<Entity>(0) != Native::PlayerPedId())
 			Native::SetEntityCoords(Context->GetArgument<Entity>(0), Context->GetArgument<float>(1), Context->GetArgument<float>(2), Context->GetArgument<float>(3), Context->GetArgument<BOOL>(4), Context->GetArgument<BOOL>(5), Context->GetArgument<BOOL>(6), Context->GetArgument<BOOL>(7));
 	}

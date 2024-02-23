@@ -297,7 +297,7 @@ namespace Patterns {
 		}, out);
 
 		Batch.Add({ ("GFM"), ("75 1C E8 ? ? ? ? 48 85 C0") }, [](Memory::Ptr ptr) {
-			Vars::g_GetFriendsMenu = ptr.Sub(11).As<u64>();
+			Vars::g_GetFriendsMenu = ptr.Sub(0xA).As<u64>();
 		}, out);
 
 		Batch.Add({ ("CPM"), ("48 89 5C 24 ? 48 89 74 24 ? 55 57 41 54 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8B D9") }, [](Memory::Ptr ptr) {
@@ -413,6 +413,10 @@ namespace Patterns {
 			Vars::g_SendRagdollEvent = ptr.As<u64>();
 		}, out);
 
+		Batch.Add({ ("WIM"), ("0F B7 15 ? ? ? ? ? 33 D2 2B D3 78 ? ? 8B 1D") }, [](Memory::Ptr ptr) {
+			Vars::g_WeaponInfoManager = ptr.FromInstruction().Sub(72).As<CWeaponInfoManager*>();
+		}, out);
+
 		Batch.Add({ ("FCP"), ("E8 ? ? ? ? 84 C0 75 0B 41 FF CF") }, [](Memory::Ptr ptr) {
 			Vars::g_FragmentPatch = ptr.Call().As<decltype(Vars::g_FragmentPatch)>();
 		}, out);
@@ -469,6 +473,106 @@ namespace Patterns {
 			Vars::g_VehicleControlOutOfBoundsPatch = ptr.As<u64>();
 		}, out);
 
+		Batch.Add({ ("HGBA"), ("40 53 48 83 EC 30 48 8B 1D ? ? ? ? BA") }, [](Memory::Ptr ptr) {
+			Vars::g_HasGameBeenAltered = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("HRP"), ("E8 ? ? ? ? EB 0B 8B CB") }, [](Memory::Ptr ptr) {
+			Vars::g_HasRosPrivilege = ptr.Call().As<u64>();
+		}, out);
+
+		Batch.Add({ ("PRM"), ("E8 ? ? ? ? 84 C0 75 02 33 FF 4C 8D") }, [](Memory::Ptr ptr) {
+			Vars::g_PostRawMessage = ptr.Call().As<u64>();
+		}, out);
+
+		Batch.Add({ ("MDP"), ("48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC 20 80 3D ? ? ? ? ? 41 8B D8 8B F2 48 8B F9 74 2F E8") }, [](Memory::Ptr ptr) {
+			Vars::g_MeltdownPatch = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("SCPCSC"), ("48 89 5C 24 ? 48 89 4C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 83 EC 30 4C 8B FA 4D 8B E8 48 8B D1 4D 85 FF 74 10") }, [](Memory::Ptr ptr) {
+			Vars::g_CheckStringStatus = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("APM"), ("40 53 48 83 EC 30 0F 29 74 24 ? 48 8B D9 E8 ? ? ? ? F3 0F 10 83 ? ? ? ? F3 0F 10 35") }, [](Memory::Ptr ptr) {
+			Vars::g_ApplyWeatherMeta = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("AMM"), ("48 8B C4 48 89 58 08 48 89 68 10 48 89 70 18 48 89 78 20 41 56 48 83 EC 20 48 8B D9 48 8B 49 18") }, [](Memory::Ptr ptr) {
+			Vars::g_AllocateMemoryMessage = ptr.As<u64>();
+			Vars::g_ConnMgrFreeMemory = ptr.Add(0x52).Rip().As<u64>();
+		}, out);
+
+		Batch.Add({ ("RMFQ"), ("E8 ? ? ? ? 0F B7 43 4C 48 8D 55 20") }, [](Memory::Ptr ptr) {
+			Vars::g_RemoveMessageFromQueue = ptr.Call().As<u64>();
+			Vars::g_RemoveUnackedMessage = ptr.Add(0x19).Rip().As<u64>();
+		}, out);
+
+		Batch.Add({ ("MBT"), ("E8 ? ? ? ? CC FF 15") }, [](Memory::Ptr ptr) {
+			Vars::g_MessageBoxTermination = ptr.Call().As<u64>();
+		}, out);
+
+		Batch.Add({ ("RBA2"), ("48 89 5C 24 10 55 56 57 41 54 41 55 41 56 41 57 48 8B EC 48 83 EC 30 48 8B 05") }, [](Memory::Ptr ptr) {
+			Vars::g_ReceiveBroadcastArray = ptr.As<u64>();
+		}, out);
+
+		//patches :DDDDDDD
+
+		//should be patched by the game already
+		Batch.Add({ ("NARRC"), ("48 8B 0D ? ? ? ? 48 85 C9 74 08 48 8B 01 B2 01 FF 50 18 0F B7 56 0A 41 B0 01 48 8B CD E8 ? ? ? ? 33 C9") }, [](Memory::Ptr ptr) {
+			Memory::WriteVector(ptr.As<u64>(), { 0xE9, 0x7C, 0x01, 0x00, 0x00 });
+		}, out);
+
+		Batch.Add({ ("CKL"), ("E8 ? ? ? ? 48 8B 56 08 84 C0 74 59 48 FF C3 44 38 3C 1A 75 F7 48 8D 4D 00 4C 8B C3 E8 ? ? ? ? 48 8D 4D 48 E8") }, [](Memory::Ptr ptr) {
+			Memory::WriteVector(ptr.Call().As<u64>(), { 0xB0, 0x00, 0xC3 });
+			}, out);
+
+		Batch.Add({ ("CKK"), ("E8 ? ? ? ? 84 C0 0F 85 ? ? ? ? 48 8B 56 08 4C 8B C3 49 FF C0 46 38 3C 02 75 F7 48 8D 4D 00 E8 ? ? ? ? 48 8D 4D 00 E8 ? ? ? ? 48 8B 56 08 84 C0 0F 84") }, [](Memory::Ptr ptr) {
+			Memory::WriteVector(ptr.Call().As<u64>(), { 0xB0, 0x00, 0xC3 });
+		}, out);
+
+		Batch.Add({ ("FMEE"), ("48 8B 5C 24 40 48 8B 6C 24 48 48 8B 74 24 50 48 8B 7C 24 58 48 83 C4 30 41 5E C3 48 8B 0D") }, [](Memory::Ptr ptr) {
+			Memory::Nop(ptr.Add(0x31).As<u64>(), 5);
+		}, out);
+
+		Batch.Add({ ("TCRASH"), ("44 38 3D ? ? ? ? 74 0E B1 01 E8 ? ? ? ? 33 C9 E8") }, [](Memory::Ptr ptr) {
+			Memory::Nop(ptr.Add(0x12).As<u64>(), 5);
+		}, out);
+
+		Batch.Add({ ("NAARC2"), ("E8 ? ? ? ? EB 61 E8 ? ? ? ? 48 8B 0D ? ? ? ? 8B 51 20 8B 41 10 C1 E2 02 C1 FA 02 2B C2 85 C0 7E 30 E8") }, [](Memory::Ptr ptr) {
+			Memory::Nop(ptr.As<u64>(), 5);
+		}, out);
+
+		Batch.Add({ ("CT"), ("48 3B F8 74 ? 8B 1D") }, [](Memory::Ptr ptr) {
+			Memory::WriteVector(ptr.Add(4).As<u64>(), { 0x00 });
+		}, out);
+
+		//should be done from the script vm but cant get the reimplementaion working :/
+		/*Batch.Add({ ("SVMP1"), ("3b 0a 0f 83 ? ? ? ? 48 ff c7") }, [](Memory::Ptr ptr) {
+			Memory::WriteVector(ptr.Add(2).As<u64>(), { 0xc9310272 });
+			Memory::WriteVector(ptr.Add(6).As<u64>(), { 0x9090 });
+		}, out);
+
+		Batch.Add({ ("SVMP2"), ("3b 0a 0f 83 ? ? ? ? 49 03 fa") }, [](Memory::Ptr ptr) {
+			Memory::WriteVector(ptr.Add(2).As<u64>(), { 0xc9310272 });
+			Memory::WriteVector(ptr.Add(6).As<u64>(), { 0x9090 });
+		}, out);
+
+		Batch.Add({ ("SVMP3"), ("3b 11 0f 83 ? ? ? ? 48 ff c7") }, [](Memory::Ptr ptr) {
+			Memory::WriteVector(ptr.Add(2).As<u64>(), { 0xd2310272 });
+			Memory::WriteVector(ptr.Add(6).As<u64>(), { 0x9090 });
+
+			Memory::WriteVector(ptr.Add(0x1C).Add(2).As<u64>(), { 0xd2310272 });
+			Memory::WriteVector(ptr.Add(0x1C).Add(6).As<u64>(), { 0x9090 });
+		}, out);
+
+		Batch.Add({ ("SVMP4"), ("3b 11 0f 83 ? ? ? ? 49 03 fa") }, [](Memory::Ptr ptr) {
+			Memory::WriteVector(ptr.Add(2).As<u64>(), { 0xd2310272 });
+			Memory::WriteVector(ptr.Add(6).As<u64>(), { 0x9090 });
+
+			Memory::WriteVector(ptr.Add(0x26).Add(2).As<u64>(), { 0xd2310272 });
+			Memory::WriteVector(ptr.Add(0x26).Add(6).As<u64>(), { 0x9090 });
+		}, out);*/
+
 		auto Region = Memory::Module("GTA5.exe");
 		Batch.Run(Region);
 
@@ -480,8 +584,26 @@ namespace Patterns {
 
 		//bandaid for now
 		Vars::g_TimeCycleMgr = (TimeCycle*)Memory::GetAddressFromInstruction(GetAddressInMemory("f3 0f 10 72 78 ? 8d 0d ? ? ? ? 33 d2 e8"), 8, 12);
-		LOG_CUSTOM_SUCCESS("TC", "Init");
-		LOG_CUSTOM_WARN("Bypass", "Patched All Integrity Handlers");
+		//LOG_CUSTOM_SUCCESS("TC", "Init");
+		//LOG_CUSTOM_WARN("Bypass", "Patched All Integrity Handlers");
+
+		Memory::Batch ScBatch;
+
+
+		Batch.Add({ ("PD"), ("48 8D 05 ? ? ? ? 48 8B F9 48 89 01 48 83 C1 08 E8 ? ? ? ? 33 C0") }, [](Memory::Ptr ptr) {
+			auto Tmp = ptr.FromInstruction().As<u64*>();
+			Vars::g_UpdatePresenceAttributeInt = Tmp[1];
+			Vars::g_UpdatePresenceAttributeString = Tmp[3];
+		}, out);
+
+		Batch.Add({ ("RAP"), ("75 70 EB 23") }, [](Memory::Ptr ptr) {
+			Memory::Nop(ptr.As<u64>(), 2);
+			Memory::WriteVector(ptr.Add(0x72).As<u64>(), { 0xB0, 0x01 });
+		}, out);
+
+		auto ScRegion = Memory::Module("socialclub.dll");
+		Batch.Run(ScRegion);
+
 	}
 
 	void Patterns::AntiCheat() {

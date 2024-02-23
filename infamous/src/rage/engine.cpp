@@ -3,6 +3,8 @@
 #include "cheat/menu/submenus/network.hpp"
 #include "util/fiber.hpp"
 #include "core/hooks.hpp"
+#include "util/fiber_pool.hpp"
+#include "cheat/util/global.hpp"
 namespace Engine {
 	CNetGamePlayer*	GetNetworkGamePlayer(u32 Player) {
 		return Caller::Call<CNetGamePlayer*>(Patterns::Vars::g_GetNetworkGamePlayer, Player);
@@ -38,6 +40,40 @@ namespace Engine {
 		Caller::Call<bool>(Patterns::Vars::g_JoinSessionByInfo, _Network, SessionInfo, Unk, Flags, Handle, HandleCount);
 	}
 
+	void JoinSessionTmp(int ID) {
+		Utils::GetFiberPool()->Push([=] {
+			if (ID == -1) {
+				Menu::Global(1574589 + 2).As<int>() = ID;
+			}
+			else {
+				Menu::Global(1575032).As<int>() = ID;
+			}
+
+			Menu::Global(1574589).As<int>() = 1;
+			Utils::WaitFiber(200);
+			Menu::Global(1574589).As<int>() = 0;
+			});
+	}
+
+
+	void JoinSession(const Rage::rlSessionInfo& Info) {
+		if (Native::_GetNumberOfInstancesOfScriptWithNameHash(RAGE_JOAAT("maintransition")) != 0 || Native::IsPlayerSwitchInProgress()) {
+			LOG_ERROR("ERR SWITCH");
+			return;
+		}
+
+		NetworkMenuVars::m_Vars.m_JoinQueue = true;
+		NetworkMenuVars::m_Vars.m_SessionInfo = Info;
+		JoinSessionTmp(1);
+
+		if (Native::_GetNumberOfInstancesOfScriptWithNameHash(RAGE_JOAAT("maintransition")) == 0)
+		{
+			NetworkMenuVars::m_Vars.m_JoinQueue = true;
+			LOG_ERROR("ERR SWITCH2");
+		}
+		return;
+	}
+	
 	void HandleRotationValuesFromOrder(Math::Matrix* Matrix, Math::Vector3_<float>* Rotation, int Order) {
 		Caller::Call<int>(Patterns::Vars::g_HandleRotationValuesFromOrder, Matrix, Rotation, Order);
 	}
@@ -88,5 +124,39 @@ namespace Engine {
 				Caller::Call<int>(Patterns::Vars::g_SendRagdollEvent, Menu::GetPlayer(Player).m_PedPointer->m_net_object->m_object_id);
 			}
 		}
+	}
+
+	void JoinSessionByRid(u64 rid) {
+		Utils::GetFiberPool()->Push([=] {
+			if (Native::_GetCurrentFrontendMenu() != 0xFFFFFFFF) {
+				Native::ActivateFrontendMenu(Joaat("FE_MENU_VERSION_SP_PAUSE"), false, 2);
+				Utils::GetFiberManager()->Sleep(200);
+			}
+			Native::ActivateFrontendMenu(Joaat("FE_MENU_VERSION_SP_PAUSE"), false, 2);
+			Utils::GetFiberManager()->Sleep(200);
+
+			CPlayerListMenu* Menu = new CPlayerListMenu();
+			u32 Hash{ 0xDA4858C1 };
+			u64 Info{ Caller::Call<u64>(Patterns::Vars::g_GetFriendsMenu, 0) };
+			u8* Data{ reinterpret_cast<u8*>(Info + 0x8) };
+
+			if (Data) {
+				u8 Idx{};
+				while (*Data <= 3u) {
+					if (*Data == 3) {
+						break;
+					}
+					++Idx;
+					Data += 0x10;
+				}
+				if (Idx < 20ui8) {
+					u64 OriginalRID{ *(u64*)(Info + 16ui64 * Idx) };
+					*(u64*)(Info + 16ui64 * Idx) = rid;
+					Caller::Call<u64>(Patterns::Vars::g_ConstructPlayerMenu, Menu, &Hash);
+					Utils::GetFiberManager()->Sleep(400);
+					*(u64*)(Info + 16ui64 * Idx) = OriginalRID;
+				}
+			}
+		});
 	}
 }

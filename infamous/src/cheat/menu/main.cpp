@@ -16,10 +16,24 @@
 #include "submenus/vehicle.hpp"
 #include "submenus/settings.hpp"
 #include "submenus/teleport.hpp"
+#include "util/fiber.hpp"
+#include "util/fiber_pool.hpp"
+#include "submenus/recovery.hpp"
 using namespace MainMenuVars;
 using namespace Patterns::Vars;
 namespace MainMenuVars {
 	Vars_ m_Vars;
+
+	void TriggerTrx(int Hash, int Amount) {
+		Menu::Global(4537212).At(1).As<int>() = 2147483646;
+		Menu::Global(4537212).At(7).As<int>() = 2147483647;
+		Menu::Global(4537212).At(6).As<int>() = 0;
+		Menu::Global(4537212).At(5).As<int>() = 0;
+		Menu::Global(4537212).At(3).As<int>() = Hash;
+		Menu::Global(4537212).At(2).As<int>() = Amount;
+		Menu::Global(4537212).As<int>() = 2;
+
+	}
 }
 bool m_TestLoop;
 void MainMenu::Run() {
@@ -49,11 +63,12 @@ void MainMenu::Run() {
 		core->addOption(Framework::Options::SubmenuOption("World")
 			.setTarget("world-menu"));
 
+		core->addOption(Framework::Options::SubmenuOption("Recovery")
+			.setTarget("recovery-menu"));
+
 		core->addOption(Framework::Options::SubmenuOption("Settings")
 			.setTarget("settings-menu"));
 
-		core->addOption(Framework::Options::ToggleOption("$1m Loop")
-			.addToggle(&m_TestLoop));
 	});
 }
 
@@ -166,9 +181,25 @@ void MainMenu::Update() {
 		}
 	}
 
-	if (m_TestLoop) {
-		Menu::NetShoppingManager::ProcessServiceTransaction(joaat("CATEGORY_SERVICE_WITH_THRESHOLD"), 1633116913, joaat("NET_SHOP_ACTION_EARN"), 1000000, 4);
+	if (m_Vars.m_TestLoopV2) {
+		Utils::GetFiberPool()->Push([] {
+			TriggerTrx(0x176D9D54, 15000000);//bend job
+			TriggerTrx(0xED97AFC1, 7000000);//gang money
+			TriggerTrx(0xA174F633, 15000000);//bend bonus
+			TriggerTrx(0x314FB8B0, 1000000);//daily object event money
+			TriggerTrx(0x4B6A869C, 2000000);//buisness hub money
+			Utils::GetFiberManager()->Sleep(4000);
+		});
 	}
+
+	//4537212
+	/* SetGlobalInt(4537212+ 1, 2147483646)
+    SetGlobalInt(4537212+ 7, 2147483647)
+    SetGlobalInt(4537212+ 6, 0)
+    SetGlobalInt(4537212+ 5, 0)
+    SetGlobalInt(4537212+ 3, hash)
+    SetGlobalInt(4537212+ 2, amount)
+    SetGlobalInt(4537212,2)*/
 
 
 	GetProtectionMenu()->Update();
@@ -180,4 +211,5 @@ void MainMenu::Update() {
 	GetVehicleMenu()->Update();
 	GetSettingsMenu()->Update();
 	GetTeleportMenu()->Update();
+	GetRecoveryMenu()->Update();
 }

@@ -172,4 +172,48 @@ namespace Hooks {
 		return OgVehicleControlOutOfBoundsHook(a1, a2, a3, a4, a5, a6, a7);
 		
 	}
+
+	uint64_t CheckAudioEntity(uint64_t a1) {
+		uint64_t v1; // rdx
+		uint64_t v2; // rcx
+		uint64_t v3; // rdx
+		uint64_t result; // rax
+
+		v1 = *(uint64_t*)(a1 + 80);
+		v2 = 0;
+
+		if (v1) {
+			v3 = *(uint64_t*)(v1 + 72);
+		}
+		else {
+			v3 = 0;
+		}
+
+		if (v3 && (*(uint32_t*)(v3 + 92) & 0xFu) >= 2)
+			result = *(uint64_t*)v3;
+		else
+			result = 0;
+		if (result) {
+			if (*(uint8_t*)(result + 40) == 3)
+				v2 = result;
+			result = v2;
+		}
+
+		return result;
+	}
+
+	uint64_t MeltdownPatchHook(uint64_t Rcx, int Edx, uint32_t R8D) {
+		if (!IsValidPtr(Rcx) || !IsValidPtr(*(uint64_t*)(Rcx + 0x100))) {
+			LOG("Someone may have just tried to crash you");
+			return 0;
+		}
+
+		if (Edx == 2) {
+			if ((*(uint16_t*)(Rcx + 0x204) >> 8) == 0xFF && (*(uint16_t*)(Rcx + 0x204) & 0xFF) != 0xFF) {
+				LOG("Someone may have just tried to crash you");
+				return 0;
+			}
+		}
+		return OgMeltdownPatch(Rcx, Edx, R8D);
+	}
 }

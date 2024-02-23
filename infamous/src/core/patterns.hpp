@@ -212,5 +212,28 @@ namespace Patterns {
 		inline u64 g_HandleToPtr;
 
 		inline u64 g_SendRagdollEvent;
+		inline CWeaponInfoManager* g_WeaponInfoManager;
+
+		inline u64 g_HasGameBeenAltered;
+		inline u64 g_HasRosPrivilege;
+		inline u64 g_PostRawMessage;
+
+		inline u64 g_MeltdownPatch;
+
+		inline u64 g_GetChatProfanityStatus;
+		inline u64 g_CheckStringStatus;
+
+		inline u64 g_ApplyWeatherMeta;
+
+		inline u64 g_AllocateMemoryMessage;
+		inline u64 g_ConnMgrFreeMemory;
+		inline u64 g_RemoveMessageFromQueue;
+		inline u64 g_RemoveUnackedMessage;
+
+		inline u64 g_MessageBoxTermination;
+		inline u64 g_ReceiveBroadcastArray;
+
+		inline u64 g_UpdatePresenceAttributeInt;
+		inline u64 g_UpdatePresenceAttributeString;
 	}
 }

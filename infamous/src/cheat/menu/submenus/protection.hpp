@@ -38,6 +38,7 @@ namespace ProtectionMenuVars {
 		std::string m_Name;
 	};
 	struct Vars_ {
+		bool m_BlockJoin = false;
 
 		bool m_Godmode = true;
 		bool m_SuperJump = true;

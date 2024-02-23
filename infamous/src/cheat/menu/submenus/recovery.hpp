@@ -4,29 +4,29 @@
 #include "framework/options/button.hpp"
 #include "framework/options/toggle.hpp"
 #include "framework/options/submenu_option.hpp"
+#include "framework/options/scroll.hpp"
+#include "framework/options/break.hpp"
+#include "framework/options/number.hpp"
 #include "core/core.hpp"
-#include "rage/types/network_types.hpp"
-#include "rage/classes/rage/rlSessionInfo.hpp"
 
-class NetworkMenu {
+
+class RecoveryMenu {
 public:
 	void Run();
 	void Update();
 };
 
-static NetworkMenu* GetNetworkMenu() {
-	static NetworkMenu instance;
+static RecoveryMenu* GetRecoveryMenu() {
+	static RecoveryMenu instance;
 	return &instance;
 }
 
-namespace NetworkMenuVars {
+namespace RecoveryMenuVars {
 	struct Vars_ {
-		bool m_SpeedUp;
-		bool m_LogState;
-		bool m_DisableProfanityFilter;
-
-		bool m_JoinQueue = false;
-		Rage::rlSessionInfo m_SessionInfo;
+		int m_SelectedCharacter;
+		bool m_MillionsLoop;
+		bool m_MillionsLoopV2;
+		bool m_KLoop;
 	};
 
 	extern Vars_ m_Vars;

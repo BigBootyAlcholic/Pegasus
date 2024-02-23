@@ -8,6 +8,7 @@
 #include "rage/classes/network/RemoteGamerInfoMsg.hpp"
 #include "rage/classes/netsync/netSyncDataNode.hpp"
 #include "rage/classes/netsync/data_nodes.hpp"
+#include "rage/classes/base/netArrayHandlerBase.hpp"
 //:DDD
 
 class CHttpRequest;
@@ -44,8 +45,8 @@ namespace Hooks {
 	void FreezeEntityPosition(Rage::Invoker::NativeContext* Context);
 	void ReviveLocalPlayer(Rage::Invoker::NativeContext* Context);
 	//hooks
-	inline uint64_t(*OgScriptVmHook)(Rage::scrValue* Stack, uint64_t** Globals, Rage::scrProgram* Program, Rage::scrThreadContext* Context);
-	uint64_t ScriptVmHook(Rage::scrValue* Stack, uint64_t** Globals, Rage::scrProgram* Program, Rage::scrThreadContext* Context);
+	inline Rage::eThreadState(*OgScriptVmHook)(Rage::scrValue* Stack, Rage::scrValue** Globals, Rage::scrProgram* Program, Rage::scrThreadContext* Context);
+	Rage::eThreadState ScriptVmHook(Rage::scrValue* Stack, Rage::scrValue** Globals, Rage::scrProgram* Program, Rage::scrThreadContext* Context);
 
 	inline bool(*OgSendMetricHook)(Rage::rlMetric* metric, bool unk);
 	bool SendMetricHook(Rage::rlMetric* metric, bool unk);
@@ -190,6 +191,39 @@ namespace Hooks {
 
 	inline bool(*OgHandleMsgNewScriptHost)(uint64_t Rcx, uint64_t Rdx);
 	bool HandleMsgNewScriptHostHook(uint64_t Rcx, uint64_t Rdx);
+
+	inline bool(*OgHasRosPrivilege)(uint64_t* Rcx, int32_t Rdx);
+	bool HasRosPrivilegeHook(uint64_t* Rcx, int32_t Rdx);
+
+	inline bool(*OgHasGameBeenAltered)();
+	bool HasGameBeenAlteredHook();
+
+	inline bool(*OgPostRawMessage)(int, Rage::rlGamerHandle*, unsigned int, const char*, unsigned int);
+	bool PostRawMessageHook(int localGamerindex, Rage::rlGamerHandle* recipients, unsigned int numRecipients, const char* message, unsigned int ttlSeconds);
+
+	inline uint64_t(*OgMeltdownPatch)(uint64_t, int, uint32_t);
+	uint64_t MeltdownPatchHook(uint64_t Rcx, int Edx, uint32_t R8D);
+
+	inline int(*OgGetChatProfanityStatus)(uint64_t, uint64_t, uint64_t);
+	int GetChatProfanityStatusHook(uint64_t Rcx, uint64_t Rdx, uint64_t R8);
+
+	inline void(*OgApplyWeatherMeta)(uint64_t);
+	void ApplyWeatherMetaHook(uint64_t Meta);
+
+	inline void*(*OgAllocateMemoryMessage)(Rage::netConnection*, int);
+	void* AllocateMemoryMessageHook(Rage::netConnection* Rcx, int Rbx);
+
+	inline void(*OgMessageBoxTermination)(uint32_t, uint32_t);
+	void MessageBoxTerminationHook(uint32_t Ecx, uint32_t Edx);
+
+	inline bool(*OgReceiveBroadcastArray)(Rage::netArrayHandlerBase*, CNetGamePlayer*, Rage::datBitBuffer*, int, std::int16_t);
+	bool ReceiveBroadcastArrayHook(Rage::netArrayHandlerBase* netArray, CNetGamePlayer* fromPlayer, Rage::datBitBuffer* msgBuffer, int msgSize, std::int16_t msgCycle);
+
+	inline bool(*OgUpdatePresenceAttributeInt)(void*, int, char*, uint64_t);
+	bool UpdatePresenceAttributeIntHook(void* _This, int Index, char* Attr, uint64_t Value);
+
+	inline bool(*OgUpdatePresenceAttributeString)(void*, int, char*, char*);
+	bool UpdatePresenceAttributeStringHook(void* _This, int Index, char* Attr, char* Value);
 
 	//hooks variables
 	namespace Vars {
