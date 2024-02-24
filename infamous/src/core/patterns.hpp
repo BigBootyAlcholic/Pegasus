@@ -235,5 +235,24 @@ namespace Patterns {
 
 		inline u64 g_UpdatePresenceAttributeInt;
 		inline u64 g_UpdatePresenceAttributeString;
+
+		//:(
+		inline ScInfo* g_ScInfo;
+		inline ScGameInfo* g_ScGameInfo;
+
+		inline u64 g_ProcessMatchmakingResponse;
+		inline u64 g_StartMatchmakingFind;
+		inline u64 g_InvitePlayer;
+		inline Friends* g_Friends;
+
+		inline Rage::EntityPool* g_EntityPool;
+		inline Rage::VehicleEntityPool* g_VehiclePool;
+		inline Rage::GenericPool* g_PedPool;
+		inline Rage::GenericPool* g_ObjectPool;
+		inline Rage::GenericPool* g_PickupPool;
+		inline Rage::GenericPool* g_AttachmentPool;
+		inline Rage::GenericPool* g_NetworkEventQueuePool;
+		inline uint64_t* g_MainEntityPool;
+		inline u64 g_GetEntityHandleFromAddress;
 	}
 }

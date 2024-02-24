@@ -5,6 +5,7 @@
 #include "util/caller.hpp"
 #include "cheat/menu/submenus/network/network_players.hpp"
 #include "rage/engine.hpp"
+#include "cheat/menu/submenus/network/network_player_history.hpp"
 namespace Menu {
 	std::string T_IsModdingInvalidModel("is modding: Invalid Model");
 	std::string T_IsModdingSpoofedName("is modding: Spoofed Name");
@@ -78,6 +79,8 @@ namespace Menu {
 
 			Native::GetCurrentPedWeapon(Player.m_Ped, &Player.m_WeaponHash, false);
 			if (Player.m_InVehicle) Native::GetCurrentPedVehicleWeapon(Player.m_Ped, &Player.m_VehicleWeaponHash);
+
+			//NetworkRecentPlayersMenuVars::Save(Player.m_Name, Player.m_NetGamePlayer->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id);
 
 		}
 	}

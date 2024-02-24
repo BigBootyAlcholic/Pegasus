@@ -1,0 +1,609 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{431EA3C0-0EE0-3E0B-B234-8BABB688D260}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>libcurl_object</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libcurl_object.dir\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libcurl_object.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libcurl_object</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libcurl_object.dir\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libcurl_object.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libcurl_object</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">libcurl_object.dir\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">libcurl_object.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">libcurl_object</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">libcurl_object.dir\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">libcurl_object.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">libcurl_object</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CURL_HIDDEN_SYMBOLS;HAVE_CONFIG_H;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;BUILDING_LIBCURL;CURL_STATICLIB;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;CURL_EMBED_MANIFEST;_DEBUG;_WINDOWS;CURL_HIDDEN_SYMBOLS;HAVE_CONFIG_H;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;BUILDING_LIBCURL;CURL_STATICLIB;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CURL_HIDDEN_SYMBOLS;HAVE_CONFIG_H;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;BUILDING_LIBCURL;CURL_STATICLIB;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;CURL_EMBED_MANIFEST;_WINDOWS;NDEBUG;CURL_HIDDEN_SYMBOLS;HAVE_CONFIG_H;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;BUILDING_LIBCURL;CURL_STATICLIB;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CURL_HIDDEN_SYMBOLS;HAVE_CONFIG_H;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;BUILDING_LIBCURL;CURL_STATICLIB;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;CURL_EMBED_MANIFEST;_WINDOWS;NDEBUG;CURL_HIDDEN_SYMBOLS;HAVE_CONFIG_H;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;BUILDING_LIBCURL;CURL_STATICLIB;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CURL_HIDDEN_SYMBOLS;HAVE_CONFIG_H;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;BUILDING_LIBCURL;CURL_STATICLIB;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;CURL_EMBED_MANIFEST;_WINDOWS;NDEBUG;CURL_HIDDEN_SYMBOLS;HAVE_CONFIG_H;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;BUILDING_LIBCURL;CURL_STATICLIB;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..\include;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\..;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0/lib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0 -BC:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0 --check-stamp-file C:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0/lib/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.inc;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.inc.cmake;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.soname;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.soname.cmake;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_config.h.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0/lib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0 -BC:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0 --check-stamp-file C:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0/lib/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.inc;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.inc.cmake;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.soname;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.soname.cmake;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_config.h.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0/lib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0 -BC:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0 --check-stamp-file C:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0/lib/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.inc;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.inc.cmake;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.soname;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.soname.cmake;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_config.h.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0/lib/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0 -BC:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0 --check-stamp-file C:/Users/hanky.DESKTOP-AFRKBFD/source/repos/infamous/includes/CURL/curl-8.6.0/curl-8.6.0/lib/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.inc;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.inc.cmake;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.soname;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Makefile.soname.cmake;C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_config.h.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\altsvc.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\amigaos.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\arpa_telnet.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\asyn.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\bufq.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\bufref.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\c-hyper.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cf-h1-proxy.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cf-h2-proxy.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cf-haproxy.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cf-https-connect.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cf-socket.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cfilters.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\conncache.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\connect.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\content_encoding.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cookie.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_addrinfo.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_base64.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_ctype.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_des.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_endian.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_fnmatch.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_get_line.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_gethostname.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_gssapi.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_hmac.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_krb5.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_ldap.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_md4.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_md5.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_memory.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_memrchr.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_multibyte.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_ntlm_core.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_ntlm_wb.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_path.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_printf.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_range.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_rtmp.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_sasl.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_setup.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_setup_once.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_sha256.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_sspi.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_threads.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_trc.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curlx.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\dict.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\doh.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\dynbuf.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\dynhds.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\easy_lock.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\easyif.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\easyoptions.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\escape.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\file.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\fileinfo.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\fopen.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\formdata.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\ftp.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\ftplistparser.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\functypes.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\getinfo.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\gopher.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\hash.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\headers.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\hostip.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\hsts.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http1.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http2.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_aws_sigv4.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_chunks.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_digest.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_negotiate.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_ntlm.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_proxy.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\idn.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\if2ip.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\imap.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\inet_ntop.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\inet_pton.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\llist.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\macos.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\memdebug.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\mime.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\mqtt.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\multihandle.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\multiif.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\netrc.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\nonblock.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\noproxy.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\parsedate.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\pingpong.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\pop3.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\progress.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\psl.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\rand.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\rename.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\rtsp.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\select.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\sendf.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\setopt.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\setup-vms.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\share.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\sigpipe.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\slist.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\smb.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\smtp.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\sockaddr.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\socketpair.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\socks.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\speedcheck.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\splay.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\strcase.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\strdup.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\strerror.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\strtok.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\strtoofft.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\system_win32.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\telnet.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\tftp.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\timediff.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\timeval.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\transfer.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\url.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\urlapi-int.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\urldata.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\version_win32.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\warnless.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\ws.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\digest.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\ntlm.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\vauth.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\bearssl.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\gtls.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\hostcheck.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\keylog.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\mbedtls.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\mbedtls_threadlock.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\openssl.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\rustls.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\schannel.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\schannel_int.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\sectransp.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\vtls.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\vtls_int.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\wolfssl.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\x509asn1.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\curl_msh3.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\curl_ngtcp2.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\curl_osslq.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\curl_quiche.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\vquic.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\vquic_int.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\vquic-tls.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vssh\ssh.h" />
+    <ClInclude Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_config.h" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\altsvc.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\amigaos.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\asyn-ares.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\asyn-thread.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\base64.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\bufq.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\bufref.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\c-hyper.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cf-h1-proxy.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cf-h2-proxy.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cf-haproxy.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cf-https-connect.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cf-socket.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cfilters.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\conncache.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\connect.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\content_encoding.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\cookie.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_addrinfo.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_des.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_endian.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_fnmatch.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_get_line.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_gethostname.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_gssapi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_memrchr.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_multibyte.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_ntlm_core.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_ntlm_wb.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_path.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_range.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_rtmp.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_sasl.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_sspi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_threads.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\curl_trc.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\dict.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\doh.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\dynbuf.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\dynhds.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\easy.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\easygetopt.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\easyoptions.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\escape.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\file.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\fileinfo.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\fopen.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\formdata.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\ftp.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\ftplistparser.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\getenv.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\getinfo.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\gopher.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\hash.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\headers.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\hmac.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\hostasyn.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\hostip.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\hostip4.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\hostip6.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\hostsyn.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\hsts.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http1.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http2.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_aws_sigv4.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_chunks.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_digest.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_negotiate.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_ntlm.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\http_proxy.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\idn.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\if2ip.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\imap.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\inet_ntop.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\inet_pton.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\krb5.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\ldap.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\llist.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\macos.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\md4.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\md5.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\memdebug.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\mime.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\mprintf.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\mqtt.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\multi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\netrc.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\nonblock.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\noproxy.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\openldap.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\parsedate.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\pingpong.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\pop3.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\progress.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\psl.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\rand.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\rename.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\rtsp.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\select.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\sendf.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\setopt.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\sha256.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\share.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\slist.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\smb.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\smtp.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\socketpair.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\socks.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\socks_gssapi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\socks_sspi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\speedcheck.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\splay.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\strcase.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\strdup.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\strerror.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\strtok.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\strtoofft.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\system_win32.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\telnet.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\tftp.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\timediff.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\timeval.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\transfer.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\url.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\urlapi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\version.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\version_win32.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\warnless.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\ws.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\cleartext.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\cram.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\digest.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\digest_sspi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\gsasl.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\krb5_gssapi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\krb5_sspi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\ntlm.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\ntlm_sspi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\oauth2.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\spnego_gssapi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\spnego_sspi.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vauth\vauth.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\bearssl.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\gtls.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\hostcheck.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\keylog.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\mbedtls.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\mbedtls_threadlock.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\openssl.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\rustls.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\schannel.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\schannel_verify.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\sectransp.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\vtls.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\wolfssl.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vtls\x509asn1.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\curl_msh3.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\curl_ngtcp2.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\curl_osslq.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\curl_quiche.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\vquic.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vquic\vquic-tls.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vssh\libssh.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vssh\libssh2.c" />
+    <ClCompile Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\vssh\wolfssh.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\ZERO_CHECK.vcxproj">
+      <Project>{C21E737F-92D9-374F-A193-5D64E2B97096}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

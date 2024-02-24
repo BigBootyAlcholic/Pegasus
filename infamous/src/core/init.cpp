@@ -9,12 +9,15 @@
 #include "util/fiber.hpp"
 #include "cheat/util/shop_manager.hpp"
 #include "exceptions/exception.hpp"
+#include "util/config.hpp"
+#include "cheat/util/matchmaking_manager.hpp"
 namespace Core::Init {
 
 	/*main program thread*/
 	DWORD WINAPI Start(LPVOID handle) {
 		Core::Log::Load();
 		Exceptions::initExceptionHandler();
+		Utils::GetConfig()->Initialize();
 		LOG("Pegasus Started");
 
 		if (!(Core::g_GameWindow = FindWindowA(("grcWindow"), NULL))) {
@@ -34,7 +37,7 @@ namespace Core::Init {
 
 		Core::g_Running = true;
 
-		LOG_SUCCESS("Pegasus Running");
+		//LOG_SUCCESS("Pegasus Running");
 
 		MODULEINFO ModuleInfo;
 		GetModuleInformation(GetCurrentProcess(), GetModuleHandleA(0), &ModuleInfo, sizeof(ModuleInfo));
@@ -45,19 +48,19 @@ namespace Core::Init {
 		LOG("Game Base: %llx", Core::g_GameAddress);
 		LOG("Game Size: %llx", Core::g_GameSize);
 
-		//auto ScriptPatcherInstance = std::make_unique<Menu::ScriptPatcher>();
+		//LOG_SUCCESS("Created Script Patches");
 
-		LOG_SUCCESS("Created Script Patches");
-
+		auto ScriptPatcherInstance = std::make_unique<Menu::ScriptPatcher>();
 		GetCore()->Init();
 
+		auto MatchMakingManager = std::make_unique<Menu::MatchmakingManager>();
 
 		d3d::initialize();
 
-		LOG_SUCCESS("Custom Textures Loaded");
+	//	LOG_SUCCESS("Custom Textures Loaded");
 
 		auto g_NativeHooks = std::make_unique<Hooking::NativeHooks>();
-		LOG_SUCCESS("Created Script Hooks");
+		//LOG_SUCCESS("Created Script Hooks");
 
 		while (g_Running) {
 
@@ -66,7 +69,8 @@ namespace Core::Init {
 			}
 		}
 		g_NativeHooks.reset();
-	//	ScriptPatcherInstance.reset();
+		MatchMakingManager.reset();
+		ScriptPatcherInstance.reset();
 		Cleanup(handle);
 	}
 

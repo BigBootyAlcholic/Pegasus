@@ -47,12 +47,20 @@
 
 #include "core/log/log.hpp"
 
+
 #pragma comment(lib, "Winmm.lib")
+#pragma comment(lib, "wldap32.lib")
+#pragma comment(lib, "crypt32.lib")
 #pragma comment(lib, "Ws2_32.lib")
 #pragma warning(disable : 4244)
 
+#define CURL_STATICLIB
+#include "../../includes/CURL/curl.h"
+#pragma comment(lib, "../includes/CURL/libcurl_imp.lib")
 template<typename T, int N>
 constexpr int NUMOF(T(&)[N]) { return N; }
+
+
 
 template<typename T>
 inline bool IsValidPtr(T Ptr) {
@@ -822,3 +830,113 @@ struct WaterQuads
 
 
 inline bool g_ScriptVmRe = false;
+
+#pragma pack(push, 1)
+class ScInfo {
+public:
+	char m_ticket[208]; //0x0000
+	char pad_00D0[304]; //0x00D0
+	char m_session_ticket[88]; //0x0200
+	char pad_0258[40]; //0x0258
+	uint32_t m_nonce; //0x0280
+	char pad_0284[4]; //0x0284
+	uint32_t m_account_id; //0x0288
+	char pad_028C[16]; //0x028C
+	char m_profile_pic[128]; //0x029C
+	char pad_031C[32]; //0x031C
+	char m_country_code[4]; //0x033C
+	char pad_0340[31]; //0x0340
+	char m_email_address[96]; //0x035F
+	char pad_03BF[6]; //0x03BF
+	char m_language_subtag[8]; //0x03C5
+	char pad_03CD[2]; //0x03CD
+	char m_sc_name[20]; //0x03CF
+	char pad_03E3[533]; //0x03E3
+	char m_session_key[16]; //0x05F8
+	char pad_0608[2296]; //0x0608
+}; //Size: 0x0F00
+static_assert(sizeof(ScInfo) == 0xF00);
+#pragma pack(pop)
+class ScGame {
+public:
+	char pad_0000[64]; //0x0000
+	char* m_string; //0x0040
+	char pad_0048[256]; //0x0048
+};
+static_assert(sizeof(ScGame) == 0x148);
+class ScGameInfo {
+public:
+	virtual ~ScGameInfo() = default;
+	virtual ScGame* GetGame() = 0;
+	virtual void Unk0010() = 0;
+	virtual void Unk0018() = 0;
+	virtual int GetStringIndex(const char* StringId, u64 Unk, u32 GameId) = 0;
+	char pad_0008[12]; //0x0008
+	uint32_t m_id; //0x0014
+	char pad_0018[8]; //0x0018
+	ScGame m_games[10]; //0x0020
+	u64 GetGamesAddress() {
+		return (u64)this + offsetof(ScGameInfo, m_games);
+	}
+}; //Size: 0x0028
+static_assert(sizeof(ScGameInfo) == 0xCF0);
+
+inline std::unordered_map<uint64_t, bool> g_OnlineRockstarIds;
+inline std::vector<uint64_t> g_OnlineRockstarIdQueue;
+
+struct NetMsgIdentifier {
+	uint64_t m_RockstarID;
+	uint8_t m_Type;
+	char _0x0009[0xB];
+};
+
+
+struct Friends {
+	char _0x0000[128]; //0x0000
+	char m_Name[32]; //0x0080
+	char _0x00A0[24]; //0x00A0
+	uint64_t m_RockstarID; //0x00B8
+	char _0x00C0[4]; //0x00C0
+	int m_State; //0x00C4
+	char _0x00C8[312]; //0x00C8
+};
+
+namespace Rage {
+	struct GenericPool {
+		uint64_t m_Address;
+		uint64_t m_MaskArray;
+		uint32_t m_Count;
+		uint32_t m_Size;
+
+		inline uint64_t GetEntity(uint32_t Index) {
+			if (IsValidPtr(m_MaskArray) && ~(*(uint8_t*)(m_MaskArray + Index) >> 7) & 1) {
+				return (m_Address + (Index * m_Size));
+			}
+
+			return 0;
+		}
+	};
+
+	struct VehicleEntityPool {
+		uint64_t* m_Address;
+		uint32_t m_Size;
+		char _0x000C[0x4];
+		uint32_t m_Count;
+
+		inline uint64_t GetEntity(uint32_t Index) {
+			if (!m_Address) return 0;
+			return m_Address[Index];
+		}
+	};
+
+	struct EntityPool {
+		char _0x0000[0x10];
+		uint32_t m_Num1;
+		char _0x000C[0xC];
+		uint32_t m_Num2;
+
+		inline bool IsFull() {
+			return m_Num1 - (m_Num2 & 0x3FFFFFFF) <= 256;
+		}
+	};
+}

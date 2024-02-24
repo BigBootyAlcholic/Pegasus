@@ -786,7 +786,7 @@ namespace Framework {
 			CPed* LocalPed = NetGamePlayer->m_player_info->m_ped;
 			uintptr_t DrawManager = *(uint64_t*)(Patterns::Vars::g_UiDrawManager);
 
-			Math::Vector3<float> pos = { PosX - 0.56f, PosY * 7.5f, 0.0f };
+			Math::Vector3<float> pos = { PosX - 0.56f, PosY * 10.5f, 0.0f };
 
 			if (DrawManager) {
 

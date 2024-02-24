@@ -150,7 +150,10 @@
   <ItemGroup>
     <ClInclude Include="src\cheat\menu\main.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\network.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\network\network_browser.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\network\network_friends.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\network\network_players.hpp" />
+    <ClInclude Include="src\cheat\menu\submenus\network\network_player_history.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\network\network_spoofing.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\network\network_tunables.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\network\players\network_players_selected.hpp" />
@@ -164,15 +167,21 @@
     <ClInclude Include="src\cheat\menu\submenus\vehicle.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\weapon.hpp" />
     <ClInclude Include="src\cheat\menu\submenus\world.hpp" />
+    <ClInclude Include="src\cheat\shv\shv.hpp" />
     <ClInclude Include="src\cheat\util\control_manager.hpp" />
     <ClInclude Include="src\cheat\util\event.hpp" />
     <ClInclude Include="src\cheat\util\global.hpp" />
     <ClInclude Include="src\cheat\util\input.hpp" />
+    <ClInclude Include="src\cheat\util\matchmaking_manager.hpp" />
     <ClInclude Include="src\cheat\util\network_manager.hpp" />
     <ClInclude Include="src\cheat\util\notify.hpp" />
     <ClInclude Include="src\cheat\util\packet.hpp" />
     <ClInclude Include="src\cheat\util\panels.hpp" />
     <ClInclude Include="src\cheat\util\player_manager.hpp" />
+    <ClInclude Include="src\cheat\util\pools\object_pool.hpp" />
+    <ClInclude Include="src\cheat\util\pools\ped_pool.hpp" />
+    <ClInclude Include="src\cheat\util\pools\pool_manager.hpp" />
+    <ClInclude Include="src\cheat\util\pools\vehicle_pool.hpp" />
     <ClInclude Include="src\cheat\util\script\script_data.hpp" />
     <ClInclude Include="src\cheat\util\script\script_patch.hpp" />
     <ClInclude Include="src\cheat\util\script\script_patcher_service.hpp" />
@@ -270,6 +279,7 @@
     <ClInclude Include="src\rage\classes\rage\rlGamerInfoBase.hpp" />
     <ClInclude Include="src\rage\classes\rage\rlMetric.hpp" />
     <ClInclude Include="src\rage\classes\rage\rlSessionInfo.hpp" />
+    <ClInclude Include="src\rage\classes\rage\rlTaskStatus.hpp" />
     <ClInclude Include="src\rage\classes\rage\scrValue.hpp" />
     <ClInclude Include="src\rage\classes\rage\vector.hpp" />
     <ClInclude Include="src\rage\classes\script\CGameScriptObjInfo.hpp" />
@@ -328,19 +338,26 @@
     <ClInclude Include="src\security\util\winapi.hpp" />
     <ClInclude Include="src\stdafx.hpp" />
     <ClInclude Include="src\util\caller.hpp" />
+    <ClInclude Include="src\util\config.hpp" />
+    <ClInclude Include="src\util\curl_wrapper.hpp" />
     <ClInclude Include="src\util\fiber.hpp" />
     <ClInclude Include="src\util\fiber_pool.hpp" />
     <ClInclude Include="src\util\hooking\hooking.hpp" />
     <ClInclude Include="src\util\hooking\minhook.h" />
+    <ClInclude Include="src\util\json.hpp" />
     <ClInclude Include="src\util\math.hpp" />
     <ClInclude Include="src\util\memory\memory.hpp" />
     <ClInclude Include="src\util\memory\pattern.hpp" />
     <ClInclude Include="src\util\util.hpp" />
+    <ClInclude Include="src\util\va.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cheat\menu\main.cpp" />
     <ClCompile Include="src\cheat\menu\submenus\network.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\network\network_browser.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\network\network_friends.cpp" />
     <ClCompile Include="src\cheat\menu\submenus\network\network_players.cpp" />
+    <ClCompile Include="src\cheat\menu\submenus\network\network_player_history.cpp" />
     <ClCompile Include="src\cheat\menu\submenus\network\network_spoofing.cpp" />
     <ClCompile Include="src\cheat\menu\submenus\network\network_tunables.cpp" />
     <ClCompile Include="src\cheat\menu\submenus\network\players\network_players_selected.cpp" />
@@ -356,11 +373,16 @@
     <ClCompile Include="src\cheat\menu\submenus\world.cpp" />
     <ClCompile Include="src\cheat\util\control_manager.cpp" />
     <ClCompile Include="src\cheat\util\input.cpp" />
+    <ClCompile Include="src\cheat\util\matchmaking_manager.cpp" />
     <ClCompile Include="src\cheat\util\network_manager.cpp" />
     <ClCompile Include="src\cheat\util\notify.cpp" />
     <ClCompile Include="src\cheat\util\packet.cpp" />
     <ClCompile Include="src\cheat\util\panels.cpp" />
     <ClCompile Include="src\cheat\util\player_manager.cpp" />
+    <ClCompile Include="src\cheat\util\pools\object_pool.cpp" />
+    <ClCompile Include="src\cheat\util\pools\ped_pool.cpp" />
+    <ClCompile Include="src\cheat\util\pools\pool_manager.cpp" />
+    <ClCompile Include="src\cheat\util\pools\vehicle_pool.cpp" />
     <ClCompile Include="src\cheat\util\script\script_patch.cpp" />
     <ClCompile Include="src\cheat\util\script\script_patcher_service.cpp" />
     <ClCompile Include="src\cheat\util\stats.cpp" />
@@ -379,9 +401,11 @@
     <ClCompile Include="src\core\hooks\Crash.cpp" />
     <ClCompile Include="src\core\hooks\GameEngine.cpp" />
     <ClCompile Include="src\core\hooks\GetChatProfanityStatus.cpp" />
+    <ClCompile Include="src\core\hooks\GetProcAddress.cpp" />
     <ClCompile Include="src\core\hooks\HandleMessageNewScriptHost.cpp" />
     <ClCompile Include="src\core\hooks\HandleNetMessage.cpp" />
     <ClCompile Include="src\core\hooks\HandleNetworkEvent.cpp" />
+    <ClCompile Include="src\core\hooks\HandleNetworkGameEvent.cpp" />
     <ClCompile Include="src\core\hooks\HandlePickupProcessing.cpp" />
     <ClCompile Include="src\core\hooks\HandlePresenceEvent.cpp" />
     <ClCompile Include="src\core\hooks\HasGameBeenAltered.cpp" />
@@ -396,11 +420,13 @@
     <ClCompile Include="src\core\hooks\ProcessCloneCreate.cpp" />
     <ClCompile Include="src\core\hooks\ProcessCloneRemove.cpp" />
     <ClCompile Include="src\core\hooks\ProcessCloneSync.cpp" />
+    <ClCompile Include="src\core\hooks\ProcessMatchmakingResponse.cpp" />
     <ClCompile Include="src\core\hooks\ReceiveBroadcastArray.cpp" />
     <ClCompile Include="src\core\hooks\Script.cpp" />
     <ClCompile Include="src\core\hooks\ScriptVM.cpp" />
     <ClCompile Include="src\core\hooks\SendChatMessage.cpp" />
     <ClCompile Include="src\core\hooks\SendCloneSync.cpp" />
+    <ClCompile Include="src\core\hooks\StartMatchmakingFind.cpp" />
     <ClCompile Include="src\core\hooks\SyncEntityMatrix.cpp" />
     <ClCompile Include="src\core\hooks\SyncPedOrientation.cpp" />
     <ClCompile Include="src\core\hooks\Task.cpp" />
@@ -425,11 +451,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\util\config.cpp" />
     <ClCompile Include="src\util\fiber.cpp" />
     <ClCompile Include="src\util\fiber_pool.cpp" />
     <ClCompile Include="src\util\hooking\hooking.cpp" />
     <ClCompile Include="src\util\memory\memory.cpp" />
     <ClCompile Include="src\util\memory\pattern.cpp" />
+    <ClCompile Include="src\util\va.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -73,6 +73,9 @@ void ProtectionMenu::Run() {
 		core->addOption(Framework::Options::SubmenuOption("Reports")
 			.setTarget("protection_reports"));
 
+		core->addOption(Framework::Options::SubmenuOption("Presence")
+			.setTarget("protection_presence"));
+
 		core->addOption(Framework::Options::SubmenuOption("Syncs")
 			.setTarget("entity-events"));
 
@@ -82,11 +85,53 @@ void ProtectionMenu::Run() {
 		core->addOption(Framework::Options::ToggleOption("Block Join")
 			.addToggle(&m_Vars.m_BlockJoin));
 
+		core->addOption(Framework::Options::ToggleOption("Block Entity Spam")
+			.addToggle(&m_Vars.m_EntitySpam));
+
+		core->addOption(Framework::Options::ToggleOption("Block Clones")
+			.addToggle(&m_Vars.m_Clones));
+
 		core->addOption(Framework::Options::ToggleOption("Block All Script Events")
 			.addToggle(&m_Vars.m_BlockAllScriptEvents));
-
 	});
 
+	Framework::addSubmenu("Presence", "protection_presence", [=](Framework::Options::Core* core) {
+		core->addOption(Framework::Options::scrollOption<const char*, std::size_t>("Text Message")
+			.addScroll(&m_Vars.text_message)
+			.setPosition(&m_Vars.text_message_id));
+
+		core->addOption(Framework::Options::scrollOption<const char*, std::size_t>("Crew Message")
+			.addScroll(&m_Vars.crew_message)
+			.setPosition(&m_Vars.crew_message_id));
+
+		core->addOption(Framework::Options::scrollOption<const char*, std::size_t>("Game Invite")
+			.addScroll(&m_Vars.game_invite)
+			.setPosition(&m_Vars.game_invite_id));
+
+		core->addOption(Framework::Options::scrollOption<const char*, std::size_t>("Bounty")
+			.addScroll(&m_Vars.bounty)
+			.setPosition(&m_Vars.bounty_id));
+
+		core->addOption(Framework::Options::scrollOption<const char*, std::size_t>("Voice Session Invite")
+			.addScroll(&m_Vars.voice_invite)
+			.setPosition(&m_Vars.voice_invite_id));
+
+		core->addOption(Framework::Options::scrollOption<const char*, std::size_t>("Game Server Rewards")
+			.addScroll(&m_Vars.game_award)
+			.setPosition(&m_Vars.game_award_id));
+
+		core->addOption(Framework::Options::scrollOption<const char*, std::size_t>("Admin Invite")
+			.addScroll(&m_Vars.admin_invite)
+			.setPosition(&m_Vars.admin_invite_id));
+
+		core->addOption(Framework::Options::scrollOption<const char*, std::size_t>("Admin Message")
+			.addScroll(&m_Vars.rockstar_message)
+			.setPosition(&m_Vars.rockstar_message_id));
+
+		core->addOption(Framework::Options::scrollOption<const char*, std::size_t>("Stat Update")
+			.addScroll(&m_Vars.stat_update)
+			.setPosition(&m_Vars.stat_update_id));
+	});
 
 	Framework::addSubmenu("Flags", "protection-flags", [=](Framework::Options::Core* core) {
 		core->addOption(Framework::Options::ToggleOption("Godmode")

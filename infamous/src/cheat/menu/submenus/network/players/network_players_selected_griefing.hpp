@@ -32,16 +32,17 @@ namespace NetworkPlayersSelectedGriefingMenuVars {
 		int m_Explode;
 		int m_CEO;
 
-		int m_AttackerType;
-		bool m_AttackerInvincibility;
-		bool m_AttackerInvisibility;
-		int m_AttackerCount;
+
+		bool m_FakeMoneyDrop;
+		std::unordered_map<int, int> m_Sounds;
 
 		bool g_explosion_loop{ false };
 		bool g_visible{ false };
 		float g_camera_shake{ 1.0f };
 		int g_radius{ 100 };
 		bool g_audible{ true };
+
+
 
 	};
 

@@ -2,6 +2,7 @@
 #include "patterns.hpp"
 #include "util/memory/pattern.hpp"
 #include "util/memory/memory.hpp"
+#include "cheat/util/pools/pool_manager.hpp"
 namespace Patterns {
 
 	u64 GetAddressInMemory(std::string ptr) {
@@ -245,6 +246,7 @@ namespace Patterns {
 
 		Batch.Add({ ("SNT"), ("48 8B C8 FF 52 30 84 C0 74 05 48") }, [](Memory::Ptr ptr) {
 			Vars::g_SetNetworkedThread = ptr.Add(8).As<decltype(Vars::g_SetNetworkedThread)>();
+			Memory::Nop(Vars::g_SetNetworkedThread, 2);
 		}, out);
 
 		Batch.Add({ ("GHL"), ("4C 03 05 ? ? ? ? EB 09 49 83 C2 04 EB 8B") }, [](Memory::Ptr ptr) {
@@ -515,6 +517,26 @@ namespace Patterns {
 			Vars::g_ReceiveBroadcastArray = ptr.As<u64>();
 		}, out);
 
+		Batch.Add({ ("SCI"), ("48 8B D3 48 8D 4C 24 ? 48 69 D2") }, [](Memory::Ptr ptr) {
+			Vars::g_ScInfo = ptr.Sub(7).FromInstruction().As<ScInfo*>();
+		}, out);
+
+		Batch.Add({ ("PMR"), ("48 89 5C 24 08 48 89 74 24 10 57 48 81 EC F0 00 00 00 41 83") }, [](Memory::Ptr ptr) {
+			Vars::g_ProcessMatchmakingResponse = ptr.As<u64>();
+		}, out);
+
+		Batch.Add({ ("SMF"), ("E8 ? ? ? ? 84 C0 0F 84 F6 FE FF FF") }, [](Memory::Ptr ptr) {
+			Vars::g_StartMatchmakingFind = ptr.Call().As<u64>();
+		}, out);
+
+		Batch.Add({ ("FL"), ("48 03 0D ? ? ? ? E8 ? ? ? ? 48 8D 4C 24 ? E8 ? ? ? ? 84 C0 74 10 48 8D 4C 24 ? 44 8B") }, [](Memory::Ptr ptr) {
+			Vars::g_Friends = ptr.FromInstruction().As<Friends*>();
+		}, out);
+
+		Batch.Add({ ("GEH"), ("48 F7 F9 49 8B 48 08 48 63 D0 C1 E0 08 0F B6 1C 11 03 D8") }, [](Memory::Ptr ptr) {
+			Vars::g_GetEntityHandleFromAddress = ptr.Sub(104).As<u64>();
+		}, out);
+
 		//patches :DDDDDDD
 
 		//should be patched by the game already
@@ -590,20 +612,26 @@ namespace Patterns {
 		Memory::Batch ScBatch;
 
 
-		Batch.Add({ ("PD"), ("48 8D 05 ? ? ? ? 48 8B F9 48 89 01 48 83 C1 08 E8 ? ? ? ? 33 C0") }, [](Memory::Ptr ptr) {
+		ScBatch.Add({ ("PD"), ("48 8D 05 ? ? ? ? 48 8B F9 48 89 01 48 83 C1 08 E8 ? ? ? ? 33 C0") }, [](Memory::Ptr ptr) {
 			auto Tmp = ptr.FromInstruction().As<u64*>();
 			Vars::g_UpdatePresenceAttributeInt = Tmp[1];
 			Vars::g_UpdatePresenceAttributeString = Tmp[3];
 		}, out);
 
-		Batch.Add({ ("RAP"), ("75 70 EB 23") }, [](Memory::Ptr ptr) {
+		ScBatch.Add({ ("SCGI"), ("48 8D 05 ? ? ? ? 48 03 F8 44 8B 47 14 48 8D 57 20 E8 ? ? ? ? 85") }, [](Memory::Ptr ptr) {
+			Vars::g_ScGameInfo = ptr.FromInstruction().As<ScGameInfo*>();
+		}, out);
+
+		ScBatch.Add({ ("RAP"), ("75 70 EB 23") }, [](Memory::Ptr ptr) {
 			Memory::Nop(ptr.As<u64>(), 2);
 			Memory::WriteVector(ptr.Add(0x72).As<u64>(), { 0xB0, 0x01 });
 		}, out);
 
 		auto ScRegion = Memory::Module("socialclub.dll");
-		Batch.Run(ScRegion);
+		ScBatch.Run(ScRegion);
 
+
+		Menu::Pools::GetPoolManager()->Initialize();
 	}
 
 	void Patterns::AntiCheat() {
@@ -640,7 +668,16 @@ namespace Patterns {
 	}
 
 	void Patterns::InGame() {
-		
+		Memory::Batch Batch;
+		bool out = true;
+
+
+		Batch.Add({ ("INVPLY"), ("48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC 30 49 8B D9 41 8B F8 48 8B F2 48 8B E9 4D 85 C9 75 16 48 8D 15 ? ? ? ? 48") }, [](Memory::Ptr ptr) {
+			Vars::g_InvitePlayer = ptr.As<u64>();
+		}, out);
+
+		auto Region = Memory::Module("GTA5.exe");
+		Batch.Run(Region);
 	}
 
 	void Patterns::Init() {
@@ -656,7 +693,7 @@ namespace Patterns {
 		//when game has finished loading scan for in game patterns
 		InGame();
 
-		LOG_SUCCESS("patterns init");
+		//LOG_SUCCESS("patterns init");
 	}
 
 }

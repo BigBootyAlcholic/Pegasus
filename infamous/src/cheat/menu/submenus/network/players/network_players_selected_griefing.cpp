@@ -18,6 +18,56 @@ using namespace NetworkPlayersSelectedGriefingMenuVars;
 namespace NetworkPlayersSelectedGriefingMenuVars {
 	Vars_ m_Vars;
 
+	void FakeMoneyPlayer(Menu::PlayerVars Player) {
+		Native::CreateAmbientPickup(0x1E9A99F8, Player.m_Coords.m_X, Player.m_Coords.m_Y, Player.m_Coords.m_Z, 0, 0, 0x113FD533, 0, 1);
+	}
+
+	void RamPlayer(Menu::PlayerVars Player) {
+		Menu::GetControlManager()->RequestModel(0x1FD824AF, [=](uint32_t Model) {
+			Vehicle Vehicle = Native::CreateVehicle(Model, Player.m_Coords.m_X, Player.m_Coords.m_Y, Player.m_Coords.m_Z, 0.f, true, false, 1);
+			if (Native::DoesEntityExist(Vehicle)) {
+				Native::SetVehicleOutOfControl(Vehicle, true, true);
+				Native::SetEntityHeading(Vehicle, Player.m_Heading - 90.f);
+				Native::SetVehicleForwardSpeed(Vehicle, 100.f);
+				Native::SetModelAsNoLongerNeeded(Model);
+			}
+			});
+	}
+
+	void CagePlayer(Menu::PlayerVars Player) {
+		Menu::GetControlManager()->RequestModel(0x466EB7B8, [=](uint32_t Model) {
+			Math::Vector3<float> MinDimensions;
+			Math::Vector3<float> MaxDimensions;
+
+			Native::GetModelDimensions(Model, &MinDimensions, &MaxDimensions);
+			Math::Vector3<float> Diameter = MaxDimensions - MinDimensions;
+
+			Math::Vector3<float> SpawnCoords = Native::GetOffsetFromEntityInWorldCoords(Player.m_Ped, -1.5f, -1.5f, 0.f);
+			Native::GetGroundZFor3DCoord(SpawnCoords.m_X, SpawnCoords.m_Y, SpawnCoords.m_Z, &SpawnCoords.m_Z, false);
+
+			Object FirstObject = Native::CreateObject(Model, SpawnCoords.m_X, SpawnCoords.m_Y, SpawnCoords.m_Z, true, true, false);
+			if (Native::DoesEntityExist(FirstObject)) {
+				float Rotation = Player.m_Heading;
+				Native::SetEntityRotation(FirstObject, 0.f, 0.f, Rotation, 2, false);
+				Native::FreezeEntityPosition(FirstObject, true);
+
+				Object NextObject = FirstObject;
+				for (int i = 0; i < 3; i++) {
+					Rotation += 90.f;
+
+					Math::Vector3<float> Next = Native::GetOffsetFromEntityInWorldCoords(NextObject, Diameter.m_X, 0.f, 0.f);
+					NextObject = Native::CreateObject(Model, Next.m_X, Next.m_Y, Next.m_Z, true, true, false);
+					if (Native::DoesEntityExist(NextObject)) {
+						Native::SetEntityRotation(NextObject, 0.f, 0.f, Rotation, 2, false);
+						Native::FreezeEntityPosition(NextObject, true);
+					}
+				}
+			}
+			});
+	}
+
+		
+
 	void TriggerScriptEvent(int event_group, int64_t* args, int arg_count, int player_bits) {
 		Caller::Call<void>(Patterns::Vars::g_TriggerScriptEvent, event_group, args, arg_count, player_bits);
 	}
@@ -180,6 +230,203 @@ namespace NetworkPlayersSelectedGriefingMenuVars {
    "Vehicle Bullet", "Gas Tank", "Bird Crap", "Snow Ball"
 	};
 
+	void ClonePlayer(Menu::PlayerVars Player) {
+		Ped Cloned = Native::ClonePed(Player.m_Ped, Player.m_Heading, true, true);
+		if (Player.m_CloneType == 1 && Native::DoesEntityExist(Cloned)) {
+			Native::GiveWeaponToPed(Cloned, 0x7FD62962, 9999, true, true);
+			Native::TaskCombatPed(Cloned, Player.m_Ped, 0, 16);
+			Native::SetPedKeepTask(Cloned, true);
+		}
+	}
+	struct tsounds { const char* name; std::pair<const char*, const char*> hash; };
+	std::vector<tsounds> g_Sounds = {
+		{ "Alien", { "SPAWN", "BARRY_01_SOUNDSET" } },
+		{ "Whistle", { "Franklin_Whistle_For_Chop", "SPEECH_RELATED_SOUNDS" } },
+		{ "EMP", { "EMP_Vehicle_Hum", "DLC_HEIST_BIOLAB_DELIVER_EMP_SOUNDS" } },
+		{ "Helicopter", { "Helicopter_Wind", "BASEJUMPS_SOUNDS" } },
+		{ "Scan", { "SCAN", "EPSILONISM_04_SOUNDSET" } },
+		{ "Leafblower", { "GARDENING_LEAFBLOWER_ANIM_TRIGGERED", "" } },
+		{ "Unlock", { "Bar_Unlock_And_Raise", "DLC_IND_ROLLERCOASTER_SOUNDS" } },
+		{ "Brakes", { "MOD_SHOP_BRAKES_ONESHOT", "" } },
+
+		{ "Carwash", { "SPRAY", "CARWASH_SOUNDS" } },
+		{ "Carwash 2", { "SPRAY_CAR", "CARWASH_SOUNDS" } },
+		{ "Carwash 3", { "DRYER", "CARWASH_SOUNDS" } },
+
+		{ "Keycard", { "Keycard_Success", "DLC_HEISTS_BIOLAB_FINALE_SOUNDS" } },
+		{ "Keycard 2", { "Keycard_Fail", "DLC_HEISTS_BIOLAB_FINALE_SOUNDS" } },
+
+		{ "Ringtone", { "Remote_Ring", "Phone_SoundSet_Michael" } },
+		{ "Ringtone 2", { "PED_PHONE_DIAL_01", "" } },
+
+		{ "Beep", { "Crate_Beeps", "MP_CRATE_DROP_SOUNDS" } },
+		{ "Beep 2", { "Crate_Collect", "MP_CRATE_DROP_SOUNDS" } },
+		{ "Endless Beep", { "CONTINUAL_BEEP", "EPSILONISM_04_SOUNDSET" } },
+		{ "Short Beep", { "IDLE_BEEP", "EPSILONISM_04_SOUNDSET" } },
+		{ "Long Beep", { "Beep_Green", "DLC_HEIST_HACKING_SNAKE_SOUNDS" } },
+		{ "Solo Fast Beep", { "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS" } },
+		{ "Confirm Beep", { "CONFIRM_BEEP", "HUD_MINI_GAME_SOUNDSET" } },
+
+		{ "5s Timer", { "5_Second_Timer", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS" } },
+		{ "5s Timer 2", { "MP_5_SECOND_TIMER", "HUD_FRONTEND_DEFAULT_SOUNDSET" } },
+		{ "Idle Timer", { "MP_IDLE_TIMER", "HUD_FRONTEND_DEFAULT_SOUNDSET" } },
+		{ "Out of Bounds Timer", { "Out_Of_Bounds_Timer", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS" } },
+		{ "Timer Stop", { "TIMER_STOP", "HUD_MINI_GAME_SOUNDSET" } },
+
+		{ "Pickup", { "PICK_UP", "HUD_FRONTEND_DEFAULT_SOUNDSET" } },
+		{ "Pickup 2", { "PICK_UP_SOUND", "HUD_FRONTEND_CUSTOM_SOUNDSET" } },
+		{ "Pickup 3", { "PICKUP_WEAPON_SMOKEGRENADE", "HUD_FRONTEND_WEAPONS_PICKUPS_SOUNDSET" } },
+
+		{ "Silence", { "3_2_1_NON_RACE", "HUD_MINI_GAME_SOUNDSET" } },
+		{ "Silence 2", { "Airhorn", "DLC_TG_Running_Back_Sounds" } },
+
+		{ "Screen Flash", { "ScreenFlash", "MissionFailedSounds" } },
+		{ "Screen Flash 2", { "ScreenFlash", "WastedSounds" } },
+
+		{ "Click", { "Click", "DLC_HEIST_HACKING_SNAKE_SOUNDS" } },
+		{ "Click Fail", { "Click_Fail", "WEB_NAVIGATION_SOUNDS_PHONE" } },
+		{ "Click Special", { "Click_Special", "WEB_NAVIGATION_SOUNDS_PHONE" } },
+
+		{ "Nav Arrow Ahead", { "Nav_Arrow_Ahead", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS" } },
+		{ "Nav Arrow Left", { "Nav_Arrow_Left", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS" } },
+		{ "Nav Arrow Right", { "Nav_Arrow_Right", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS" } },
+
+		{ "Checkpoint Missed", { "CHECKPOINT_MISSED", "HUD_MINI_GAME_SOUNDSET" } },
+		{ "Checkpoint Ahead", { "CHECKPOINT_AHEAD", "HUD_MINI_GAME_SOUNDSET" } },
+		{ "Checkpoint Perfect", { "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET" } },
+		{ "Checkpoint Under Bridge", { "CHECKPOINT_UNDER_THE_BRIDGE", "HUD_MINI_GAME_SOUNDSET" } },
+
+		{ "Menu Select", { "Apt_Style_Purchase", "DLC_APT_Apartment_SoundSet" } },
+		{ "Menu Select 2", { "SELECT", "HUD_MINI_GAME_SOUNDSET" } },
+
+		{ "Hack Failed", { "Hack_Failed", "DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS" } },
+		{ "Hack Success", { "Hack_Success", "DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS" } },
+
+		{ "Pin Bad", { "Pin_Bad", "DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS" } },
+		{ "Pin Button", { "PIN_BUTTON", "ATM_SOUNDS" } },
+		{ "Pin Good", { "Pin_Good", "DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS" } },
+
+		{ "Tennis Match Point", { "TENNIS_MATCH_POINT", "HUD_AWARDS" } },
+		{ "Tennis Point Won", { "TENNIS_POINT_WON", "HUD_AWARDS" } },
+
+		{ "Start Squelch", { "Start_Squelch", "CB_RADIO_SFX" } },
+		{ "End Squelch", { "End_Squelch", "CB_RADIO_SFX" } },
+
+		{ "Garage Door Open", { "RAMP_UP", "TRUCK_RAMP_DOWN" } },
+		{ "1st Person Transition", { "1st_Person_Transition", "PLAYER_SWITCH_CUSTOM_SOUNDSET" } },
+		{ "Emphasis", { "3_2_1", "HUD_MINI_GAME_SOUNDSET" } },
+		{ "5s Warning", { "5_SEC_WARNING", "HUD_MINI_GAME_SOUNDSET" } },
+		{ "Notification", { "ATM_WINDOW", "HUD_FRONTEND_DEFAULT_SOUNDSET" } },
+		{ "Challenge Unlocked", { "CHALLENGE_UNLOCKED", "HUD_AWARDS" } },
+		{ "Mission Success", { "BASE_JUMP_PASSED", "HUD_AWARDS" } },
+		{ "Wasted", { "Bed", "WastedSounds" } },
+		{ "Bus Pickup", { "Bus_Schedule_Pickup", "DLC_PRISON_BREAK_HEIST_SOUNDS" } },
+		{ "Taken Photo", { "Camera_Shoot", "Phone_Soundset_Franklin" } },
+		{ "Switching Characters", { "CHARACTER_SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET" } },
+		{ "Close Window", { "CLOSE_WINDOW", "LESTER1A_SOUNDS" } },
+		{ "Crash", { "Crash", "DLC_HEIST_HACKING_SNAKE_SOUNDS" } },
+		{ "Delete", { "DELETE", "HUD_DEATHMATCH_SOUNDSET" } },
+		{ "Truck Rev", { "DiggerRevOneShot", "BulldozerDefault" } },
+		{ "Drill Pin Break", { "Drill_Pin_Break", "DLC_HEIST_FLEECA_SOUNDSET" } },
+		{ "Edit", { "EDIT", "HUD_DEATHMATCH_SOUNDSET" } },
+		{ "Error", { "ERROR", "HUD_AMMO_SHOP_SOUNDSET" } },
+		{ "Failure", { "Failure", "DLC_HEIST_HACKING_SNAKE_SOUNDS" } },
+		{ "Falling Crates", { "Falling_Crates", "EXILE_1" } },
+		{ "Car Breakdown", { "FAMILY_1_CAR_BREAKDOWN", "FAMILY1_BOAT" } },
+		{ "First Place", { "FIRST_PLACE", "HUD_MINI_GAME_SOUNDSET" } },
+		{ "Flight School Passed", { "FLIGHT_SCHOOL_LESSON_PASSED", "HUD_AWARDS" } },
+		{ "Focus In", { "FocusIn", "HintCamSounds" } },
+		{ "Go", { "GO", "HUD_MINI_GAME_SOUNDSET" } },
+		{ "Goal", { "Goal", "DLC_HEIST_HACKING_SNAKE_SOUNDS" } },
+		{ "Grab Parachute", { "Grab_Parachute", "BASEJUMPS_SOUNDS" } },
+		{ "Hang Up", { "Hang_Up", "Phone_SoundSet_Michael" } },
+		{ "Highlight Error", { "Highlight_Error", "DLC_HEIST_PLANNING_BOARD_SOUNDS" } },
+		{ "Hit", { "Hit", "RESPAWN_SOUNDSET" } },
+		{ "Hit 2", { "Hit_1", "LONG_PLAYER_SWITCH_SOUNDS" } },
+		{ "Hit Out", { "Hit_Out", "PLAYER_SWITCH_CUSTOM_SOUNDSET" } },
+		{ "Cash Counter Complete", { "LOCAL_PLYR_CASH_COUNTER_COMPLETE", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS" } },
+		{ "Lose Match", { "LOOSE_MATCH", "HUD_MINI_GAME_SOUNDSET" } },
+		{ "Loser", { "LOSER", "HUD_AWARDS" } },
+		{ "Menu Accept", { "Menu_Accept", "Phone_SoundSet_Default" } },
+		{ "Mission Pass Notify", { "Mission_Pass_Notify", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS" } },
+		{ "Award", { "MP_AWARD", "HUD_FRONTEND_DEFAULT_SOUNDSET" } },
+		{ "Idle Kick", { "MP_IDLE_KICK", "HUD_FRONTEND_DEFAULT_SOUNDSET" } },
+		{ "Rank Up", { "MP_RANK_UP", "HUD_FRONTEND_DEFAULT_SOUNDSET" } },
+		{ "Wave Complete", { "MP_WAVE_COMPLETE", "HUD_FRONTEND_DEFAULT_SOUNDSET" } },
+		{ "On", { "ON", "NOIR_FILTER_SOUNDS" } },
+		{ "On Call Player Join", { "On_Call_Player_Join", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS" } },
+		{ "Open Window", { "OPEN_WINDOW", "LESTER1A_SOUNDS" } },
+		{ "Other Text", { "OTHER_TEXT", "HUD_AWARDS" } },
+		{ "Player Collect", { "Player_Collect", "DLC_PILOT_MP_HUD_SOUNDS" } },
+		{ "Power Down", { "Power_Down", "DLC_HEIST_HACKING_SNAKE_SOUNDS" } },
+		{ "Pre Screen Stinger", { "Pre_Screen_Stinger", "DLC_HEISTS_FAILED_SCREEN_SOUNDS" } },
+		{ "Property Purchase", { "PROPERTY_PURCHASE", "HUD_AWARDS" } },
+		{ "Money Lost", { "PS2A_MONEY_LOST", "PALETO_SCORE_2A_BANK_SS" } },
+		{ "Put Away", { "Put_Away", "Phone_SoundSet_Michael" } },
+		{ "Round Ending", { "ROUND_ENDING_STINGER_CUSTOM", "CELEBRATION_SOUNDSET" } },
+		{ "Heartbeat", { "Short_Transition_In", "PLAYER_SWITCH_CUSTOM_SOUNDSET" } },
+		{ "Bomb Loading", { "STUN_COLLECT", "MINUTE_MAN_01_SOUNDSET" } },
+	};
+
+	void StartSoundPlayer(Menu::PlayerVars Player, std::pair<const char*, const char*> Sound, bool Add, int OptionID) {
+		/*if (!Native::HasSoundFinished(m_Vars.m_Sounds[OptionID])) {
+			Native::StopSound(m_Vars.m_Sounds[OptionID]);
+			return;
+		}*/
+
+		int SoundID = Native::GetSoundId();
+		Native::PlaySoundFromCoord(SoundID, Sound.first, Player.m_Coords.m_X, Player.m_Coords.m_Y, Player.m_Coords.m_Z, Sound.second, true, 0, true);
+
+		if (Add) {
+			m_Vars.m_Sounds[OptionID] = SoundID;
+		}
+	}
+
+	void SpawnAttackers(Menu::PlayerVars Player) {
+		std::vector<Entity> Entities;
+
+		if (Player.m_AttackerType == 1) { // Military Buzzards
+			Menu::GetControlManager()->SimpleRequestModel(0x2f03547b); // buzzard
+			Menu::GetControlManager()->SimpleRequestModel(0x613E626C); // mw
+
+			for (int i = 0; i < Player.m_AttackerCount; i++) {
+				Math::Vector3_<float> SpawnCoords = { Player.m_Coords.m_X + Native::GetRandomFloatInRange(0.f, 100.f), Player.m_Coords.m_Y + Native::GetRandomFloatInRange(0.f, 100.f), Player.m_Coords.m_Z + 100.f + (i * 10.f) };
+
+				Vehicle Vehicle = Native::CreateVehicle(0x2f03547b, SpawnCoords.m_X, SpawnCoords.m_Y, SpawnCoords.m_Z, Player.m_Heading, true, true, 0);
+				if (Native::DoesEntityExist(Vehicle)) {
+					Native::ApplyForceToEntity(Vehicle, 1, 0.f, 0.f, 50.f, 0.f, 0.f, 0.f, 0, true, true, true, false, true);
+
+					Entities.push_back(Vehicle);
+
+					Ped Ped = Native::CreateRandomPedAsDriver(Vehicle, true);
+					if (Native::DoesEntityExist(Ped)) {
+						Entities.push_back(Ped);
+
+						Native::TaskHeliChase(Ped, Player.m_Ped, 0.f, 0.f, 50.f);
+						Native::TaskCombatPed(Ped, Player.m_Ped, 0, 16);
+						Native::SetPedKeepTask(Ped, true);
+
+						for (int j = 0; j < Native::GetVehicleMaxNumberOfPassengers(Vehicle); j++) {
+							Ped = Native::CreatePedInsideVehicle(Vehicle, 29, 0x613E626C, i, true, false);
+							if (Native::DoesEntityExist(Ped)) {
+								Entities.push_back(Ped);
+
+								Native::SetPedCombatAbility(Ped, 100);
+								Native::GiveDelayedWeaponToPed(Ped, 0x394f415c, 9999, true);
+								Native::TaskCombatPed(Ped, Player.m_Ped, 0, 16);
+								Native::SetPedKeepTask(Ped, true);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		for (auto& E : Entities) {
+			Native::SetEntityInvincible(E, Player.m_AttackerInvincibility);
+			Native::SetEntityVisible(E, !Player.m_AttackerInvisibility, true);
+		}
+	}
 }
 
 void NetworkPlayersSelectedGriefingMenu::Run() {
@@ -189,6 +436,12 @@ void NetworkPlayersSelectedGriefingMenu::Run() {
 
 		core->addOption(Framework::Options::SubmenuOption("Explosions")
 			.setTarget("selected_explosions"));
+
+		core->addOption(Framework::Options::SubmenuOption("Sounds")
+			.setTarget("selected_sounds"));
+
+		core->addOption(Framework::Options::SubmenuOption("Attackers")
+			.setTarget("selected_attackers"));
 
 		core->addOption(Framework::Options::ToggleOption("Freeze")
 			.addToggle(&m_Vars.m_DisableTasks));
@@ -213,6 +466,74 @@ void NetworkPlayersSelectedGriefingMenu::Run() {
 
 		core->addOption(Framework::Options::ToggleOption("Rain Rockets")
 			.addToggle(&m_Vars.m_RainRockets));
+
+		core->addOption(Framework::Options::ToggleOption("Fake Money Drop")
+			.addToggle(&m_Vars.m_FakeMoneyDrop));
+
+		core->addOption(Framework::Options::ButtonOption("Glitch Physics")
+			.addClick([] {
+				Menu::GetPlayerManager()->Foreach([](Menu::PlayerVars& Player) {
+					Native::RemoveAllPedWeapons(Player.m_Ped, true);
+					});
+				}));
+
+		core->addOption(Framework::Options::ButtonOption("Remove Weapons")
+			.addClick([] {
+				Menu::GetPlayerManager()->Foreach([](Menu::PlayerVars& Player) {
+					Native::RemoveAllPedWeapons(Player.m_Ped, true);
+					});
+				}));
+
+		core->addOption(Framework::Options::ButtonOption("Ragdoll")
+			.addClick([] {
+				Menu::GetPlayerManager()->Foreach([](Menu::PlayerVars& Player) {
+					RagdollPlayer(Player);
+					});
+				}));
+
+
+		core->addOption(Framework::Options::ButtonOption("Taze")
+			.addClick([] {
+				Menu::GetPlayerManager()->Foreach([](Menu::PlayerVars& Player) {
+					TazePlayer(Player);
+					});
+				}));
+
+		core->addOption(Framework::Options::ButtonOption("Give Wanted Level")
+			.addClick([] {
+				Menu::GetPlayerManager()->Foreach([](Menu::PlayerVars& Player) {
+					GiveWantedLevel(Player, 5);
+				});
+			}));
+
+		core->addOption(Framework::Options::ButtonOption("Kick From Vehicle")
+			.addClick([] {
+				Menu::GetPlayerManager()->Foreach([](Menu::PlayerVars& Player) {
+					KickFromVehiclePlayer(Player);
+					});
+			}));
+
+		core->addOption(Framework::Options::ButtonOption("Ram")
+			.addClick([] {
+				Menu::GetPlayerManager()->Foreach([](Menu::PlayerVars& Player) {
+					RamPlayer(Player);
+				});
+			}));
+
+
+		core->addOption(Framework::Options::ButtonOption("Cage")
+			.addClick([] {
+				Menu::GetPlayerManager()->Foreach([](Menu::PlayerVars& Player) {
+					CagePlayer(Player);
+				});
+			}));
+
+		core->addOption(Framework::Options::ButtonOption("Clone")
+			.addClick([] {
+				Menu::GetPlayerManager()->Foreach([](Menu::PlayerVars& Player) {
+					ClonePlayer(Player);
+					});
+			}));
 
 		core->addOption(Framework::Options::ButtonOption("Black Screen")
 			.addClick([] {
@@ -251,6 +572,47 @@ void NetworkPlayersSelectedGriefingMenu::Run() {
 
 	});
 
+
+	Framework::addPlayerSubmenu(&NetworkPlayersMenuVars::m_Vars.m_SelectedPlayer, "selected_sounds", [=](Framework::Options::PCore* core) {
+		g_EnablePlayerInfo = true;
+		core->addOption(Framework::Options::ButtonOption("Stop All")
+			.addClick([] {
+				for (auto& Sound : m_Vars.m_Sounds) {
+					Native::StopSound(Sound.second);
+				}
+				}));
+
+		core->addOption(Framework::Options::BreakOption("Sounds"));
+
+		for (int i = 0; i < g_Sounds.size(); i++) {
+			auto Arr = g_Sounds[i];
+
+			core->addOption(Framework::Options::ButtonOption(Arr.name)
+				.addClick([=] {
+
+					Menu::GetPlayerManager()->Foreach([=](Menu::PlayerVars& Player) {
+						StartSoundPlayer(Player, Arr.hash, true, i);
+						});
+					
+				}));
+		}
+	});
+	
+	Framework::addPlayerSubmenu(&NetworkPlayersMenuVars::m_Vars.m_SelectedPlayer, "selected_attackers", [=](Framework::Options::PCore* core) {
+		g_EnablePlayerInfo = true;
+		core->addOption(Framework::Options::ToggleOption("Invincibility")
+			.addToggle(&Menu::GetSelectedPlayer().m_AttackerInvincibility));
+
+		core->addOption(Framework::Options::ToggleOption("Invisibility")
+			.addToggle(&Menu::GetSelectedPlayer().m_AttackerInvisibility));
+
+		core->addOption(Framework::Options::NumberOption<int>("Camera Shake")
+			.addNumber(&Menu::GetSelectedPlayer().m_AttackerCount)
+			.addMin(1).addMax(100).addStep(1));
+
+		core->addOption(Framework::Options::ButtonOption(("Spawn Attackers"))
+			.addClick([] { SpawnAttackers(Menu::GetSelectedPlayer()); }));
+	});
 
 	Framework::addPlayerSubmenu(&NetworkPlayersMenuVars::m_Vars.m_SelectedPlayer, "selected_explosions", [=](Framework::Options::PCore* core) {
 		g_EnablePlayerInfo = true;
@@ -317,6 +679,12 @@ void NetworkPlayersSelectedGriefingMenu::Update() {
 		if (Player.m_Ragdoll || m_Vars.m_Ragdoll) {
 			Menu::Timers::RunTimedFunction(&Player.m_RagdollTimer, 1000, [=] {
 				RagdollPlayer(Player);
+				});
+		}
+
+		if (Player.m_FakeMoneyDrop || m_Vars.m_FakeMoneyDrop) {
+			Menu::Timers::RunTimedFunction(&Player.m_FakeMoneyDropTimer, 500, [=] {
+				FakeMoneyPlayer(Player);
 				});
 		}
 

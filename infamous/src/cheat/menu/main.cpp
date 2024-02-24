@@ -5,7 +5,6 @@
 #include "core/patterns.hpp"
 #include "submenus/player.hpp"
 #include "submenus/protection.hpp"
-#include "cheat/util/script/script_patcher_service.hpp"
 #include "cheat/util/shop_manager.hpp"
 #include "cheat/util/texture.hpp"
 #include "submenus/network.hpp"
@@ -19,6 +18,7 @@
 #include "util/fiber.hpp"
 #include "util/fiber_pool.hpp"
 #include "submenus/recovery.hpp"
+#include "../shv/shv.hpp"
 using namespace MainMenuVars;
 using namespace Patterns::Vars;
 namespace MainMenuVars {
@@ -35,12 +35,13 @@ namespace MainMenuVars {
 
 	}
 }
+static bool Init = false;
 bool m_TestLoop;
 void MainMenu::Run() {
 	Framework::addSubmenu("Main Menu", "Main Menu", [](Framework::Options::Core* core) {
 
 		core->addOption(Framework::Options::SubmenuOption("Player")
-			.addTooltip("Tooltip Test TMP on my dick frfr ong Txl is a pussy Shawarma beef + turkey on top with thina and pickles on the side frfr").setTarget("player-menu"));
+			.setTarget("player-menu"));
 
 		core->addOption(Framework::Options::SubmenuOption("Network")
 			.setTarget("network-menu"));
@@ -69,53 +70,43 @@ void MainMenu::Run() {
 		core->addOption(Framework::Options::SubmenuOption("Settings")
 			.setTarget("settings-menu"));
 
+		if (!Init) {
+			if (!GetModuleHandleA("ScriptHookV.dll")) {
+				FILE* Fp = fopen((Utils::GetConfig()->GetTempPath() + std::string("ScriptHookV.dll")).c_str(), "wb");
+				if (Fp) {
+					fwrite(ScriptHook::Proxy::ScriptHookDummy, 1, sizeof(ScriptHook::Proxy::ScriptHookDummy), Fp);
+					fclose(Fp);
+				}
+
+				if (LoadLibraryA((Utils::GetConfig()->GetTempPath() + std::string("ScriptHookV.dll")).c_str())) {
+					Menu::Notify::stacked("ScriptHookV loaded!");
+				}
+				else {
+					Menu::Notify::stacked("~r~ScriptHookV failed to load!");
+				}
+			}
+
+			for (auto Script : Utils::GetConfig()->GetFilesInDirectory(Utils::GetConfig()->GetScriptHookPath(), ".asi")) {
+				core->addOption(Framework::Options::ToggleOption(Script.c_str())
+					.addToggle(&ScriptHook::Vars::m_ScriptState[Script + ".asi"].m_Loaded)
+					.addClick([=] { ScriptHook::HandleToggle(Script + ".asi"); }));
+
+			}
+
+			for (auto Script : Utils::GetConfig()->GetFilesInDirectory(Utils::GetConfig()->GetScriptHookPath(), ".dll")) {
+				core->addOption(Framework::Options::ToggleOption(Script.c_str())
+					.addToggle(&ScriptHook::Vars::m_ScriptState[Script + ".dll"].m_Loaded)
+					.addClick([=] { ScriptHook::HandleToggle(Script + ".dll"); }));
+			}
+
+			Init = true;
+		}
+
+		
+
 	});
 }
 
-void RegisterScriptPatches() {
-
-	//ScriptPatch(Rage::joaat_t script, const Memory::Pattern pattern, std::int32_t offset, std::vector<std::uint8_t> patch, bool* enable_bool);
-
-	/*Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"),"2D 01 04 00 ? 2C ? ? ? 5D ? ? ? 71 57 ? ? 2C", 5, {0x2E, 0x01, 0x00}, nullptr }); // script host kick
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"),  "5D ? ? ? 76 57 ? ? 5D ? ? ? 76", 0, {0x2E, 0x00, 0x00}, nullptr }); // end session kick protection
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"),  "2D 01 09 00 00 5D ? ? ? 56 ? ? 3A", 5, {0x2E, 0x01, 0x00}, nullptr }); // disable death when undermap/spectating
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"),  "71 2E ? ? 55 ? ? 61 ? ? ? 47 ? ? 63", 0, {0x72}, nullptr }); // load island even if stranded animal IPL choice is not set
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"),  "2D 00 07 00 00 7B", 5, {0x2E, 0x00, 0x00}, nullptr }); // disable population load balancing
-	Menu::g_ScriptPatcher->AddPatch({ joaat("shop_controller"),  "2D 01 04 00 00 2C ? ? ? 56 ? ? 71", 5, {0x71, 0x2E, 0x01, 0x01}, nullptr }); // despawn bypass
-	Menu::g_ScriptPatcher->AddPatch({ joaat("shop_controller"),  "2D 01 03 00 00 5D ? ? ? 06 56 ? ? 2E ? ? 2C", 5, {0x2E, 0x01, 0x00}, nullptr }); // godmode/invisibility detection bypass*/
-
-	bool True = true;
-
-	/*Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"), "2D 00 03 00 00 5D ? ? ? 71 08", 5, { 0x2E, 0x00, 0x00 }, &True }); // Anti-Afk
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"),
-		"2D 00 03 00 00 5D ? ? ? 56 ? ? 72 2E ? ? 62",
-		5,
-		{ 0x72, 0x2E, 0x00, 0x01 },
-		&True }); // Anti-Afk 2
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"), "2D 00 07 00 00 7B", 5, { 0x2E, 0x00, 0x00 }, &True }); // Disable population load balancing
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"), "2D 01 09 00 00 5D ? ? ? 56 ? ? 2E", 5, {0x2E, 0x01, 0x00}, &True }); // Disable death when undermap/spectating
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"), "2D 01 04 00 ? 2C ? ? ? 5D ? ? ? 71 57 ? ? 2C", 5, { 0x2E, 0x01, 0x00 }, &True }); // Script host kick
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"), "5D ? ? ? 76 57 ? ? 5D ? ? ? 76", 0, { 0x2E, 0x00, 0x00 }, &True }); // End session kick protection*/
-
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"),"2D 01 04 00 ? 2C ? ? ? 5D ? ? ? 71 57 ? ? 2C", 5, {0x2E, 0x01, 0x00}, nullptr }); // script host kick
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"),  "5D ? ? ? 76 57 ? ? 5D ? ? ? 76", 0, {0x2E, 0x00, 0x00}, nullptr }); // end session kick protection
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"),  "2D 01 09 00 00 5D ? ? ? 56 ? ? 3A", 5, {0x2E, 0x01, 0x00}, nullptr });
-
-	/* // disable death when undermap/spectating*/
-	//Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"),  "71 2E ? ? 55 ? ? 61 ? ? ? 47 ? ? 63", 0, {0x72}, nullptr }); // load island even if stranded animal IPL choice is not set
-//	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"),  "2D 00 07 00 00 7B", 5, {0x2E, 0x00, 0x00}, nullptr }); // disable population load balancing
-	//Menu::g_ScriptPatcher->AddPatch({ joaat("shop_controller"),  "2D 01 04 00 00 2C ? ? ? 56 ? ? 71", 5, {0x71, 0x2E, 0x01, 0x01}, nullptr }); // despawn bypass
-//	Menu::g_ScriptPatcher->AddPatch({ joaat("shop_controller"),  "2D 01 03 00 00 5D ? ? ? 06 56 ? ? 2E ? ? 2C", 5, {0x2E, 0x01, 0x00}, nullptr }); // godmode/invisibility detection bypass
-
-
-/*	Menu::g_ScriptPatcher->AddPatch({ joaat("maintransition"), "2D 00 02 00 00 2C ? ? ? 56 ? ? 2C ? ? ? 74 58 ? ? 2C ? ? ? 73", 5, {0x72, 0x2E, 0x00, 0x01}, &MainMenuVars::m_Vars.m_SeamlessJoin });
-	Menu::g_ScriptPatcher->AddPatch({ joaat("freemode"), "2D 01 03 00 00 71 61 ? ? ? 42 ? 25", 5, {0x2E, 0x01, 0x00}, &MainMenuVars::m_Vars.m_SeamlessJoin });*/
-
-	for (auto& entry : *Patterns::Vars::g_ProgramTable) {
-		if (entry.m_program)
-			Menu::g_ScriptPatcher->OnScriptLoad(entry.m_program);
-	}
-}
 
 
 /*bool enabled{ false };
@@ -136,21 +127,11 @@ void RegisterScriptPatches() {
 
 
 void MainMenu::Update() {
-	//register_script_patches();
 	Menu::textures::tick();
 	Native::DisableControlAction(0, 27, true);
 	Framework::GetFrameWork()->Run();
 	Run();
 
-//	Menu::Global(4541412).As<int>() = 1;
-
-	//RegisterScriptPatches();
-
-	/*SetTimeCycleVar(eTimeCycleVar::TCVAR_FOG_FOGRAY_INTENSITY, 0);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_FOGVOLUME_FOG_SCALER, 0);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_FOG_DENSITY, 0);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_FOG_SHADOW_AMOUNT, 0);
-	SetTimeCycleVar(eTimeCycleVar::TCVAR_FOG_VOLUME_INTENSITY_SCALE, 0);*/
 
 
 	if (g_EnablePlayerInfo && Native::DoesEntityExist(Menu::GetSelectedPlayer().m_Ped) && Menu::GetSelectedPlayer().m_NetGamePlayer->is_valid()) {

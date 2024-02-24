@@ -129,7 +129,7 @@ namespace Menu {
 		int m_Explode;
 		int m_CEO;
 		int m_SendToID;
-		int m_AttackerType;
+		int m_AttackerType = 1;
 		int m_AttackerCount = 1;
 		int m_ExplosionType;
 		int m_ExplosionVisual;

@@ -8,6 +8,9 @@
 namespace Menu::Network {
 	bool ForceScriptHost(Rage::joaat_t Script);
 	void PreventStealing();
+	int GetLauncherIndexFromType(Rage::joaat_t scriptHash);
+	void StartLauncherScript(int scriptId);
+
 	namespace Vars {
 		inline bool m_PreventStealing;
 		inline bool m_ForcedScriptHost;

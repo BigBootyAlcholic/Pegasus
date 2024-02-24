@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\x64\Release\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\hanky.DESKTOP-AFRKBFD\source\repos\infamous\includes\CURL\curl-8.6.0\curl-8.6.0\lib\Release\libcurl.dll</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

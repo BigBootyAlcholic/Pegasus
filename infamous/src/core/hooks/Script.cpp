@@ -6,6 +6,7 @@
 #include "cheat/menu/submenus/network.hpp"
 #include "rage/classes/enums/enums.hpp"
 #include "rage/engine.hpp"
+#include "cheat/menu/submenus/network/network_tunables.hpp"
 namespace Hooks {
 	void SetWarningMessageWithHeader(Rage::Invoker::NativeContext* src) {
 		if (auto entry_line = src->GetArgument<const char*>(1); !strcmp(entry_line, "CTALERT_F_2")) {
@@ -25,6 +26,12 @@ namespace Hooks {
 		}
 		else {
 			Context->SetReturn(0, Native::NetworkSessionHost(Context->GetArgument<int>(0), Context->GetArgument<int>(1), Context->GetArgument<bool>(2)));
+		}
+	}
+
+	void ReturnTrue(Rage::Invoker::NativeContext* Context) {
+		if (NetworkTunablesMenuVars::m_Vars.m_BypassCasinoRegionLock) {
+			Context->SetReturn(0, TRUE);
 		}
 	}
 

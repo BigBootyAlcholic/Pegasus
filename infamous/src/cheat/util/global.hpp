@@ -32,6 +32,53 @@ namespace Menu {
 	};
 
 
+	class ScriptLocalStack {
+	public:
+		explicit ScriptLocalStack(Rage::scrThread* thread, std::size_t index);
+		explicit ScriptLocalStack(PVOID stack, std::size_t index);
+
+		ScriptLocalStack At(std::ptrdiff_t index);
+		ScriptLocalStack At(std::ptrdiff_t index, std::size_t size);
+
+		template<typename T>
+		std::enable_if_t<std::is_pointer_v<T>, T> As() {
+			return static_cast<T>(Get());
+		}
+
+		template<typename T>
+		std::enable_if_t<std::is_lvalue_reference_v<T>, T> As() {
+			return *static_cast<std::add_pointer_t<std::remove_reference_t<T>>>(Get());
+		}
+
+	private:
+		void* Get();
+		std::size_t m_index;
+		PVOID m_stack;
+	};
+
+	inline ScriptLocalStack::ScriptLocalStack(Rage::scrThread* thread, std::size_t index) :
+		m_index(index),
+		m_stack(thread->m_stack)
+	{
+	}
+	inline ScriptLocalStack::ScriptLocalStack(PVOID stack, std::size_t index) :
+		m_index(index),
+		m_stack(stack)
+	{
+	}
+
+	inline ScriptLocalStack ScriptLocalStack::At(std::ptrdiff_t index) {
+		return ScriptLocalStack(m_stack, m_index + index);
+	}
+
+	inline ScriptLocalStack ScriptLocalStack::At(std::ptrdiff_t index, std::size_t size) {
+		return ScriptLocalStack(m_stack, m_index + 1 + (index * size));
+	}
+
+	inline void* ScriptLocalStack::Get() {
+		return reinterpret_cast<uintptr_t*>((uintptr_t)m_stack + (m_index * sizeof(uintptr_t)));
+	}
+
 	class ScriptLocal {
 	private:
 		int m_Index;
@@ -40,6 +87,7 @@ namespace Menu {
 	public:
 		ScriptLocal(uint64_t Storage, int Index)
 			: m_Storage(Storage), m_Index(Index) {}
+
 
 		ScriptLocal At(int Index) { m_Index += Index; return *this; }
 		ScriptLocal At(int Index, int Size) { return At(1 + (Index * Size)); }

@@ -27,6 +27,19 @@ namespace NetworkMenuVars {
 
 		bool m_JoinQueue = false;
 		Rage::rlSessionInfo m_SessionInfo;
+
+		bool m_RejoinDesyncedSessions;
+		bool m_NotifyDesyncKicks;
+
+		bool m_ToggleSessionType;
+		int m_SessionType = 0;
+		std::string m_GsType;
+
+		bool m_OpenExtraSlot;
+
+		bool m_InviteOnly = true;
+		bool m_FriendOnly = true;
+		bool m_CrewOnly = true;
 	};
 
 	extern Vars_ m_Vars;

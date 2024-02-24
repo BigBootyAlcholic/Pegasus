@@ -5,6 +5,9 @@
 #include "core/hooks.hpp"
 #include "util/fiber_pool.hpp"
 #include "cheat/util/global.hpp"
+#include "rage/classes/network/Network.hpp"
+#include "util/curl_wrapper.hpp"
+#include "cheat/util/notify.hpp"
 namespace Engine {
 	CNetGamePlayer*	GetNetworkGamePlayer(u32 Player) {
 		return Caller::Call<CNetGamePlayer*>(Patterns::Vars::g_GetNetworkGamePlayer, Player);
@@ -12,6 +15,11 @@ namespace Engine {
 	uint64_t GetEntityAddress(::Entity Entity) {
 		return Caller::Call<uint64_t>(Patterns::Vars::g_GetEntityAddress, Entity);
 	}
+
+	Entity GetEntityHandleFromAddress(uint64_t Address) {
+		return Caller::Call<Entity>(Patterns::Vars::g_GetEntityHandleFromAddress, Address, 0);
+	}
+
 	bool ChangeNetworkObjectOwner(int32_t Index, CNetGamePlayer* Owner) {
 		u64 NetworkObjectMgrInterface = *(u64*)(Patterns::Vars::g_NetworkObjectMgr);
 		if (NetworkObjectMgrInterface == NULL)
@@ -73,6 +81,31 @@ namespace Engine {
 		}
 		return;
 	}
+
+	std::string gsTypeToString(int gstype) {
+		switch (gstype) {
+		case 0: {
+			return "Invite-Only";
+		} break;
+		case 1: {
+			return "Friends-Only";
+		} break;
+		case 2: {
+			return "Crew-Only";
+		} break;
+		case 3: {
+			return "Crew";
+		} break;
+		case 4: {
+			return "Solo";
+		} break;
+		case 5: {
+			return "Public";
+		} break;
+		}
+		return "Offline";
+	}
+
 	
 	void HandleRotationValuesFromOrder(Math::Matrix* Matrix, Math::Vector3_<float>* Rotation, int Order) {
 		Caller::Call<int>(Patterns::Vars::g_HandleRotationValuesFromOrder, Matrix, Rotation, Order);
@@ -158,5 +191,78 @@ namespace Engine {
 				}
 			}
 		});
+	}
+	
+	namespace Api {
+		nlohmann::json Request(nlohmann::json body, std::string endpoint) {
+			std::string ticket = (*Patterns::Vars::g_ScInfo).m_ticket;
+			CurlWrapper curl{};
+			std::string jsonBody{ body.dump() };
+			std::string authorizationHeader{ "Authorization: SCAUTH val=\"" + ticket + "\"" };
+			std::vector<std::string> headers{
+				"X-Requested-With: XMLHttpRequest",
+				"Content-Type: application/json; charset=utf-8",
+				authorizationHeader
+			};
+			std::string response{ curl.Post(endpoint, jsonBody, headers) };
+			if (response != "bad_res") {
+				return nlohmann::json::parse(response);
+			}
+			return {};
+		}
+		bool IsOnline(u64 rid) {
+			if (nlohmann::json json{ Request({ { "RockstarId", std::to_string(rid) } }, "https://scui.rockstargames.com/api/friend/getprofile") }; !json.is_null()) {
+				for (auto& acc : json["Accounts"]) {
+					if (auto& r_acc = acc["RockstarAccount"]; !r_acc.is_null()) {
+						if (rid == r_acc["RockstarId"].get<u64>()) {
+							return r_acc["IsOnline"].get<bool>();
+						}
+					}
+				}
+			}
+			return false;
+		}
+		u64 NameToRid(std::string name) {
+			std::string endpoint = "https://scui.rockstargames.com/api/friend/accountsearch";
+			nlohmann::json body = { { "searchNickname", name } };
+			nlohmann::json json = Request(body, endpoint);
+			if (!json.is_null()) {
+				if (name.size() <= 20) {
+					int numAccs = json["Total"].get<int>();
+					if (numAccs > 0) {
+						return json["Accounts"][0]["RockstarId"].get<u64>();
+					}
+					else {
+						Menu::Notify::stacked(std::format("Cant Find {}", name).c_str());
+					}
+				}
+				else {
+					Menu::Notify::stacked("The character count cannot exceed 20. Please shorten the value.");
+				}
+			}
+			return 0;
+		}
+		std::string RidToName(u64 rid) {
+			if (nlohmann::json json{ Request({ { "RockstarId", std::to_string(rid) } }, "https://scui.rockstargames.com/api/friend/getprofile") }; !json.is_null()) {
+				for (auto& acc : json["Accounts"]) {
+					if (auto& r_acc = acc["RockstarAccount"]; !r_acc.is_null()) {
+						if (rid == r_acc["RockstarId"].get<u64>()) {
+							return r_acc["Name"].get<std::string>();
+						}
+					}
+				}
+			}
+			return {};
+		}
+	}
+
+	void InvitePlayer(uint64_t rid) {
+		NetMsgIdentifier identifier;
+		memset(&identifier, 0, sizeof(identifier));
+
+		identifier.m_RockstarID = rid;
+		identifier.m_Type = 3;
+
+		Caller::Call<void>(Patterns::Vars::g_InvitePlayer, Patterns::Vars::g_NetworkBaseConfig, &identifier, 1, "Invite", "join me daddy", 0);
 	}
 }

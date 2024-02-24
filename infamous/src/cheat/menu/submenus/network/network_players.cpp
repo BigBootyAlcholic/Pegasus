@@ -91,6 +91,8 @@ void NetworkPlayersMenu::Run() {
 
 void NetworkPlayersMenu::Update() {
 	Run();
-	GetNetworkPlayersSelectedMenu()->Update();
+	if (Native::NetworkIsSessionStarted()) {
+		GetNetworkPlayersSelectedMenu()->Update();
+	}
 
 }

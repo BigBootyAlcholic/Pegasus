@@ -237,8 +237,10 @@ namespace Hooks {
 			if (!InitFlag) {
 				InitFlag = true;
 				Utils::GetFiberManager()->Initialize();
+				Utils::GetScriptHookFiberManager()->Initialize();
 				Utils::GetFiberPool()->Initialize();
 				Menu::textures::initialize();
+
 
 				Utils::GetFiberManager()->Add("MMU", [] {
 					Menu::GetPlayerManager()->Update();
@@ -255,6 +257,7 @@ namespace Hooks {
 			}
 			if (Core::g_Running) {
 				Utils::GetFiberManager()->Update();
+				Utils::GetScriptHookFiberManager()->Update();
 			}
 		}
 
@@ -758,18 +761,16 @@ namespace Hooks {
 		
 		}
 		else {
-			bool PatchOne = false;
-			if (!PatchOne) {
-				//PatchScriptItem(Program, Context, Joaat("shop_controller"), "2D 01 04 00 00 2C ? ? ? 56 ? ? 71", 5, { 0x71, 0x2E, 0x01, 0x01 });
-			//	PatchScriptItem(Program, Context, Joaat("freemode"),"2D 01 04 00 ? 2C ? ? ? 5D ? ? ? 71 57 ? ? 2C", 5, { 0x2E, 0x01, 0x00 });
-				//PatchScriptItem(Program, Context, Joaat("freemode"),  "5D ? ? ? 76 57 ? ? 5D ? ? ? 76", 0, { 0x2E, 0x00, 0x00 });
-				//PatchScriptItem(Program, Context, Joaat("freemode"),  "2D 01 09 00 00 5D ? ? ? 56 ? ? 3A", 5, { 0x2E, 0x01, 0x00 });
-				//PatchScriptItem(Program, Context, Joaat("freemode"),  "71 2E ? ? 55 ? ? 61 ? ? ? 47 ? ? 63", 0, { 0x72 });
-				//PatchScriptItem(Program, Context, Joaat("freemode"),  "2D 00 07 00 00 7B", 5, { 0x2E, 0x00, 0x00 });
-				//PatchScriptItem(Program, Context, Joaat("shop_controller"),  "2D 01 03 00 00 5D ? ? ? 06 56 ? ? 2E ? ? 2C", 5, { 0x2E, 0x01, 0x00 });
-				PatchOne = true;
-			}
-			return OgScriptVmHook(Stack, Globals, Program, Context);
+			std::uint8_t** OriginalByteCode = Program->m_code_blocks;
+
+			if (auto ByteCode = Menu::g_ScriptPatcher->GetScriptBytecode(Program->m_name_hash))
+				Program->m_code_blocks = ByteCode;
+
+			auto ret =  OgScriptVmHook(Stack, Globals, Program, Context);
+
+			Program->m_code_blocks = OriginalByteCode;
+
+			return ret;
 		}
 
 	}

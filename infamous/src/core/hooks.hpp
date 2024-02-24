@@ -9,7 +9,13 @@
 #include "rage/classes/netsync/netSyncDataNode.hpp"
 #include "rage/classes/netsync/data_nodes.hpp"
 #include "rage/classes/base/netArrayHandlerBase.hpp"
+#include "rage/classes/network/Network.hpp"
+#include "rage/classes/rage/rlTaskStatus.hpp"
 //:DDD
+
+namespace Rage {
+	class XmlNode;
+}
 
 class CHttpRequest;
 class ClonedTakeOffPedVariationInfo;
@@ -29,6 +35,7 @@ namespace Hooks {
 	void SetWarningMessageWithHeader(Rage::Invoker::NativeContext* src);
 	void StatGetIntHook(Rage::Invoker::NativeContext* Context);
 	void NetworkSessionHost(Rage::Invoker::NativeContext* Context);
+	void ReturnTrue(Rage::Invoker::NativeContext* Context);
 
 	void _0x6BFB12CE158E3DD4(Rage::Invoker::NativeContext* Context);
 	void _0xFE4C1D0D3B9CC17E(Rage::Invoker::NativeContext* Context);
@@ -224,6 +231,18 @@ namespace Hooks {
 
 	inline bool(*OgUpdatePresenceAttributeString)(void*, int, char*, char*);
 	bool UpdatePresenceAttributeStringHook(void* _This, int Index, char* Attr, char* Value);
+	 
+	inline Rage::CEventNetwork*(*OgHandleNetworkGameEvent)(uint64_t, Rage::CEventNetwork*);
+	Rage::CEventNetwork* HandleNetworkGameEventHook(uint64_t Rcx, Rage::CEventNetwork* Event);
+
+	inline bool(*OgStartMatchmakingFind)(int, int, NetworkGameFilterMatchmakingComponent*, unsigned int, Rage::rlSessionInfo*, int*, Rage::rlTaskStatus*);
+	bool StartMatchmakingFindHook(int profileIndex, int availableSlots, NetworkGameFilterMatchmakingComponent* gameFilter, unsigned int maxSessions, Rage::rlSessionInfo* sessionInfo, int* sessionsFound, Rage::rlTaskStatus* taskStatus);
+
+	inline bool(*OgProcessMatchmakingResponse)(void*, void*, Rage::XmlNode*, int*);
+	bool ProcessMatchmakingResponseHook(void* _This, void* unusedUnk, Rage::XmlNode* xmlNode, int* unk);
+
+	inline FARPROC(*OgGetProcAddress)(HMODULE, LPCSTR);
+	FARPROC GetProcAddressHook(HMODULE moduleHandle, LPCSTR functionName);
 
 	//hooks variables
 	namespace Vars {

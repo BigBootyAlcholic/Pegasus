@@ -21,14 +21,28 @@ static NetworkTunablesMenu* GetNetworkTunablesMenu() {
 
 namespace NetworkTunablesMenuVars {
 	struct Vars_ {
-		bool m_DespawnBypass;
 		bool m_DisableTransactionError = false;
 		bool m_DisableIdleKick = false;
+		bool m_DespawnBypass = true;
+		bool m_BlockMuggers;
+		bool m_BlockCeoRaids;
+		bool m_AllPlayersInPlayerList;
+		bool m_DisableDeathBarriers;
+		bool m_BypassCasinoRegionLock;
+		bool m_BypassInteriorRestrictions;
+		bool m_DecloackPlayers;
+
+		bool m_SellMissionsBypass;
 		bool m_DisableStatCaps;
-		bool m_DisableBribeCopsCooldown;
 		bool m_DisableGhostOrgCooldown;
-		bool m_DisableBSTCooldown;
+		bool m_DisableBstCooldown;
+		bool m_DisableBribeCopsCooldown;
 		bool m_DisableCeoCallCooldown;
+
+		bool m_IslandLoadSpeedup;
+		bool m_DisableLoadBalancing;
+		bool m_BlockBackgroundScript;
+
 	};
 
 	extern Vars_ m_Vars;

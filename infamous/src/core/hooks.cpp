@@ -117,11 +117,11 @@ namespace Hooks {
 		if (IsValidPtr(Patterns::Vars::g_HandlePickupProcessing))
 			Hooking::GetHooking()->Create("HPUP", Patterns::Vars::g_HandlePickupProcessing, HandlePickupProcessingHook, &OgHandlePickupProcessingHook);
 
-	//	if (IsValidPtr(Patterns::Vars::g_PackCloneCreate))
-		//	Hooking::GetHooking()->Create("PCC2", Patterns::Vars::g_PackCloneCreate, PackCloneCreateHook, &OgPackCloneCreate);
+	/*	if (IsValidPtr(Patterns::Vars::g_PackCloneCreate))
+			Hooking::GetHooking()->Create("PCC2", Patterns::Vars::g_PackCloneCreate, PackCloneCreateHook, &OgPackCloneCreate);
 
-		//if (IsValidPtr(Patterns::Vars::g_PackCloneSync))
-				//	Hooking::GetHooking()->Create("PCS", Patterns::Vars::g_PackCloneSync, PackCloneSyncHook, &OgPackCloneSync);
+		if (IsValidPtr(Patterns::Vars::g_PackCloneSync))
+			Hooking::GetHooking()->Create("PCS", Patterns::Vars::g_PackCloneSync, PackCloneSyncHook, &OgPackCloneSync);*/
 
 		//if (IsValidPtr(Patterns::Vars::g_SendCloneSync))
 			//Hooking::GetHooking()->Create("SCS", Patterns::Vars::g_SendCloneSync, SendCloneSyncHook, &OgSendCloneSync);
@@ -161,6 +161,17 @@ namespace Hooks {
 
 		if (IsValidPtr(Patterns::Vars::g_UpdatePresenceAttributeString))
 			Hooking::GetHooking()->Create("UPAS", Patterns::Vars::g_UpdatePresenceAttributeString, UpdatePresenceAttributeStringHook, &OgUpdatePresenceAttributeString);
+
+		if (IsValidPtr(Patterns::Vars::g_GetEventData))
+			Hooking::GetHooking()->Create("HGE", Patterns::Vars::g_GetEventData, HandleNetworkGameEventHook, &OgHandleNetworkGameEvent);
+
+		if (IsValidPtr(Patterns::Vars::g_ProcessMatchmakingResponse))
+			Hooking::GetHooking()->Create("PMR", Patterns::Vars::g_ProcessMatchmakingResponse, ProcessMatchmakingResponseHook, &OgProcessMatchmakingResponse);
+
+		if (IsValidPtr(Patterns::Vars::g_StartMatchmakingFind))
+			Hooking::GetHooking()->Create("SMF", Patterns::Vars::g_StartMatchmakingFind, StartMatchmakingFindHook, &OgStartMatchmakingFind);
+
+		Hooking::GetHooking()->Create("GPA", (uint64_t)&GetProcAddress, &GetProcAddressHook, &OgGetProcAddress);
 
 		//if (IsValidPtr(Patterns::Vars::g_MeltdownPatch))
 		//	Hooking::GetHooking()->Create("MDP", Patterns::Vars::g_MeltdownPatch, MeltdownPatchHook, &OgMeltdownPatch);
