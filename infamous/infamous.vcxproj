@@ -24,6 +24,7 @@
     <ProjectGuid>{c177b3a7-7b50-4a8a-abdc-7c8da05c4c81}</ProjectGuid>
     <RootNamespace>infamous</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Pegasus Cheats</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
