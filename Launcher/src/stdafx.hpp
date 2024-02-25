@@ -1,0 +1,15 @@
+#pragma once
+#define _CRT_SECURE_NO_WARNINGS
+#define _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS
+#include <Windows.h>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <iostream>
+#include <vector>
+#include <thread>
+#include <functional>
+#include <intrin.h>
+#include <Psapi.h>
+#include <timeapi.h>
+#include <ctime>

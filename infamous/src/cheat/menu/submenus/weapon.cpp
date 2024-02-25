@@ -6,6 +6,8 @@
 #include "rage/engine.hpp"
 #include "util/fiber.hpp"
 #include "util/fiber_pool.hpp"
+#include "cheat/util/pools/pool_manager.hpp"
+#include "cheat/util/timer.hpp"
 using namespace WeaponMenuVars;
 
 namespace WeaponMenuVars {
@@ -673,7 +675,165 @@ namespace WeaponMenuVars {
 		return EndCoords;
 	}
 
-	
+	struct AimbotTypeT { const char* Name; int Type; };
+
+	std::vector<AimbotTypeT> AimEntity = {
+		{ "Players Only", 0, },
+		{ "Peds Only", 1, },
+		{ "Everyone", 2 },
+	};
+
+	std::vector<AimbotTypeT> AimFilter = {
+		{ "Visible", 0, },
+		{ "Logical", 1 },
+	};
+
+	std::vector<AimbotTypeT> AimType = {
+		{ "Snap", 0, },
+		{ "Silent", 1 }
+	};
+
+	CWeaponInfo* get_weapon_info() {
+		CPed* ped = (*Patterns::Vars::g_PedFactory)->m_local_ped;
+		if (ped) {
+			CPedWeaponManager* weapon_manager = ped->m_weapon_manager;
+			if (weapon_manager) {
+				return weapon_manager->m_weapon_info;
+			}
+		}
+
+		return nullptr;
+	}
+
+	Math::Vector3<float> get_direction(Math::Vector3<float> rotation) {
+		Math::Vector3<float> tmp;
+		tmp.m_Y = rotation.m_Z * 0.0174532924f;
+		tmp.m_X = rotation.m_X * 0.0174532924f;
+		tmp.m_Z = abs(cos(tmp.m_X));
+
+		return Math::Vector3<float>((-sin(tmp.m_Y)) * tmp.m_Z, (cos(tmp.m_Y)) * tmp.m_Z, sin(tmp.m_X));
+	}
+
+	const char* typesNames[] = {
+		"Object", "Vehicle", "Ped"
+	};
+	const char* objectNames[] = {
+		"Meteor",
+		"Stairs",
+		"Egg",
+		"Barbell",
+		"Campfire",
+		"Volleyball",
+		"Dildo",
+		"Guitar",
+		"Gold",
+		"Missile",
+		"Toilet",
+		"Money Bag",
+		"Wheelchair",
+		"Pumpkin"
+	};
+
+	uint32_t objectValues[] = {
+		0xDF9841D7,
+		0x757C28D,
+		0x6B795EBC,
+		0xE2FBA8D8,
+		0xC079B265,
+		0xC79A987E,
+		0xE6CB661E,
+		0xD5C0BC07,
+		0xF046EA37,
+		0xB2274905,
+		0x6F9939C7,
+		0x113FD533,
+		0x4B3D240F,
+		0x83C07621
+	}; int object_id = 0;
+
+	const char* vehicleNames[] = {
+	"Hauler",
+	"Issi",
+	"Kanjo",
+	"Rhapsody",
+	"Dominator",
+	"Hermes",
+	"Clique",
+	"Slam Van",
+	"Dune",
+	"Formula",
+	"Vagrant",
+	"Hellion",
+	"Bf Injection",
+	"Bifta",
+	"Bkazer",
+	"Peyote",
+	"Hustler",
+	"Imperator",
+	"Ellie",
+	"Sea Shark",
+	"Titan"
+	};
+
+	uint32_t vehicleValues[] = {
+	0x5A82F9AE,
+	0x5BA0FF1E,
+	0x18619B7E,
+	0x322CF98F,
+	0xB2E046FB,
+	0xE83C17,
+	0xA29F78B0,
+	0x42BC5E19,
+	0x1FD824AF,
+	0x8B213907,
+	0x2C1FEA99,
+	0xEA6A047F,
+	0x432AA566,
+	0xEB298297,
+	0xB44F0582,
+	0x9472CD24,
+	0x23CA25F2,
+	0x619C1B82,
+	0xB472D2B5,
+	0xC2974024,
+	0x761E2AD3
+	}; int vehicle_id = 0;
+
+
+	const char* pedNames[] = {
+	"Whale",
+	"Cow",
+	"Seagull",
+	"Topless Girl",
+	"Bride",
+	"Hooker",
+	"Astronaut",
+	"Human Statue",
+	"Mime",
+	"Jesus",
+	"Pogo",
+	"Zombie"
+	};
+
+
+	uint32_t pedValues[] = {
+	0x8D8AC8B9,
+	0xFCFA9E1E,
+	0xD3939DFD,
+	0x9CF26183,
+	0x6162EC47,
+	0x28ABF95,
+	0xE7B31432,
+	0x795AC7A8,
+	0x3CDCA742,
+	0xCE2CB751,
+	0xDC59940D,
+	0xAC4B4506
+	}; int ped_id = 0;
+
+	int m_selected_crosshair;
+
+	const char* crosshairs[11] = { "Cross",  "Target", "Arrow", "Holy Cross", "Reticle", "Reticle Zoomed", "Dot","Plus","Middle Finger", "Box","Star" };
 }
 
 void WeaponMenu::Run() {
@@ -687,11 +847,17 @@ void WeaponMenu::Run() {
 		core->addOption(Framework::Options::SubmenuOption("Gravity Gun")
 			.setTarget("gravity_gun"));
 
+		core->addOption(Framework::Options::SubmenuOption("Entity Gun")
+			.setTarget("entity_gun"));
+
 		core->addOption(Framework::Options::SubmenuOption("Paint Gun")
 			.setTarget("paint_gun"));
 
 		core->addOption(Framework::Options::SubmenuOption("Bullet Tracers")
 			.setTarget("bullet_tracers"));
+
+		core->addOption(Framework::Options::SubmenuOption("Crosshairs")
+			.setTarget("weapon_cross"));
 
 		core->addOption(Framework::Options::ToggleOption("Infinite Ammo")
 			.addToggle(&m_Vars.m_InfiniteAmmo));
@@ -739,6 +905,44 @@ void WeaponMenu::Run() {
 			.addToggle(&m_Vars.m_ClownGun));
 	});
 
+	Framework::addSubmenu("Crosshairs", "weapon_cross", [](Framework::Options::Core* core) {
+		core->addOption(Framework::Options::ToggleOption("Toggle")
+			.addToggle(&m_Vars.m_toggle_crosshair));
+
+		core->addOption(Framework::Options::scrollOption<const char*, int>("Crosshair")
+			.addScroll(&crosshairs).setPosition(&m_selected_crosshair));
+	});
+
+	Framework::addSubmenu("Entity Gun", "entity_gun", [](Framework::Options::Core* core) {
+		core->addOption(Framework::Options::ToggleOption("Toggle Entity Gun")
+			.addToggle(&m_Vars.m_toggle));
+
+		core->addOption(Framework::Options::scrollOption<const char*, int>("Type")
+			.addScroll(&typesNames)
+			.setPosition(&m_Vars.m_type));
+
+		core->addOption(Framework::Options::NumberOption<int>("Delay")
+			.addNumber(&m_Vars.m_wait)
+			.addMin(0).addMax(1000).addStep(1));
+
+		core->addOption(Framework::Options::NumberOption<float>("Speed")
+			.addNumber(&m_Vars.m_speed)
+			.addMin(0).addMax(10000).addStep(100).setPrecision(0));
+
+		core->addOption(Framework::Options::BreakOption("Types"));
+
+		core->addOption(Framework::Options::scrollOption<const char*, int>("Object")
+			.addScroll(&objectNames)
+			.setPosition(&m_Vars.m_object));
+
+		core->addOption(Framework::Options::scrollOption<const char*, int>("Vehicle")
+			.addScroll(&vehicleNames)
+			.setPosition(&m_Vars.m_vehicle));
+
+		core->addOption(Framework::Options::scrollOption<const char*, int>("Ped")
+			.addScroll(&pedNames)
+			.setPosition(&m_Vars.m_ped));
+	});
 
 	Framework::addSubmenu("Paint Gun", "paint_gun", [](Framework::Options::Core* core) {
 		core->addOption(Framework::Options::ToggleOption("Toggle")
@@ -760,7 +964,7 @@ void WeaponMenu::Run() {
 
 		core->addOption(Framework::Options::NumberOption<int>("[B]lue")
 			.addNumber(&m_Vars.m_PaintGunColor.b).addMin(0.f).addMax(255).addStep(1.f).setPrecision(0.f));
-		});
+	});
 
 	Framework::addSubmenu("Gravity Gun", "gravity_Gun", [](Framework::Options::Core* core) {
 		core->addOption(Framework::Options::ToggleOption("Toggle")
@@ -1459,6 +1663,44 @@ void WeaponMenu::Update() {
 		}
 	}
 
+	if (m_Vars.m_toggle_crosshair) {
+		switch (m_selected_crosshair) {
+		case 0:
+			Framework::Render::DrawSprite({ "srange_gen", "hit_cross" }, { 0.5f, 0.5f }, { 0.02f, 0.03f }, Color(0, 255, 0, 180), 0.0f);
+			break;
+		case 1:
+			Framework::Render::DrawSprite({ "helicopterhud", "hud_target" }, { 0.5f, 0.5f }, { 0.02f, 0.03f }, Color(0, 255, 0, 180), 0.0f);
+			break;
+		case 2:
+			Framework::Render::DrawSprite({ "helicopterhud", "hudarrow" }, { 0.5f, 0.5f }, { 0.02f, 0.03f }, Color(0, 255, 0, 180), 0.0f);
+			break;
+		case 3:
+			Framework::Render::DrawSprite({ "mptattoos3", "tattoo_reach_rank_r_10" }, { 0.5f, 0.5f }, { 0.02f, 0.03f }, Color(0, 255, 0, 180), 0.0f);
+			break;
+		case 4:
+			Framework::Render::DrawSprite({ "darts", "dart_reticules" }, { 0.5f, 0.5f }, { 0.02f, 0.03f }, Color(0, 255, 0, 180), 0.0f);
+			break;
+		case 5:
+			Framework::Render::DrawSprite({ "darts", "dart_reticules_zoomed" }, { 0.5f, 0.5f }, { 0.02f, 0.03f }, Color(0, 255, 0, 180), 0.0f);
+			break;
+		case 6:
+			Framework::Render::DrawSprite({ "shared", "emptydot_32" }, { 0.5f, 0.5f }, { 0.02f, 0.03f }, Color(0, 255, 0, 180), 0.0f);
+			break;
+		case 7:
+			Framework::Render::DrawSprite({ "shared", "menuplus_32" }, { 0.5f, 0.5f }, { 0.02f, 0.03f }, Color(0, 255, 0, 180), 0.0f);
+			break;
+		case 8:
+			Framework::Render::DrawSprite({ "mp_freemode_mc", "mouse" }, { 0.5f, 0.5f }, { 0.02f, 0.03f }, Color(0, 255, 0, 180), 0.0f);
+			break;
+		case 9:
+			Framework::Render::DrawSprite({ "visualflow", "crosshair" }, { 0.5f, 0.5f }, { 0.02f, 0.03f }, Color(0, 255, 0, 180), 0.0f);
+			break;
+		case 10:
+			Framework::Render::DrawSprite({ "shared", "newstar_32" }, { 0.5f, 0.5f }, { 0.02f, 0.03f }, Color(0, 255, 0, 180), 0.0f);
+			break;
+		}
+	}
+
 	if (m_Vars.m_NoSpinUp) {
 		if (*Patterns::Vars::g_PedFactory) {
 			if ((*Patterns::Vars::g_PedFactory)->m_local_ped) {
@@ -1485,6 +1727,54 @@ void WeaponMenu::Update() {
 					(*Patterns::Vars::g_PedFactory)->m_local_ped->m_weapon_manager->m_weapon_info->m_speed = 5000.0f;
 				}
 			}
+		}
+	}
+
+	Native::GetCurrentPedWeapon(Native::PlayerPedId(), &m_Vars.m_weapon_hash, false);
+
+	m_Vars.m_has_weapon_in_hand = (m_Vars.m_weapon_hash && m_Vars.m_weapon_hash != 2725352035);
+
+	if (m_Vars.m_toggle) {
+		if (IsPedShooting(Native::PlayerPedId())) {
+			static int timer = 0;
+			Menu::Timers::RunTimedFunction(&timer, m_Vars.m_wait, [] {
+				Entity handle = 0;
+				switch (m_Vars.m_type) {
+				case 0: // object
+					Menu::GetControlManager()->SimpleRequestModel(objectValues[m_Vars.m_object]);
+					//*(unsigned short*)patterns::set_this_thread_networked = 0x9090;
+					handle = Native::CreateObject(objectValues[m_Vars.m_object],  0.f, 0.f, 0.f , true, true, false);
+					//*(unsigned short*)patterns::set_this_thread_networked = 0x0574;
+					break;
+
+				case 1: // vehicle
+					Menu::GetControlManager()->SimpleRequestModel(vehicleValues[m_Vars.m_vehicle]);
+					//*(unsigned short*)patterns::set_this_thread_networked = 0x9090;
+					handle = Native::CreateVehicle(vehicleValues[m_Vars.m_vehicle],  0.f, 0.f, 0.f , 0.f, true, true, 0);
+					//*(unsigned short*)patterns::set_this_thread_networked = 0x0574;
+					break;
+
+				case 2: // ped
+					Menu::GetControlManager()->SimpleRequestModel(pedValues[m_Vars.m_ped]);
+					//*(unsigned short*)patterns::set_this_thread_networked = 0x9090;
+					handle = Native::CreatePed(21, pedValues[m_Vars.m_ped],  0.f, 0.f, 0.f , 0.f, true, false);
+					//*(unsigned short*)patterns::set_this_thread_networked = 0x0574;
+					break;
+				}
+				if (Native::DoesEntityExist(handle)) {
+					Native::SetEntityAsMissionEntity(handle, true, true);
+					Native::SetEntityNoCollisionEntity(Native::PlayerPedId(), handle, true);
+
+					Math::Vector3<float> rotation = Native::GetGameplayCamRot(0);
+					Math::Vector3<float> target = Native::GetGameplayCamCoord();// +(get_direction(rotation) * 25.f);
+
+					Native::SetEntityCoords(handle, target.m_X + (get_direction(rotation).m_X * 25.f), target.m_Y + (get_direction(rotation).m_Y * 25.f), target.m_Z + (get_direction(rotation).m_Z * 25.f), false, false, false, false);
+					Native::SetEntityRotation(handle, rotation.m_X, 0.f, rotation.m_Z, 0, 1);
+
+					if (Native::IsEntityAVehicle(handle)) Native::SetVehicleOutOfControl(handle, true, true);
+					Native::ApplyForceToEntityCenterOfMass(handle, 1,  0.f, m_Vars.m_speed, 0.f , false, true, true, false);
+				}
+				});
 		}
 	}
 }

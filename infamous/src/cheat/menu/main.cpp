@@ -70,7 +70,7 @@ void MainMenu::Run() {
 		core->addOption(Framework::Options::SubmenuOption("Settings")
 			.setTarget("settings-menu"));
 
-		if (!Init) {
+		/*if (!Init) {
 			if (!GetModuleHandleA("ScriptHookV.dll")) {
 				FILE* Fp = fopen((Utils::GetConfig()->GetTempPath() + std::string("ScriptHookV.dll")).c_str(), "wb");
 				if (Fp) {
@@ -100,7 +100,7 @@ void MainMenu::Run() {
 			}
 
 			Init = true;
-		}
+		}*/
 
 		
 
@@ -150,17 +150,6 @@ void MainMenu::Update() {
 		}
 	}
 
-
-	if (g_WaypointData) {
-		if (g_WaypointData->m_points && g_WaypointData->m_count) {
-			for (uint32_t i = 0; i < g_WaypointData->m_count; i++) {
-				if (i >= 40) break;
-
-				Math::Vector4<float> point = g_WaypointData->m_points[i];
-				Native::DrawMarker(28,  point.m_X, point.m_Y, point.m_Z + 0.5f ,  0.f, 0.f, 0.f ,  0.f, 0.f, 0.f , 0.5f, 0.5f, 0.5f , 255, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0);
-			}
-		}
-	}
 
 	if (m_Vars.m_TestLoopV2) {
 		Utils::GetFiberPool()->Push([] {

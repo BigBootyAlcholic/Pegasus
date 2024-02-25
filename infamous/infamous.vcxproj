@@ -278,6 +278,7 @@
     <ClInclude Include="src\rage\classes\rage\rlGamerInfo.hpp" />
     <ClInclude Include="src\rage\classes\rage\rlGamerInfoBase.hpp" />
     <ClInclude Include="src\rage\classes\rage\rlMetric.hpp" />
+    <ClInclude Include="src\rage\classes\rage\rlSessionByGamerTaskResult.hpp" />
     <ClInclude Include="src\rage\classes\rage\rlSessionInfo.hpp" />
     <ClInclude Include="src\rage\classes\rage\rlTaskStatus.hpp" />
     <ClInclude Include="src\rage\classes\rage\scrValue.hpp" />

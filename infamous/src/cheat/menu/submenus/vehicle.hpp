@@ -22,6 +22,7 @@ static VehicleMenu* GetVehicleMenu() {
 }
 
 namespace VehicleMenuVars {
+
 	struct Vars_ {
 		bool m_GodMode = false;
 		bool m_Invisibility = false;
@@ -44,6 +45,32 @@ namespace VehicleMenuVars {
 		bool m_HandBrake = false;
 		bool m_InstantlyEnter = false;
 		bool m_InstantlyExit = false;
+		int m_Seat;
+		bool m_RocketBoost;
+		bool m_VerticalRocketBoost;
+
+		bool m_DisableFullCollision;
+		bool m_DisableVehicleCollision;
+
+		bool m_AutoRepair;
+		bool m_AutoWash;
+
+		bool m_DisableLockOn;
+		bool m_DrivebyInAllVehicles;
+		bool m_Transparency;
+		bool m_FrontRamp;
+		bool m_RearRamp;
+		bool m_LeftRamp;
+		bool m_RightRamp;
+
+		int m_RampType = 1;
+		int m_Gravity;
+		bool m_SlippyWheels;
+		bool m_DriveOnWater;
+		bool m_Freeze;
+		bool m_StickToGround;
+
+		Entity m_DriveOnWaterEntity;
 	};
 
 	extern Vars_ m_Vars;

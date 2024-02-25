@@ -621,6 +621,9 @@
     <ClInclude Include="src\cheat\util\pools\object_pool.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\rage\classes\rage\rlSessionByGamerTaskResult.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">

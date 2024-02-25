@@ -901,6 +901,30 @@ struct Friends {
 	char _0x00C8[312]; //0x00C8
 };
 
+class CFriend {
+public:
+	uint64_t m_rockstar_id; //0x0000
+};
+
+#pragma pack(push, 16)
+class CFriendMenu {
+public:
+	virtual ~CFriendMenu() = default;
+	CFriend get_friend(u8 index) {
+		return *(CFriend*)((u64)this + 16ui64 * index);
+	}
+	u8 get_online_friend() {
+		u8* data{ reinterpret_cast<u8*>((u64)this + 0x8) };
+		for (u8 i{}; i != 20; ++i, data += 16) {
+			if (data[i] == 3) {
+				return i;
+			}
+		}
+		return NULL;
+	}
+};
+#pragma pack(pop)
+
 namespace Rage {
 	struct GenericPool {
 		uint64_t m_Address;

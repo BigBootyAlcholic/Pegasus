@@ -299,7 +299,7 @@ namespace Patterns {
 		}, out);
 
 		Batch.Add({ ("GFM"), ("75 1C E8 ? ? ? ? 48 85 C0") }, [](Memory::Ptr ptr) {
-			Vars::g_GetFriendsMenu = ptr.Sub(0xA).As<u64>();
+			Vars::g_GetFriendsMenu = ptr.Sub(0xB).As<u64>();
 		}, out);
 
 		Batch.Add({ ("CPM"), ("48 89 5C 24 ? 48 89 74 24 ? 55 57 41 54 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8B D9") }, [](Memory::Ptr ptr) {
@@ -309,6 +309,10 @@ namespace Patterns {
 		Batch.Add({ ("HNM"), ("48 83 EC 20 4C 8B 71 50 33 ED") }, [](Memory::Ptr ptr) {
 			Vars::g_HandleNetMessage = ptr.Sub(0x19).As<u64>();
 		}, out);
+
+		Batch.Add({ ("SSBG"), ("E8 ? ? ? ? 84 C0 0F 84 ? ? ? ? 8B 05 ? ? ? ? 48 8D 4C 24") }, [](Memory::Ptr ptr) {
+			Vars::g_StartSessionByGamer = ptr.Call().As<u64>();
+			}, out);
 
 
 		Batch.Add({ ("GCP"), ("48 89 5C 24 08 48 89 74 24 18 89 54 24 10 57 48 83 EC 40 48") }, [](Memory::Ptr ptr) {

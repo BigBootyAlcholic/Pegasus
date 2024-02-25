@@ -82,6 +82,67 @@ namespace Menu {
 
 			//NetworkRecentPlayersMenuVars::Save(Player.m_Name, Player.m_NetGamePlayer->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id);
 
+			if (Player.m_Connected) {
+				if (i != Native::PlayerId()) {
+					if (Player.m_Model != 0x0 && Player.m_Model != 0x9c9effd8 && Player.m_Model != 0x705e61f2) {
+						if (!Player.m_ModderFlags[Menu::REASON_INVALID_MODEL]) {
+							Menu::Notify::stacked(std::format("{} Is Modding: Model Change", Player.m_Name).c_str());
+						}
+
+						Player.m_ModderFlags[Menu::REASON_INVALID_MODEL] = true;
+						Player.m_IsModder = true;
+					}
+
+					if (IsValidPtr(Player.m_NetGamePlayer)) {
+						if (Player.m_NetGamePlayer->m_is_cheater) {
+							Player.m_ModderFlags[Menu::REASON_NET_GAME_PLAYER_CHEATER] = true;
+							Player.m_IsModder = true;
+						}
+
+						if (IsValidPtr(Player.m_NetGamePlayer->m_player_info)) {
+							if (((Player.m_NetGamePlayer->m_player_info->m_net_player_data.m_host_token >> 32) & 0xFFFFFFFF) < 0x1000 || Player.m_NetGamePlayer->m_player_info->m_net_player_data.m_host_token < 0x1000) {
+								if (!Player.m_ModderFlags[Menu::REASON_SPOOFED_PEER]) {
+									Menu::Notify::stacked(std::format("{} Is Modding: Spoofed Peer", Player.m_Name).c_str());
+								}
+
+								Player.m_ModderFlags[Menu::REASON_SPOOFED_PEER] = true;
+								Player.m_IsModder = true;
+							}
+
+
+
+							// Frame flag checks
+							std::pair<int, std::pair<Menu::ePlayerReportReasons, std::string>> FrameFlags[] = {
+								{ 0x800, { Menu::REASON_EXPLOSIVE_AMMO, "Explosive Ammo"}},
+								{ 0x2000, { Menu::REASON_EXPLOSIVE_MELEE, "Explosive Melee"}},
+								{ 0x1000, { Menu::REASON_FIRE_AMMO, "Fire Ammo"}},
+								{ 0x4000, { Menu::REASON_SUPER_JUMP, "Super Jump"}}
+							};
+
+							for (auto& Flag : FrameFlags) {
+								if ((Player.m_NetGamePlayer->m_player_info->m_frame_flags & Flag.first) != 0) {
+									if (!Player.m_ModderFlags[Flag.second.first]) {
+										Menu::Notify::stacked(std::format("{} Is Modding: {}", Player.m_Name, Flag.second.second.c_str()).c_str());
+									}
+
+									Player.m_ModderFlags[Flag.second.first] = true;
+									Player.m_IsModder = true;
+								}
+							}
+
+							if (Player.m_NetGamePlayer->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id < 10000) {
+								if (!Player.m_ModderFlags[Menu::REASON_SPOOFED_RID]) {
+									Menu::Notify::stacked(std::format("{} Is Modding: Spoofed Rid", Player.m_Name).c_str());
+								}
+
+								Player.m_ModderFlags[Menu::REASON_SPOOFED_RID] = true;
+								Player.m_IsModder = true;
+							}
+						}
+					}
+
+				}
+			}
 		}
 	}
 

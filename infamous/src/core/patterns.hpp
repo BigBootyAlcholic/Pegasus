@@ -254,5 +254,7 @@ namespace Patterns {
 		inline Rage::GenericPool* g_NetworkEventQueuePool;
 		inline uint64_t* g_MainEntityPool;
 		inline u64 g_GetEntityHandleFromAddress;
+
+		inline u64 g_StartSessionByGamer;
 	}
 }

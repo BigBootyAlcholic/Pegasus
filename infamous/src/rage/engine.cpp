@@ -8,6 +8,7 @@
 #include "rage/classes/network/Network.hpp"
 #include "util/curl_wrapper.hpp"
 #include "cheat/util/notify.hpp"
+#include "rage/classes/rage/rlSessionByGamerTaskResult.hpp"
 namespace Engine {
 	CNetGamePlayer*	GetNetworkGamePlayer(u32 Player) {
 		return Caller::Call<CNetGamePlayer*>(Patterns::Vars::g_GetNetworkGamePlayer, Player);
@@ -161,6 +162,33 @@ namespace Engine {
 
 	void JoinSessionByRid(u64 rid) {
 		Utils::GetFiberPool()->Push([=] {
+			if (Native::_GetNumberOfInstancesOfScriptWithNameHash(RAGE_JOAAT("maintransition")) != 0 || Native::IsPlayerSwitchInProgress()) {
+				LOG_ERROR("ERR SWITCH");
+				return;
+			}
+
+			Rage::rlGamerHandle player_handle(rid);
+			Rage::rlSessionByGamerTaskResult result;
+			bool success = false;
+			Rage::rlTaskStatus state{};
+
+			if (Caller::Call<bool>(Patterns::Vars::g_StartSessionByGamer, 0, &player_handle, 1, &result, 1, &success, &state))
+			{
+				while (state.status == 1)
+					Utils::GetFiberManager()->GoToMainFiber();
+
+				if (state.status == 3 && success)
+				{
+					JoinSession(result.m_session_info);
+					return;
+				}
+			}
+
+			Menu::Notify::stacked("Player Is Offline");
+		});
+		
+
+		/*Utils::GetFiberPool()->Push([=] {
 			if (Native::_GetCurrentFrontendMenu() != 0xFFFFFFFF) {
 				Native::ActivateFrontendMenu(Joaat("FE_MENU_VERSION_SP_PAUSE"), false, 2);
 				Utils::GetFiberManager()->Sleep(200);
@@ -170,7 +198,7 @@ namespace Engine {
 
 			CPlayerListMenu* Menu = new CPlayerListMenu();
 			u32 Hash{ 0xDA4858C1 };
-			u64 Info{ Caller::Call<u64>(Patterns::Vars::g_GetFriendsMenu, 0) };
+			u64 Info{ (u64)Caller::Call<u64>(Patterns::Vars::g_GetFriendsMenu, 0) };
 			u8* Data{ reinterpret_cast<u8*>(Info + 0x8) };
 
 			if (Data) {
@@ -185,12 +213,14 @@ namespace Engine {
 				if (Idx < 20ui8) {
 					u64 OriginalRID{ *(u64*)(Info + 16ui64 * Idx) };
 					*(u64*)(Info + 16ui64 * Idx) = rid;
-					Caller::Call<u64>(Patterns::Vars::g_ConstructPlayerMenu, Menu, &Hash);
+					Caller::Call<bool>(Patterns::Vars::g_ConstructPlayerMenu, Menu, &Hash);
 					Utils::GetFiberManager()->Sleep(400);
 					*(u64*)(Info + 16ui64 * Idx) = OriginalRID;
 				}
 			}
-		});
+		});*/
+
+
 	}
 	
 	namespace Api {

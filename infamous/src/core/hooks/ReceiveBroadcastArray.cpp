@@ -4,17 +4,6 @@
 #include "cheat/util/shop_manager.hpp"
 #include "rage/classes/script/scriptManager.hpp"
 namespace Hooks {
-
-	GtaThread* FindScriptThreadFromHash(Rage::joaat_t hash) {
-		for (auto thread : *Patterns::Vars::g_ScriptThreads) {
-			if (thread && thread->m_context.m_thread_id && thread->m_handler && thread->m_script_hash == hash) {
-				return thread;
-			}
-		}
-
-		return nullptr;
-	}
-
 	enum class eFreemodeState
 	{
 		NONE = 0,

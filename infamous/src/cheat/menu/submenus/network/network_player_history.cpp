@@ -111,7 +111,7 @@ namespace NetworkPlayerHistoryMenuVars {
 			Output << Resp.dump(4);
 			Output.close();
 		}
-		Menu::Notify::stacked("DONE");
+		//Menu::Notify::stacked("DONE");
 	}
 
 	void Load() {
@@ -220,10 +220,10 @@ void NetworkPlayerHistoryMenu::Run() {
 	Framework::addSubmenu("Player History", "network_player_history", [](Framework::Options::Core* core) {
 
 
-		if (!init) {
+		//if (!init) {
 			Load();
-			init = true;
-		}
+			//init = true;
+		//}//
 
 		core->addOption(Framework::Options::SubmenuOption("Saved Players")
 			.setTarget("history-saved"));
@@ -264,6 +264,10 @@ void NetworkPlayerHistoryMenu::Run() {
 			.addClick([] {
 				Engine::JoinSessionByRid(m_Vars.m_SelectedList->at(m_Vars.m_SelectedPlayer).second.m_RockstarID);
 				}));
+
+
+		core->addOption(Framework::Options::ButtonOption("Save Player")
+			.addClick([] { MakePermanent(); }));
 		});
 	Framework::addSubmenu("Saved Players", "history-saved", [](Framework::Options::Core* core) {
 

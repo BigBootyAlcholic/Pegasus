@@ -331,26 +331,20 @@ namespace WeaponMenuVars {
 		bool m_TriggerBotEnemies = true;
 		bool m_TriggerBotPlayers = true;
 		bool m_EnableTriggerBot = false;
-		const char* const m_AimBotBone[7]
-		{
-			"Head",
-			"Neck",
-			"Core",
-			"Left Hand",
-			"Right Hand",
-			"Left Foot",
-			"Right Foot"
-		};
-		int m_AimBotBonePos = 0;
-		float m_AimBotLegitSpeed = 2.f;
-		float m_AimBotFOV = 90.f;
-		float m_AimBotDistance = 200.f;
-		bool m_AimBotPolice = true;
-		bool m_AimBotCivilians = true;
-		bool m_AimBotEnemies = true;
-		bool m_AimBotPlayers = true;
-		bool m_LegitBot = true;
-		bool m_EnableAimBot = false;
+		
+		int m_type = 0;
+		int m_wait = 0;
+		int m_object = 0;
+		int m_vehicle = 0;
+		int m_ped = 0;
+		float m_speed = 900.f;
+
+		bool m_toggle = false;
+		bool m_toggle_crosshair;
+
+		uint32_t m_weapon_hash = 0;
+		bool m_has_weapon_in_hand;
+		
 
 		struct BulletTracer
 		{

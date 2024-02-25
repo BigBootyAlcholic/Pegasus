@@ -26,6 +26,8 @@ namespace MainMenuVars {
 		bool m_Crash = false;
 		bool m_TestLoopV2;
 		bool m_SeamlessJoin = false;
+
+
 	};
 
 	extern Vars_ m_Vars;
